@@ -44,10 +44,15 @@ export const createSSOEnrollemnt = withServerActionAuth(
             id: "ssp_1JYaFD4Zq9wno7HaEdfmr6",
           },
           {
-            enabled_organizations: [{ organization_id: orgId }],
+            enabled_organizations: [
+              { organization_id: orgId, assign_membership_on_login: true },
+            ],
             connection_config: {
-              display_name: "Random Name 1",
+              display_name: "Aperture Science",
               name: "random-name-1",
+              options: {
+                domain_aliases: ["aperture.com"],
+              },
             },
           }
         )
