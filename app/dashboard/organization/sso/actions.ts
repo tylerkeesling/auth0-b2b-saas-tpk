@@ -32,9 +32,12 @@ export const verifyDomain = withServerActionAuth(
 )
 
 export const createSSOEnrollemnt = withServerActionAuth(
-  async function createSSOEntrollment() {
-    const session = await appClient.getSession()
-
+  async function createSSOEntrollment(
+    session: Session
+  ): Promise<
+    | { ticketUrl: string; error?: undefined }
+    | { error: string; ticketUrl?: undefined }
+  > {
     try {
       const orgId = session?.user.org_id
 

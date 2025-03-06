@@ -88,7 +88,8 @@ function openPopupWindow(popupOptions: IPopupWindow): Window | null {
         ? document.documentElement.clientHeight
         : screen.height
 
-    const systemZoom = width / window.screen.availWidth
+    // const systemZoom = width / window.screen.availWidth
+    const systemZoom = window.devicePixelRatio || 1
     const left = (width - popupOptions.width) / 2 / systemZoom + dualScreenLeft
     const top = (height - popupOptions.height) / 2 / systemZoom + dualScreenTop
     const newWindow = window.open(
