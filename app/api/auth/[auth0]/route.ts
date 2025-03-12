@@ -14,6 +14,7 @@ const handler = appClient.handleAuth({
     const searchParams = request.nextUrl.searchParams
     // const organization = searchParams.get("organization")
     const invitation = searchParams.get("invitation")
+    const connection = searchParams.get("connection")
 
     // @ts-ignore
     const { orgName, domain } = generateOrgAndFQDN(request)
@@ -24,6 +25,7 @@ const handler = appClient.handleAuth({
         redirect_uri: `${domain}/api/auth/callback`,
         // if the user is accepting an invite, we need to forward it to Auth0
         invitation,
+        connection,
       },
       returnTo: `${domain}/dashboard/account/tokens`,
     }
