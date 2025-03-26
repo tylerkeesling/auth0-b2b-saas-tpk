@@ -36,6 +36,20 @@ const handler = appClient.handleAuth({
     },
     returnTo: "/",
   }),
+  "sso-callback": appClient.handleLogin((request) => {
+    // @ts-ignore
+    const searchParams = request.nextUrl.searchParams
+    const organization = searchParams.get("organization")
+    const connection = searchParams.get("connection")
+
+    return {
+      authorizationParams: {
+        organization,
+        connection,
+      },
+      returnTo: "/dashboard/account/tokens",
+    }
+  }),
   callback: appClient.handleCallback((request) => {
     // @ts-ignore
     const { domain: redirectUri } = generateOrgAndFQDN(request)
