@@ -27,6 +27,7 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
     >
       {items.map((item) => (
         <Link
+          prefetch={true}
           key={item.href}
           href={item.href}
           className={cn(
