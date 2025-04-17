@@ -10,9 +10,13 @@ const sidebarNavItems = [
     href: "/dashboard/account/security",
   },
   {
+    title: "Passkeys",
+    href: "/dashboard/account/passkeys",
+  },
+  {
     title: "Tokens",
     href: "/dashboard/account/tokens",
-  }
+  },
 ]
 
 interface AccountLayoutProps {

@@ -69,33 +69,3 @@ export async function deleteAccount() {
     }
   }
 }
-
-export async function revokePasskey(formData: FormData) {
-  const session = await appClient.getSession()
-
-  if (!session) {
-    return redirect("/api/auth/login")
-  }
-
-  const authenticationMethodId = formData.get("authentication_method_id")
-
-  if (!authenticationMethodId || typeof authenticationMethodId !== "string") {
-    return {
-      error: "Display name is required.",
-    }
-  }
-
-  try {
-    await managementClient.users.deleteAuthenticationMethod({
-      id: session.user.sub,
-      authentication_method_id: authenticationMethodId,
-    })
-
-    return {}
-  } catch (error) {
-    console.error("failed to delete account", error)
-    return {
-      error: "Failed to delete your account.",
-    }
-  }
-}
