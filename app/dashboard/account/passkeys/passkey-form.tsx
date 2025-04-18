@@ -5,9 +5,10 @@ import moment from "moment"
 import { toast } from "sonner"
 
 import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { SubmitButton } from "@/components/submit-button"
+import { Separator } from "@/components/ui/separator"
 
 import { revokePasskey } from "./actions"
 
@@ -23,13 +24,10 @@ interface PasskeyProps {
 }
 
 export function PasskeyForm({ passkeys }: PasskeyProps) {
-  return (
-    <Card>
-      {/* <CardHeader>
-        <CardTitle>Passkeys</CardTitle>
-      </CardHeader> */}
-      <CardContent className="pt-6">
-        {!passkeys || passkeys.length === 0 ? (
+  if (!passkeys || passkeys.length === 0) {
+    return (
+      <Card>
+        <CardContent className="pt-6">
           <div className="flex flex-col gap-6">
             <div className="flex items-center justify-between space-x-2">
               <Label className="flex flex-col space-y-2">
@@ -39,44 +37,56 @@ export function PasskeyForm({ passkeys }: PasskeyProps) {
               </Label>
             </div>
           </div>
-        ) : (
-          <div className="flex flex-col gap-4">
-            {passkeys.map((passkey) => (
-              <form
-                key={passkey.id}
-                className="flex w-full items-center justify-between gap-4"
-                action={async (formData: FormData) => {
-                  const { error } = await revokePasskey(formData)
-                  if (error) {
-                    toast.error(error)
-                  } else {
-                    toast.success("Your passkey has been deleted.")
-                  }
-                }}
-              >
+        </CardContent>
+      </Card>
+    )
+  }
+
+  return (
+    <Card>
+      <CardContent className="p-4 md:p-6">
+        {passkeys.map((passkey, idx) => (
+          <div key={passkey.id}>
+            {idx > 0 && <Separator className="my-4" />}
+            <form
+              className="grid grid-cols-[2fr_1fr_1fr_auto] items-center gap-4 py-2"
+              action={async (formData: FormData) => {
+                const { error } = await revokePasskey(formData)
+                if (error) {
+                  toast.error(error)
+                } else {
+                  toast.success("Your passkey has been deleted.")
+                }
+              }}
+            >
+              <div>
                 <Label className="flex flex-col space-y-1">
-                  <span className="leading-6">{passkey.id}</span>
-                  <p className="max-w-fit font-normal leading-snug text-muted-foreground">
-                    <span>{passkey.user_agent}</span>
-                  </p>
-                </Label>
-                <Label>
-                  <span>
-                    {moment(passkey.last_auth_at).format(
-                      "MMMM DD, YYYY \\a\\t HH:mm:ss"
-                    )}
+                  <span className="break-all font-mono leading-6">
+                    {passkey.id}
+                  </span>
+                  <span className="font-normal leading-snug text-muted-foreground">
+                    {passkey.user_agent}
                   </span>
                 </Label>
-                <Label>
-                  <Badge
-                    variant="default"
-                    className="ml-3 h-fit bg-slate-400 font-light text-black"
-                  >
-                    {passkey.credential_device_type === "single_device"
-                      ? "DEVICE BOUND"
-                      : "Other"}
-                  </Badge>
-                </Label>
+              </div>
+              <div>
+                <span className="text-sm">
+                  {moment(passkey.last_auth_at).format(
+                    "MMMM DD, YYYY \\a\\t HH:mm:ss"
+                  )}
+                </span>
+              </div>
+              <div>
+                <Badge
+                  variant="default"
+                  className="h-fit bg-slate-400 font-light text-black hover:bg-slate-400 pointer-events-none"
+                >
+                  {passkey.credential_device_type === "single_device"
+                    ? "DEVICE BOUND"
+                    : "MULTI DEVICE"}
+                </Badge>
+              </div>
+              <div className="flex justify-end">
                 <input
                   type="hidden"
                   id="authentication_method_id"
@@ -85,15 +95,15 @@ export function PasskeyForm({ passkeys }: PasskeyProps) {
                 />
                 <SubmitButton
                   variant="destructive"
-                  className="ml-4"
                   aria-label="Delete passkey"
+                  size="icon"
                 >
                   <Trash2 className="h-4 w-4" />
                 </SubmitButton>
-              </form>
-            ))}
+              </div>
+            </form>
           </div>
-        )}
+        ))}
       </CardContent>
     </Card>
   )

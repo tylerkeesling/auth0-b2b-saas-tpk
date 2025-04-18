@@ -24,6 +24,28 @@ function decodeToken(token: string) {
   }
 }
 
+function TokenCard({ title, description, token }: { title: string; description: React.ReactNode; token: string | undefined }) {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="grid w-full items-center gap-1.5">
+          <Code
+            theme="material-darker"
+            className="!m-0 !rounded-xl text-sm"
+            lang="json"
+          >
+            {token}
+          </Code>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
 export default appClient.withPageAuthRequired(
   async function Profile() {
     const session = await appClient.getSession()
@@ -37,52 +59,20 @@ export default appClient.withPageAuthRequired(
           title="Tokens"
           description="View your ID Token and Access Token."
         />
-        <Card>
-          <CardHeader>
-            <CardTitle>ID Token</CardTitle>
-            <CardDescription>
-              An ID token is an artifact that proves{" "}
-              <span className="font-bold">
-                the user has been authenticated.
-              </span>
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid w-full items-center gap-1.5">
-              <Code
-                theme="material-darker"
-                className="!m-0 !rounded-xl text-sm"
-                lang="json"
-              >
-                {idToken}
-              </Code>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Access Token</CardTitle>
-            <CardDescription>
-              An access token is an artifact that{" "}
-              <span className="font-bold">
-                allows the client application to access the user&apos;s
-                resources.
-              </span>
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid w-full items-center gap-1.5">
-              <Code
-                theme="material-darker"
-                className="!m-0 !rounded-xl text-sm"
-                lang="json"
-              >
-                {accessToken}
-              </Code>
-            </div>
-          </CardContent>
-        </Card>
-
+        <TokenCard
+          title="ID Token"
+          description={
+            <>An ID token is an artifact that proves <span className="font-bold">the user has been authenticated.</span></>
+          }
+          token={idToken}
+        />
+        <TokenCard
+          title="Access Token"
+          description={
+            <>An access token is an artifact that <span className="font-bold">allows the client application to access the user&apos;s resources.</span></>
+          }
+          token={accessToken}
+        />
         <RefreshTokenForm />
       </div>
     )

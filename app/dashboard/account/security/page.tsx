@@ -3,28 +3,21 @@ import { SUPPORTED_PROVIDERS } from "@/lib/mfa-policy"
 import { PageHeader } from "@/components/page-header"
 
 import { MFAEnrollmentForm } from "./mfa-enrollment-form"
-import UserSessions from "./user-sessions"
 
 export default appClient.withPageAuthRequired(
   async function Profile() {
     const session = await appClient.getSession()
     const userId = session?.user.sub
 
-    const [
-      factorsResponse,
-      enrollmentsResponse,
-      sessionsResponse,
-      userMetadataResponse,
-    ] = await Promise.all([
-      managementClient.guardian.getFactors(),
-      managementClient.users.getAuthenticationMethods({ id: userId }),
-      managementClient.users.getSessions({ user_id: userId }),
-      managementClient.users.get({ id: userId, fields: "user_metadata" }),
-    ])
+    const [factorsResponse, enrollmentsResponse, userMetadataResponse] =
+      await Promise.all([
+        managementClient.guardian.getFactors(),
+        managementClient.users.getAuthenticationMethods({ id: userId }),
+        managementClient.users.get({ id: userId, fields: "user_metadata" }),
+      ])
 
     const factors = factorsResponse.data
     const enrollments = enrollmentsResponse.data
-    const sessions = sessionsResponse.data.sessions
     const enforceMfa = userMetadataResponse.data.user_metadata?.enforce_mfa
 
     const filteredFactors = factors
@@ -53,12 +46,11 @@ export default appClient.withPageAuthRequired(
     return (
       <div className="space-y-2">
         <PageHeader
-          title="Security"
-          description="Manage your account's security settings."
+          title="Multifactor Authentication"
+          description="Manage your account's security factors."
         />
 
         <MFAEnrollmentForm enforceMfa={enforceMfa} factors={filteredFactors} />
-        <UserSessions user={session!.user} sessions={sessions} />
       </div>
     )
   },

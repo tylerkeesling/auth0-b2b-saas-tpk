@@ -136,7 +136,7 @@ export default function UserSessions({ user, sessions }: UserSessionsProps) {
                             className="h-fit min-w-24"
                             variant="outline"
                           >
-                            Remove
+                            Sign Out
                           </SubmitButton>
                         </form>
                       </div>

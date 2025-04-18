@@ -2,11 +2,15 @@ import { SidebarNav } from "@/components/sidebar-nav"
 
 const sidebarNavItems = [
   {
+    title: "Tokens",
+    href: "/dashboard/account/tokens",
+  },
+  {
     title: "Profile",
     href: "/dashboard/account/profile",
   },
   {
-    title: "Security",
+    title: "Multifactor Authentication",
     href: "/dashboard/account/security",
   },
   {
@@ -14,8 +18,8 @@ const sidebarNavItems = [
     href: "/dashboard/account/passkeys",
   },
   {
-    title: "Tokens",
-    href: "/dashboard/account/tokens",
+    title: "Sessions",
+    href: "/dashboard/account/sessions",
   },
 ]
 
