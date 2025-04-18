@@ -7,8 +7,8 @@ import { toast } from "sonner"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
-import { SubmitButton } from "@/components/submit-button"
 import { Separator } from "@/components/ui/separator"
+import { SubmitButton } from "@/components/submit-button"
 
 import { revokePasskey } from "./actions"
 
@@ -45,6 +45,17 @@ export function PasskeyForm({ passkeys }: PasskeyProps) {
   return (
     <Card>
       <CardContent className="p-4 md:p-6">
+        {/* Header Row */}
+        <div className="mb-2 grid grid-cols-[2fr_1fr_1fr_auto] items-center gap-4 border-b border-muted pb-2">
+          <span className="font-semibold tracking-wider text-muted-foreground">
+            Name
+          </span>
+          <span className="font-semibold tracking-wider text-muted-foreground">
+            Last Used
+          </span>
+          <span />
+          <span className="w-9"></span>
+        </div>
         {passkeys.map((passkey, idx) => (
           <div key={passkey.id}>
             {idx > 0 && <Separator className="my-4" />}
@@ -72,18 +83,18 @@ export function PasskeyForm({ passkeys }: PasskeyProps) {
               <div>
                 <span className="text-sm">
                   {moment(passkey.last_auth_at).format(
-                    "MMMM DD, YYYY \\a\\t HH:mm:ss"
+                    "MMMM DD, YYYY, hh:mm:ss A"
                   )}
                 </span>
               </div>
               <div>
                 <Badge
                   variant="default"
-                  className="h-fit bg-slate-400 font-light text-black hover:bg-slate-400 pointer-events-none"
+                  className="pointer-events-none h-fit bg-green-300 font-light text-black"
                 >
                   {passkey.credential_device_type === "single_device"
                     ? "DEVICE BOUND"
-                    : "MULTI DEVICE"}
+                    : "SYNCED"}
                 </Badge>
               </div>
               <div className="flex justify-end">

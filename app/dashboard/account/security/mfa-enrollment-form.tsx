@@ -152,7 +152,10 @@ export function MFAEnrollmentForm({ factors, enforceMfa }: MFAEnrollmentProps) {
                     <span className="leading-6">
                       {meta.title}
                       {factor.enrollmentId && (
-                        <Badge variant="default" className="ml-3">
+                        <Badge
+                          variant="default"
+                          className="ml-3 bg-green-300 font-light text-black"
+                        >
                           Enrolled
                         </Badge>
                       )}
