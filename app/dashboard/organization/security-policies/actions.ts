@@ -10,6 +10,7 @@ import { withServerActionAuth } from "@/lib/with-server-action-auth"
 export const updateMfaPolicy = withServerActionAuth(
   async function updateMfaPolicy(formData: FormData, session: Session) {
     const enforce = !!formData.get("enforce")
+    const skipForPasskey = !!formData.get("skip_for_passkey")
     const skipForDomains = formData.get("skip_for_domains")
     const providers = SUPPORTED_PROVIDERS.map((p) => formData.get(p)).filter(
       Boolean
@@ -30,6 +31,7 @@ export const updateMfaPolicy = withServerActionAuth(
             mfaPolicy: JSON.stringify({
               ...DEFAULT_MFA_POLICY,
               enforce,
+              skipForPasskey,
               skipForDomains: parsedSkipForDomains,
               providers,
             }),

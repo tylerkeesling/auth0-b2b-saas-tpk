@@ -51,6 +51,7 @@ export function MfaPolicyForm({ organization }: Props) {
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-6">
+          {/* Enforce MFA Switch */}
           <div className="flex flex-row items-center justify-between rounded-lg border bg-field p-3 shadow-sm">
             <div className="space-y-1.5">
               <Label>Enforce Multi-Factor Authentication</Label>
@@ -62,6 +63,23 @@ export function MfaPolicyForm({ organization }: Props) {
             <Switch
               name="enforce"
               defaultChecked={organization.mfaPolicy.enforce}
+            />
+          </div>
+
+          <Separator />
+
+          {/* Skip for Passkey Switch */}
+          <div className="flex flex-row items-center justify-between rounded-lg border bg-field p-3 shadow-sm">
+            <div className="space-y-1.5">
+              <Label>Skip MFA if Passkey is used</Label>
+              <div className="text-sm text-muted-foreground">
+                Users authenticating with a passkey will not be prompted for
+                MFA.
+              </div>
+            </div>
+            <Switch
+              name="skip_for_passkey"
+              defaultChecked={organization.mfaPolicy.skipForPasskey}
             />
           </div>
 
@@ -141,17 +159,15 @@ export function MfaPolicyForm({ organization }: Props) {
               </div>
 
               <div className="flex justify-between space-x-1 rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent/5 hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">
-                <Label
-                  className="flex items-center space-x-4"
-                  htmlFor="sms"
-                >
+                <Label className="flex items-center space-x-4" htmlFor="sms">
                   <div className="rounded-md border bg-secondary p-3">
                     <KeySquareIcon className="size-5" />
                   </div>
                   <div className="space-y-1.5">
                     <div>SMS</div>
                     <div className="text-muted-foreground">
-                    Users will receive a phone message with a verification code.
+                      Users will receive a phone message with a verification
+                      code.
                     </div>
                   </div>
                 </Label>
