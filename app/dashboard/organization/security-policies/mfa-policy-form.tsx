@@ -158,7 +158,7 @@ export function MfaPolicyForm({ organization }: Props) {
 
                 <Checkbox
                   defaultChecked={organization.mfaPolicy.providers.includes(
-                    "phome"
+                    "phone"
                   )}
                   value="phone"
                   id="sms"
