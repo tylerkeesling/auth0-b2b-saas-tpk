@@ -1,5 +1,6 @@
 "use client"
 
+import React, { useState } from "react"
 import { KeyIcon, KeySquareIcon } from "lucide-react"
 import { toast } from "sonner"
 
@@ -31,6 +32,8 @@ interface Props {
 }
 
 export function MfaPolicyForm({ organization }: Props) {
+  const [enforce, setEnforce] = useState(!!organization.mfaPolicy.enforce)
+
   return (
     <Card>
       <form
@@ -51,36 +54,59 @@ export function MfaPolicyForm({ organization }: Props) {
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-6">
-          {/* Enforce MFA Switch */}
-          <div className="flex flex-row items-center justify-between rounded-lg border bg-field p-3 shadow-sm">
-            <div className="space-y-1.5">
-              <Label>Enforce Multi-Factor Authentication</Label>
-              <div className="text-sm text-muted-foreground">
-                Users will be required to verify their identity with a second
-                factor.
+          {/* MFA Policy Switches Grouped */}
+          <div className="flex flex-col gap-4 rounded-lg border bg-field p-3 shadow-sm">
+            {/* Enforce MFA Switch */}
+            <div className="flex flex-row items-center justify-between">
+              <div className="space-y-1.5">
+                <Label>Enforce Multi-Factor Authentication</Label>
+                <div className="text-sm text-muted-foreground">
+                  Users will be required to verify their identity with a second
+                  factor.
+                </div>
               </div>
+              <Switch
+                name="enforce"
+                checked={enforce}
+                onCheckedChange={setEnforce}
+              />
             </div>
-            <Switch
-              name="enforce"
-              defaultChecked={organization.mfaPolicy.enforce}
-            />
-          </div>
 
-          <Separator />
+            <Separator />
 
-          {/* Skip for Passkey Switch */}
-          <div className="flex flex-row items-center justify-between rounded-lg border bg-field p-3 shadow-sm">
-            <div className="space-y-1.5">
-              <Label>Skip MFA if Passkey is used</Label>
-              <div className="text-sm text-muted-foreground">
-                Users authenticating with a passkey will not be prompted for
-                MFA.
+            {/* Skip for Passkey Switch */}
+            <div className="flex flex-row items-center justify-between">
+              <div className="space-y-1.5">
+                <Label>Do not require MFA when passkeys are used</Label>
+                <div className="text-sm text-muted-foreground">
+                  Passkeys provide strong authentication on their own and
+                  don&apos;t require additional factors.
+                </div>
               </div>
+              <Switch
+                name="skip_for_passkey"
+                defaultChecked={organization.mfaPolicy.skipForPasskey}
+                disabled={!enforce}
+              />
             </div>
-            <Switch
-              name="skip_for_passkey"
-              defaultChecked={organization.mfaPolicy.skipForPasskey}
-            />
+
+            <Separator />
+
+            {/* Skip for SSO Switch */}
+            <div className="flex flex-row items-center justify-between">
+              <div className="space-y-1.5">
+                <Label>Do not require MFA for federated logins</Label>
+                <div className="text-sm text-muted-foreground">
+                  Trust the identity provider&apos;s authentication methods
+                  without requiring additional factors.
+                </div>
+              </div>
+              <Switch
+                name="skip_for_federation"
+                defaultChecked={organization.mfaPolicy.skipForFederation}
+                disabled={!enforce}
+              />
+            </div>
           </div>
 
           <Separator />
