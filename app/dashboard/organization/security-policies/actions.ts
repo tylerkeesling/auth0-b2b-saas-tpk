@@ -4,7 +4,11 @@ import { revalidatePath } from "next/cache"
 import { Session } from "@auth0/nextjs-auth0"
 
 import { managementClient } from "@/lib/auth0"
-import { DEFAULT_MFA_POLICY, SUPPORTED_PROVIDERS } from "@/lib/mfa-policy"
+import {
+  DEFAULT_MFA_POLICY,
+  DEFAULT_SESSION_POLICY,
+  SUPPORTED_PROVIDERS,
+} from "@/lib/mfa-policy"
 import { withServerActionAuth } from "@/lib/with-server-action-auth"
 
 export const updateMfaPolicy = withServerActionAuth(
@@ -22,12 +26,17 @@ export const updateMfaPolicy = withServerActionAuth(
         : []
 
     try {
+      const { data: org } = await managementClient.organizations.get({
+        id: session!.user.org_id,
+      })
+
       await managementClient.organizations.update(
         {
           id: session.user.org_id,
         },
         {
           metadata: {
+            ...org.metadata,
             mfaPolicy: JSON.stringify({
               ...DEFAULT_MFA_POLICY,
               enforce,
@@ -44,6 +53,65 @@ export const updateMfaPolicy = withServerActionAuth(
       console.error("failed to update the organization's MFA policy", error)
       return {
         error: "Failed to update the organization's MFA policy.",
+      }
+    }
+
+    return {}
+  },
+  {
+    role: "admin",
+  }
+)
+
+export const updateSessionPolicy = withServerActionAuth(
+  async function updateSessionPolicy(formData: FormData, session: Session) {
+    const sessionLifetimeMs = formData.get("session_lifetime_ms")
+    const idleTimeoutMs = formData.get("idle_timeout_ms")
+
+    try {
+      const { data: org } = await managementClient.organizations.get({
+        id: session!.user.org_id,
+      })
+
+      await managementClient.organizations.update(
+        {
+          id: session.user.org_id,
+        },
+        {
+          metadata: {
+            ...org.metadata,
+            sessionPolicy: JSON.stringify({
+              ...DEFAULT_SESSION_POLICY,
+              sessionLifetimeMs: sessionLifetimeMs
+                ? Number(sessionLifetimeMs)
+                : DEFAULT_SESSION_POLICY.sessionLifetimeMs,
+              idleTimeoutMs: idleTimeoutMs
+                ? Number(idleTimeoutMs)
+                : DEFAULT_SESSION_POLICY.idleTimeoutMs,
+            }),
+          },
+        }
+      )
+
+      const metadata = {
+        sessionPolicy: JSON.stringify({
+          ...DEFAULT_SESSION_POLICY,
+          sessionLifetimeMs: sessionLifetimeMs
+            ? Number(sessionLifetimeMs)
+            : DEFAULT_SESSION_POLICY.sessionLifetimeMs,
+          idleTimeoutMs: idleTimeoutMs
+            ? Number(idleTimeoutMs)
+            : DEFAULT_SESSION_POLICY.idleTimeoutMs,
+        }),
+      }
+
+      console.log("metadata", metadata)
+
+      revalidatePath("/dashboard/organization/security-policies")
+    } catch (error) {
+      console.error("failed to update the organization's session policy", error)
+      return {
+        error: "Failed to update the organization's session policy.",
       }
     }
 
