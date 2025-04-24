@@ -51,6 +51,12 @@ export default async function DashboardLayout({
           >
             Home
           </Link>
+          <Link
+            href="/dashboard/event-stream"
+            className="w-auto whitespace-nowrap text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Event Stream
+          </Link>
         </div>
 
         <div className="flex flex-row gap-x-4">
