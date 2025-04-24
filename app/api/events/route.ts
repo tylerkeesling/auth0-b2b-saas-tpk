@@ -15,6 +15,20 @@ const eventSchema = z.object({
 });
 
 export async function POST(req: NextRequest) {
+  const authHeader = req.headers.get('authorization');
+  const expectedToken = process.env.EVENT_STREAM_API_TOKEN;
+
+  if (
+    !authHeader ||
+    !authHeader.startsWith('Bearer ') ||
+    authHeader.slice(7) !== expectedToken
+  ) {
+    return NextResponse.json(
+      { error: 'Unauthorized' },
+      { status: 401 }
+    );
+  }
+
   try {
     const body = await req.json();
     const event = eventSchema.parse(body);
