@@ -94,7 +94,7 @@ export default function EventStreamList({
 
                     {expandedEvents.has(event.id) && (
                       <div className="border-t border-border bg-muted p-4">
-                        <pre className="overflow-x-auto rounded-md border bg-card p-4 text-card-foreground">
+                        <pre className="overflow-x-auto rounded-md border bg-card p-4 text-card-foreground text-xs">
                           <code>{JSON.stringify(event.data, null, 2)}</code>
                         </pre>
                       </div>
