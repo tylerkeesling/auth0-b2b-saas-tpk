@@ -55,7 +55,7 @@ export function MfaPolicyForm({ organization }: Props) {
         </CardHeader>
         <CardContent className="grid gap-6">
           {/* MFA Policy Switches Grouped */}
-          <div className="flex flex-col gap-4 rounded-lg border bg-field p-3 shadow-sm">
+          <div className="flex flex-col gap-4 rounded-lg border bg-field p-3 shadow-xs">
             {/* Enforce MFA Switch */}
             <div className="flex flex-row items-center justify-between">
               <div className="space-y-1.5">
