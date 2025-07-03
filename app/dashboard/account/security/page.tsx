@@ -30,6 +30,10 @@ export default appClient.withPageAuthRequired(
         const enrollmentInfo = enrollments.find((enrollment: any) => {
           let factorName: string = factor.name
 
+          if (factor.name === "push-notification") {
+            factorName = "guardian"
+          }
+
           if (factor.name === "sms" || factor.name === "voice") {
             factorName = "phone"
           }
