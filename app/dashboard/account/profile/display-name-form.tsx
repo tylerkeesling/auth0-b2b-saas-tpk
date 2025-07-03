@@ -1,6 +1,9 @@
 "use client"
 
 import { toast } from "sonner"
+import { useState } from "react"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 
 import {
   Card,
@@ -14,50 +17,149 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { SubmitButton } from "@/components/submit-button"
 
-import { updateDisplayName } from "./actions"
+import { updateProfile } from "./actions"
 
-interface Props {
-  displayName: string
+interface Profile {
+  name: string
+  email: string
+  email_verified?: boolean
+  phone_number?: string
 }
 
-export function DisplayNameForm({ displayName }: Props) {
+interface Props {
+  profile: Profile
+}
+
+export function DisplayProfileForm({ profile }: Props) {
+  const [editMode, setEditMode] = useState(false)
+
+  if (!editMode) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Profile</CardTitle>
+          <CardDescription>View your profile information.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex gap-4">
+            <div className="flex-1">
+              <Label>Name</Label>
+              <Input value={profile.name} disabled />
+            </div>
+            <div className="flex-1">
+              <Label>Phone Number</Label>
+              <Input value={profile.phone_number ? formatPhoneNumber(profile.phone_number) : ''} disabled placeholder="(not set)" />
+            </div>
+          </div>
+          <div className="flex gap-4">
+            <div className="flex-1">
+              <Label>Email</Label>
+              <Input value={profile.email} disabled />
+            </div>
+            <div className="flex-1 flex items-end">
+              <div className="w-full">
+                <Label>Email Verified</Label>
+                <div>
+                  {profile.email_verified ? (
+                    <Badge variant="default">Verified</Badge>
+                  ) : (
+                    <Badge variant="destructive">Not Verified</Badge>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+        <CardFooter className="flex justify-end">
+          <Button type="button" onClick={() => setEditMode(true)}>
+            Edit
+          </Button>
+        </CardFooter>
+      </Card>
+    )
+  }
+
   return (
     <Card>
       <form
         action={async (formData: FormData) => {
-          const { error } = await updateDisplayName(formData)
+          const { error } = await updateProfile(formData)
 
           if (error) {
             toast.error(error)
           } else {
-            toast.success("Your display name has been updated.")
+            toast.success("Your profile has been updated.")
+            setEditMode(false)
           }
         }}
       >
         <CardHeader>
-          <CardTitle>Display Name</CardTitle>
-          <CardDescription>
-            Enter a name you would liked to have displayed to other users.
-          </CardDescription>
+          <CardTitle>Edit Profile</CardTitle>
+          <CardDescription>Update your profile information.</CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="display_name" className="sr-only">
-              Display Name
-            </Label>
-            <Input
-              id="display_name"
-              name="display_name"
-              type="text"
-              placeholder="John Smith"
-              defaultValue={displayName}
-            />
+        <CardContent className="space-y-4">
+          <div className="flex gap-4">
+            <div className="flex-1">
+              <Label htmlFor="name">Name</Label>
+              <Input
+                id="name"
+                name="name"
+                type="text"
+                defaultValue={profile.name}
+                required
+              />
+            </div>
+            <div className="flex-1">
+              <Label>Phone Number</Label>
+              <Input
+                value={profile.phone_number ? formatPhoneNumber(profile.phone_number) : ''}
+                disabled
+                placeholder="(not set)"
+              />
+            </div>
+          </div>
+          <div className="flex gap-4">
+            <div className="flex-1">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                value={profile.email}
+                disabled
+              />
+            </div>
+            <div className="flex-1 flex items-end">
+              <div className="w-full">
+                <Label>Email Verified</Label>
+                <div>
+                  {profile.email_verified ? (
+                    <Badge variant="default">Verified</Badge>
+                  ) : (
+                    <Badge variant="destructive">Not Verified</Badge>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         </CardContent>
-        <CardFooter className="flex justify-end">
+        <CardFooter className="flex justify-end gap-2">
           <SubmitButton>Save</SubmitButton>
+          <Button type="button" variant="destructive" onClick={() => setEditMode(false)}>
+            Cancel
+          </Button>
         </CardFooter>
       </form>
     </Card>
   )
+}
+
+function formatPhoneNumber(phone: string) {
+  // Simple US formatting, can be improved for international
+  const cleaned = ("" + phone).replace(/\D/g, "")
+  const match = cleaned.match(/^1?(\d{3})(\d{3})(\d{4})$/)
+  if (match) {
+    return `(${match[1]}) ${match[2]}-${match[3]}`
+  }
+  return phone
 }

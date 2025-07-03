@@ -2,7 +2,7 @@ import { appClient, managementClient } from "@/lib/auth0"
 import { PageHeader } from "@/components/page-header"
 
 import { DeleteAccountForm } from "./delete-account-form"
-import { DisplayNameForm } from "./display-name-form"
+import { DisplayProfileForm } from "./display-name-form"
 
 export default appClient.withPageAuthRequired(
   async function Profile() {
@@ -16,7 +16,7 @@ export default appClient.withPageAuthRequired(
           description="Manage your personal information."
         />
 
-        <DisplayNameForm displayName={session?.user.name} />
+        <DisplayProfileForm profile={session!.user as any} />
         <DeleteAccountForm />
       </div>
     )

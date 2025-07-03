@@ -5,18 +5,18 @@ import { redirect } from "next/navigation"
 
 import { appClient, managementClient } from "@/lib/auth0"
 
-export async function updateDisplayName(formData: FormData) {
+export async function updateProfile(formData: FormData) {
   const session = await appClient.getSession()
 
   if (!session) {
     return redirect("/api/auth/login")
   }
 
-  const displayName = formData.get("display_name")
+  const name = formData.get("name")
 
-  if (!displayName || typeof displayName !== "string") {
+  if (!name || typeof name !== "string") {
     return {
-      error: "Display name is required.",
+      error: "Name is required.",
     }
   }
 
@@ -26,23 +26,23 @@ export async function updateDisplayName(formData: FormData) {
         id: session.user.sub,
       },
       {
-        name: displayName,
+        name,
       }
     )
 
-    // update the cached local session to reflect the new display name across the app
+    // update the cached local session to reflect the new profile across the app
     await appClient.updateSession({
       ...session,
       user: {
         ...session.user,
-        name: displayName,
+        name,
       },
     })
     revalidatePath("/", "layout")
   } catch (error) {
-    console.error("failed to update display name", error)
+    console.error("failed to update profile", error)
     return {
-      error: "Failed to update your display name.",
+      error: "Failed to update your profile.",
     }
   }
 
