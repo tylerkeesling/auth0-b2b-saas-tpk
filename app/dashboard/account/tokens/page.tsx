@@ -35,7 +35,7 @@ function TokenCard({ title, description, token }: { title: string; description: 
         <div className="grid w-full items-center gap-1.5">
           <Code
             theme="material-darker"
-            className="!m-0 !rounded-xl text-sm"
+            className="m-0! rounded-xl! text-sm"
             lang="json"
           >
             {token}

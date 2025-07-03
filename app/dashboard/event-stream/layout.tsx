@@ -16,7 +16,7 @@ export default async function AccountLayout({ children }: AccountLayoutProps) {
 
   return (
     <div className="space-y-1">
-      <div className="min-h-full rounded-2xl border border-border bg-field p-2 shadow-sm">
+      <div className="min-h-full rounded-2xl border border-border bg-field p-2 shadow-xs">
         <div className="mx-auto">{children}</div>
       </div>
     </div>
