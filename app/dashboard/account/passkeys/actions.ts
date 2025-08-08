@@ -3,7 +3,8 @@
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
-import { appClient, managementClient } from "@/lib/auth0"
+import { appClient } from "@/lib/auth0"
+import { managementClient } from "@/lib/auth0-manage"
 
 export async function revokePasskey(formData: FormData) {
   const session = await appClient.getSession()

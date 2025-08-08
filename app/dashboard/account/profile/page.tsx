@@ -1,4 +1,4 @@
-import { appClient, managementClient } from "@/lib/auth0"
+import { appClient } from "@/lib/auth0"
 import { PageHeader } from "@/components/page-header"
 
 import { DeleteAccountForm } from "./delete-account-form"

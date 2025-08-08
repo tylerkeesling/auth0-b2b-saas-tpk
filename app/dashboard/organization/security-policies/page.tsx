@@ -1,4 +1,5 @@
-import { appClient, managementClient } from "@/lib/auth0"
+import { appClient } from "@/lib/auth0"
+import { managementClient } from "@/lib/auth0-manage"
 import { DEFAULT_MFA_POLICY, DEFAULT_SESSION_POLICY } from "@/lib/mfa-policy"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { PageHeader } from "@/components/page-header"

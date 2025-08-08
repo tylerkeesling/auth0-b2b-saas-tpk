@@ -3,7 +3,8 @@
 import { redirect } from "next/navigation"
 import slugify from "@sindresorhus/slugify"
 
-import { managementClient, onboardingClient } from "@/lib/auth0"
+import { onboardingClient } from "@/lib/auth0"
+import { managementClient } from "@/lib/auth0-manage"
 
 export async function createOrganization(formData: FormData) {
   const session = await onboardingClient.getSession()

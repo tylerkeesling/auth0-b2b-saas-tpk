@@ -1,4 +1,5 @@
-import { appClient, managementClient } from "@/lib/auth0"
+import { appClient } from "@/lib/auth0"
+import { managementClient } from "@/lib/auth0-manage"
 import { Role } from "@/lib/roles"
 import { PageHeader } from "@/components/page-header"
 

@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 import { Session } from "@auth0/nextjs-auth0"
 
-import { managementClient } from "@/lib/auth0"
+import { managementClient } from "@/lib/auth0-manage"
 import {
   DEFAULT_MFA_POLICY,
   DEFAULT_SESSION_POLICY,

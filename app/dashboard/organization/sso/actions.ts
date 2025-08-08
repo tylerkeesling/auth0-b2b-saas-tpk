@@ -3,7 +3,8 @@
 import { revalidatePath } from "next/cache"
 import { Session } from "@auth0/nextjs-auth0"
 
-import { appClient, managementClient } from "@/lib/auth0"
+import { appClient } from "@/lib/auth0"
+import { managementClient } from "@/lib/auth0-manage"
 import { verifyDnsRecords } from "@/lib/domain-verification"
 import { withServerActionAuth } from "@/lib/with-server-action-auth"
 

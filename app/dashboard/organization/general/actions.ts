@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 import { Session } from "@auth0/nextjs-auth0"
 
-import { managementClient } from "@/lib/auth0"
+import { managementClient } from "@/lib/auth0-manage"
 import { withServerActionAuth } from "@/lib/with-server-action-auth"
 
 export const updateDisplayName = withServerActionAuth(

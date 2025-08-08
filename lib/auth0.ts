@@ -1,13 +1,6 @@
 import { initAuth0 } from "@auth0/nextjs-auth0"
-import { ManagementClient } from "auth0"
 
 import Store from "./session-store"
-
-export const managementClient = new ManagementClient({
-  domain: process.env.AUTH0_MANAGEMENT_API_DOMAIN,
-  clientId: process.env.AUTH0_MANAGEMENT_CLIENT_ID,
-  clientSecret: process.env.AUTH0_MANAGEMENT_CLIENT_SECRET,
-})
 
 export const onboardingClient = initAuth0({
   clientID: process.env.AUTH0_MANAGEMENT_CLIENT_ID,
