@@ -9,7 +9,7 @@ export async function refreshTokens() {
   const session = await appClient.getSession()
 
   if (!session) {
-    return redirect("/api/auth/login")
+    return redirect("/auth/login")
   }
 
   try {

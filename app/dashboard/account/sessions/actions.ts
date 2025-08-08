@@ -10,7 +10,7 @@ export async function deleteSession(formData: FormData) {
   const session = await appClient.getSession()
 
   if (!session) {
-    return redirect("/api/auth/login")
+    return redirect("/auth/login")
   }
 
   let sessionId = formData.get("session_id")

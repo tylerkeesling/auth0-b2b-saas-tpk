@@ -59,11 +59,13 @@ export default async function Profile() {
   const session = await appClient.getSession()
 
   if (!session) {
-    return redirect("/api/auth/login?returnTo=/dashboard/account/tokens")
+    return redirect("/auth/login?returnTo=/dashboard/account/tokens")
   }
 
-  const idToken = session?.idToken && decodeToken(session.idToken)
-  const accessToken = session?.accessToken && decodeToken(session.accessToken)
+  const idToken =
+    session?.tokenSet.idToken && decodeToken(session.tokenSet.idToken)
+  const accessToken =
+    session?.tokenSet.accessToken && decodeToken(session.tokenSet.accessToken)
 
   return (
     <div className="space-y-2">

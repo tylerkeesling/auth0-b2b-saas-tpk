@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import { UserProvider } from "@auth0/nextjs-auth0/client"
+import { Auth0Provider } from "@auth0/nextjs-auth0"
 import { SettingsIcon } from "lucide-react"
 
 import { appClient } from "@/lib/auth0"
@@ -20,7 +20,7 @@ export default async function DashboardLayout({
 
   // if the user is not authenticated, redirect to login
   if (!session?.user) {
-    redirect("/api/auth/login")
+    redirect("/auth/login")
   }
 
   const { data: orgs } = await managementClient.users.getUserOrganizations({
@@ -33,7 +33,7 @@ export default async function DashboardLayout({
   }
 
   return (
-    <UserProvider>
+    <Auth0Provider user={session.user}>
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-2 py-4 sm:px-8">
         <div className="flex items-center space-x-6">
           <OrganizationSwitcher
@@ -43,18 +43,18 @@ export default async function DashboardLayout({
               displayName: o.display_name!,
               logoUrl: o.branding?.logo_url,
             }))}
-            currentOrgId={session.user.org_id}
+            currentOrgId={session.user?.org_id ?? ""}
           />
 
           <Link
             href="/dashboard"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            className="text-muted-foreground hover:text-foreground text-sm font-medium transition-colors"
           >
             Home
           </Link>
           <Link
             href="/dashboard/event-stream"
-            className="w-auto whitespace-nowrap text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            className="text-muted-foreground hover:text-foreground w-auto text-sm font-medium whitespace-nowrap transition-colors"
           >
             Event Stream
           </Link>
@@ -104,6 +104,6 @@ export default async function DashboardLayout({
           </div>
         </div>
       </footer>
-    </UserProvider>
+    </Auth0Provider>
   )
 }

@@ -10,7 +10,7 @@ export async function revokePasskey(formData: FormData) {
   const session = await appClient.getSession()
 
   if (!session) {
-    return redirect("/api/auth/login")
+    return redirect("/auth/login")
   }
 
   const authenticationMethodId = formData.get("authentication_method_id")

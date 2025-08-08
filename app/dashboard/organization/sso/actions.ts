@@ -1,7 +1,7 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { Session } from "@auth0/nextjs-auth0"
+import { type SessionData } from "@auth0/nextjs-auth0/types"
 
 import { appClient } from "@/lib/auth0"
 import { managementClient } from "@/lib/auth0-manage"
@@ -9,7 +9,7 @@ import { verifyDnsRecords } from "@/lib/domain-verification"
 import { withServerActionAuth } from "@/lib/with-server-action-auth"
 
 export const verifyDomain = withServerActionAuth(
-  async function verifyDomain(domain: string, session: Session) {
+  async function verifyDomain(domain: string, session: SessionData) {
     if (!domain || typeof domain !== "string") {
       return {
         error: "Domain is required.",
@@ -17,6 +17,7 @@ export const verifyDomain = withServerActionAuth(
     }
 
     try {
+      //@ts-ignore
       const verified = await verifyDnsRecords(domain, session.user.org_id)
 
       return { verified }
@@ -34,7 +35,7 @@ export const verifyDomain = withServerActionAuth(
 
 export const createSSOEnrollemnt = withServerActionAuth(
   async function createSSOEntrollment(
-    session: Session
+    session: SessionData
   ): Promise<
     | { ticketUrl: string; error?: undefined }
     | { error: string; ticketUrl?: undefined }
@@ -49,6 +50,7 @@ export const createSSOEnrollemnt = withServerActionAuth(
           },
           {
             enabled_organizations: [
+              //@ts-ignore
               { organization_id: orgId, assign_membership_on_login: true },
             ],
             connection_config: {

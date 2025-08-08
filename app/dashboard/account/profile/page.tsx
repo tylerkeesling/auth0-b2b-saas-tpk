@@ -10,7 +10,7 @@ export default async function Profile() {
   const session = await appClient.getSession()
 
   if (!session) {
-    return redirect("/api/auth/login?returnTo=/dashboard/account/profile")
+    return redirect("/auth/login?returnTo=/dashboard/account/profile")
   }
 
   const userId = session?.user.sub

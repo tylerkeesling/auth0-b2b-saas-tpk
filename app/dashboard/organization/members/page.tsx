@@ -1,5 +1,5 @@
-import { appClient } from "@/lib/auth0"
 import { managementClient } from "@/lib/auth0-manage"
+import { getOrganizationSession } from "@/lib/with-organization-auth"
 import { Role } from "@/lib/roles"
 import { PageHeader } from "@/components/page-header"
 
@@ -8,15 +8,16 @@ import { InvitationsList } from "./invitations-list"
 import { MembersList } from "./members-list"
 
 export default async function Members() {
-  const session = await appClient.getSession()
+  const session = await getOrganizationSession()
+
   const { data: members } = await managementClient.organizations.getMembers({
-    id: session!.user.org_id,
+    id: session.user.org_id,
     fields: ["user_id", "name", "email", "picture", "roles"].join(","),
     include_fields: true,
   })
   const { data: invitations } =
     await managementClient.organizations.getInvitations({
-      id: session!.user.org_id,
+      id: session.user.org_id,
     })
 
   return (

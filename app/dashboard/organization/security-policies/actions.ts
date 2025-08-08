@@ -1,7 +1,7 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { Session } from "@auth0/nextjs-auth0"
+import { type SessionData } from "@auth0/nextjs-auth0/types"
 
 import { managementClient } from "@/lib/auth0-manage"
 import {
@@ -12,7 +12,7 @@ import {
 import { withServerActionAuth } from "@/lib/with-server-action-auth"
 
 export const updateMfaPolicy = withServerActionAuth(
-  async function updateMfaPolicy(formData: FormData, session: Session) {
+  async function updateMfaPolicy(formData: FormData, session: SessionData) {
     const enforce = !!formData.get("enforce")
     const skipForPasskey = !!formData.get("skip_for_passkey")
     const skipForDomains = formData.get("skip_for_domains")
@@ -27,11 +27,13 @@ export const updateMfaPolicy = withServerActionAuth(
 
     try {
       const { data: org } = await managementClient.organizations.get({
+        //@ts-ignore
         id: session!.user.org_id,
       })
 
       await managementClient.organizations.update(
         {
+          //@ts-ignore
           id: session.user.org_id,
         },
         {
@@ -64,17 +66,19 @@ export const updateMfaPolicy = withServerActionAuth(
 )
 
 export const updateSessionPolicy = withServerActionAuth(
-  async function updateSessionPolicy(formData: FormData, session: Session) {
+  async function updateSessionPolicy(formData: FormData, session: SessionData) {
     const sessionLifetimeMs = formData.get("session_lifetime_ms")
     const idleTimeoutMs = formData.get("idle_timeout_ms")
 
     try {
       const { data: org } = await managementClient.organizations.get({
+        //@ts-ignore
         id: session!.user.org_id,
       })
 
       await managementClient.organizations.update(
         {
+          //@ts-ignore
           id: session.user.org_id,
         },
         {

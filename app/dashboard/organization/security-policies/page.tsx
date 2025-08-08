@@ -11,6 +11,7 @@ import { SessionSettings } from "./session-settings"
 export default async function SecurityPolicies() {
   const session = await appClient.getSession()
   const { data: org } = await managementClient.organizations.get({
+    //@ts-ignore
     id: session!.user.org_id,
   })
 

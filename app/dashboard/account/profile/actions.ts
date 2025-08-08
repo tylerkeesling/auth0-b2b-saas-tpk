@@ -10,7 +10,7 @@ export async function updateProfile(formData: FormData) {
   const session = await appClient.getSession()
 
   if (!session) {
-    return redirect("/api/auth/login")
+    return redirect("/auth/login")
   }
 
   const name = formData.get("name")
@@ -54,7 +54,7 @@ export async function deleteAccount() {
   const session = await appClient.getSession()
 
   if (!session) {
-    return redirect("/api/auth/login")
+    return redirect("/auth/login")
   }
 
   try {

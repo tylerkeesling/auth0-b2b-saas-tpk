@@ -44,7 +44,7 @@ npm run auth0:bootstrap
 Uses Auth0 Organizations for multi-tenancy with a shared user database. Each organization represents a tenant with its own settings, members, and configurations.
 
 ### Authentication Flow
-- **App Client**: Main application authentication (`/api/auth/[auth0]`)
+- **App Client**: Main application authentication (`/auth/[auth0]`)
 - **Onboarding Client**: Separate client for organization creation flow (`/onboarding/[auth0]`)
 - **Management Client**: Server-side Auth0 Management API access
 
@@ -53,7 +53,7 @@ Uses Auth0 Organizations for multi-tenancy with a shared user database. Each org
 - `app/` - Next.js App Router pages and API routes
   - `dashboard/` - Protected dashboard pages with nested layouts
   - `onboarding/` - Organization creation and verification flows
-  - `api/auth/` - Auth0 authentication routes
+  - `auth/` - Auth0 authentication routes
   - `api/events/` - Webhook event handling
 - `lib/` - Shared utilities, Auth0 clients, and server actions
 - `components/` - Reusable UI components (shadcn/ui based)

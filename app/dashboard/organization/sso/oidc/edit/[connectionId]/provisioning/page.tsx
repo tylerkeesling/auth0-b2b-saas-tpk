@@ -13,12 +13,13 @@ export default async function Provisioning({
   const session = await appClient.getSession()
 
   if (!session) {
-    return redirect("/api/auth/login")
+    return redirect("/auth/login")
   }
 
   // ensure that the connection ID being fetched is owned by the organization
   const { data: enabledConnection } =
     await managementClient.organizations.getEnabledConnection({
+      //@ts-ignore
       id: session.user.org_id,
       connectionId: params.connectionId,
     })
