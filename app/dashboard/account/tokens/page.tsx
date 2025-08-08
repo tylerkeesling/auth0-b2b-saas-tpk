@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation"
 import { Code } from "bright"
 import { jwtDecode } from "jwt-decode"
 
@@ -24,7 +25,15 @@ function decodeToken(token: string) {
   }
 }
 
-function TokenCard({ title, description, token }: { title: string; description: React.ReactNode; token: string | undefined }) {
+function TokenCard({
+  title,
+  description,
+  token,
+}: {
+  title: string
+  description: React.ReactNode
+  token: string | undefined
+}) {
   return (
     <Card>
       <CardHeader>
@@ -46,36 +55,45 @@ function TokenCard({ title, description, token }: { title: string; description: 
   )
 }
 
-export default appClient.withPageAuthRequired(
-  async function Profile() {
-    const session = await appClient.getSession()
+export default async function Profile() {
+  const session = await appClient.getSession()
 
-    const idToken = session?.idToken && decodeToken(session.idToken)
-    const accessToken = session?.accessToken && decodeToken(session.accessToken)
+  if (!session) {
+    return redirect("/api/auth/login?returnTo=/dashboard/account/tokens")
+  }
 
-    return (
-      <div className="space-y-2">
-        <PageHeader
-          title="Tokens"
-          description="View your ID Token and Access Token."
-        />
-        <TokenCard
-          title="ID Token"
-          description={
-            <>An ID token is an artifact that proves <span className="font-bold">the user has been authenticated.</span></>
-          }
-          token={idToken}
-        />
-        <TokenCard
-          title="Access Token"
-          description={
-            <>An access token is an artifact that <span className="font-bold">allows the client application to access the user&apos;s resources.</span></>
-          }
-          token={accessToken}
-        />
-        <RefreshTokenForm />
-      </div>
-    )
-  },
-  { returnTo: "/dashboard/account/tokens" }
-)
+  const idToken = session?.idToken && decodeToken(session.idToken)
+  const accessToken = session?.accessToken && decodeToken(session.accessToken)
+
+  return (
+    <div className="space-y-2">
+      <PageHeader
+        title="Tokens"
+        description="View your ID Token and Access Token."
+      />
+      <TokenCard
+        title="ID Token"
+        description={
+          <>
+            An ID token is an artifact that proves{" "}
+            <span className="font-bold">the user has been authenticated.</span>
+          </>
+        }
+        token={idToken}
+      />
+      <TokenCard
+        title="Access Token"
+        description={
+          <>
+            An access token is an artifact that{" "}
+            <span className="font-bold">
+              allows the client application to access the user&apos;s resources.
+            </span>
+          </>
+        }
+        token={accessToken}
+      />
+      <RefreshTokenForm />
+    </div>
+  )
+}
