@@ -1,9 +1,23 @@
 import { type NextRequest } from "next/server"
 
-import { appClient } from "./lib/auth0"
+import { appClient, onboardingClient } from "./lib/auth0"
+
+// Helper function to detect onboarding routes
+const isOnboardingRoute = (pathname: string): boolean => {
+  return pathname.startsWith('/onboarding')
+}
 
 export async function middleware(request: NextRequest) {
-  return await appClient.middleware(request)
+  const { pathname } = request.nextUrl
+  
+  // Route to appropriate Auth0 client based on path
+  if (isOnboardingRoute(pathname)) {
+    // Use onboarding client for organization creation flow
+    return await onboardingClient.middleware(request)
+  } else {
+    // Use app client for main application routes
+    return await appClient.middleware(request)
+  }
 }
 
 export const config = {
