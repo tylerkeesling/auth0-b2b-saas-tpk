@@ -11,7 +11,7 @@ export default async function AccountLayout({ children }: AccountLayoutProps) {
 
   // if the user is not authenticated, redirect to login
   if (!session?.user) {
-    redirect("/api/auth/login")
+    redirect("/auth/login")
   }
 
   return (

@@ -1,4 +1,5 @@
-import { appClient, managementClient } from "@/lib/auth0"
+import { appClient } from "@/lib/auth0"
+import { managementClient } from "@/lib/auth0-manage"
 import { DEFAULT_MFA_POLICY, DEFAULT_SESSION_POLICY } from "@/lib/mfa-policy"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { PageHeader } from "@/components/page-header"
@@ -10,6 +11,7 @@ import { SessionSettings } from "./session-settings"
 export default async function SecurityPolicies() {
   const session = await appClient.getSession()
   const { data: org } = await managementClient.organizations.get({
+    //@ts-ignore
     id: session!.user.org_id,
   })
 

@@ -1,7 +1,7 @@
 import { randomBytes } from "node:crypto"
 import { resolveTxt } from "node:dns/promises"
 
-import { managementClient } from "./auth0"
+import { managementClient } from "./auth0-manage"
 import { DOMAIN_VERIFICATION_RECORD_IDENTIFIER } from "./constants"
 
 /**

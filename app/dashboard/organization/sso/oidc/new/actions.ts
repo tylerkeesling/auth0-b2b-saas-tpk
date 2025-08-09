@@ -2,15 +2,15 @@
 
 import crypto from "crypto"
 import { revalidatePath } from "next/cache"
-import { Session } from "@auth0/nextjs-auth0"
+import { type SessionData } from "@auth0/nextjs-auth0/types"
 import slugify from "@sindresorhus/slugify"
 
-import { managementClient } from "@/lib/auth0"
+import { managementClient } from "@/lib/auth0-manage"
 import { verifyDnsRecords } from "@/lib/domain-verification"
 import { withServerActionAuth } from "@/lib/with-server-action-auth"
 
 export const createConnection = withServerActionAuth(
-  async function createConnection(formData: FormData, session: Session) {
+  async function createConnection(formData: FormData, session: SessionData) {
     const displayName = formData.get("display_name")
     const discoveryUrl = formData.get("discovery_url")
     const clientId = formData.get("client_id")
@@ -66,6 +66,7 @@ export const createConnection = withServerActionAuth(
 
     // ensure that the domains are verified
     for (const domain of parsedDomains) {
+      // @ts-ignore
       const verified = await verifyDnsRecords(domain, session.user.org_id)
 
       if (!verified) {
@@ -94,6 +95,7 @@ export const createConnection = withServerActionAuth(
       })
 
       await managementClient.organizations.addEnabledConnection(
+        // @ts-ignore
         { id: session.user.org_id },
         {
           connection_id: connection.id,
@@ -118,7 +120,7 @@ export const createConnection = withServerActionAuth(
 )
 
 export const deleteConnection = withServerActionAuth(
-  async function deleteConnection(connectionId: string, session: Session) {
+  async function deleteConnection(connectionId: string, session: SessionData) {
     if (!connectionId || typeof connectionId !== "string") {
       return {
         error: "Connection ID is required.",
@@ -129,6 +131,7 @@ export const deleteConnection = withServerActionAuth(
       // ensure that the connection being removed belongs to the organization
       const { data: connection } =
         await managementClient.organizations.getEnabledConnection({
+          //@ts-ignore
           id: session.user.org_id,
           connectionId,
         })

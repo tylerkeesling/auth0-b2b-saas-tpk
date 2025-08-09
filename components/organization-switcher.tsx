@@ -86,7 +86,7 @@ export function OrganizationSwitcher({
                 <CommandItem
                   key={org.id}
                   onSelect={() => {
-                    window.location.href = `/api/auth/login?organization=${org.slug}&returnTo=/dashboard`
+                    window.location.href = `/auth/login?organization=${org.slug}&returnTo=/dashboard`
 
                     setOpen(false)
                   }}

@@ -3,13 +3,14 @@
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
-import { appClient, managementClient } from "@/lib/auth0"
+import { appClient } from "@/lib/auth0"
+import { managementClient } from "@/lib/auth0-manage"
 
 export async function deleteSession(formData: FormData) {
   const session = await appClient.getSession()
 
   if (!session) {
-    return redirect("/api/auth/login")
+    return redirect("/auth/login")
   }
 
   let sessionId = formData.get("session_id")

@@ -1,4 +1,5 @@
-import { appClient, managementClient } from "@/lib/auth0"
+import { appClient } from "@/lib/auth0"
+import { managementClient } from "@/lib/auth0-manage"
 import { PageHeader } from "@/components/page-header"
 
 import { ConnectionsList } from "./connections-list"
@@ -7,6 +8,7 @@ export default async function SSO() {
   const session = await appClient.getSession()
   const { data: connections } =
     await managementClient.organizations.getEnabledConnections({
+      //@ts-ignore
       id: session!.user.org_id,
     })
 

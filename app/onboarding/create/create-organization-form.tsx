@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useUser } from "@auth0/nextjs-auth0/client"
+import { useUser } from "@auth0/nextjs-auth0"
 import slugify from "@sindresorhus/slugify"
 import { toast } from "sonner"
 
@@ -54,7 +54,7 @@ export function CreateOrganizationForm() {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             Slug: <Code>{slugify(name || "Acme Corp")}</Code>
           </p>
         </div>
