@@ -21,8 +21,8 @@ export default function SsoNavLink({
       href={`/dashboard/organization/sso/oidc/edit/${connectionId}/${slug}`}
       className={cn(
         isActive
-          ? "font-semibold text-primary underline underline-offset-12"
-          : "font-normal text-muted-foreground transition-colors hover:text-foreground"
+          ? "text-primary font-semibold underline underline-offset-12"
+          : "text-muted-foreground hover:text-foreground font-normal transition-colors"
       )}
     >
       {children}

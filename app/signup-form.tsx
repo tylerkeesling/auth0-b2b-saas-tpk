@@ -12,8 +12,9 @@ export function SignUpForm() {
         <h1 className="text-2xl font-semibold tracking-tight">
           Try SaaStart for Free
         </h1>
-        <p className="text-sm text-muted-foreground">
-          Enter your email address to sign up and create a new organization for you and your collaborators.
+        <p className="text-muted-foreground text-sm">
+          Enter your email address to sign up and create a new organization for
+          you and your collaborators.
         </p>
       </div>
       <form
@@ -44,18 +45,18 @@ export function SignUpForm() {
           <SubmitButton>Get Started</SubmitButton>
         </div>
       </form>
-      <p className="px-8 text-center text-sm text-muted-foreground">
+      <p className="text-muted-foreground px-8 text-center text-sm">
         By continuing, you agree to our{" "}
         <Link
           href="/terms"
-          className="underline underline-offset-4 hover:text-primary"
+          className="hover:text-primary underline underline-offset-4"
         >
           Terms of Service
         </Link>{" "}
         and{" "}
         <Link
           href="/privacy"
-          className="underline underline-offset-4 hover:text-primary"
+          className="hover:text-primary underline underline-offset-4"
         >
           Privacy Policy
         </Link>

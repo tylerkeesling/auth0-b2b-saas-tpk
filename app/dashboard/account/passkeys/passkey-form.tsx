@@ -31,7 +31,7 @@ export function PasskeyForm({ passkeys }: PasskeyProps) {
           <div className="flex flex-col gap-6">
             <div className="flex items-center justify-between space-x-2">
               <Label className="flex flex-col space-y-2">
-                <p className="max-w-fit font-normal leading-snug text-muted-foreground">
+                <p className="text-muted-foreground max-w-fit leading-snug font-normal">
                   You currently do not have any registered passkeys.
                 </p>
               </Label>
@@ -46,11 +46,11 @@ export function PasskeyForm({ passkeys }: PasskeyProps) {
     <Card>
       <CardContent className="p-4 md:p-6">
         {/* Header Row */}
-        <div className="mb-2 grid grid-cols-[2fr_1fr_1fr_auto] items-center gap-4 border-b border-muted pb-2">
-          <span className="font-semibold tracking-wider text-muted-foreground">
+        <div className="border-muted mb-2 grid grid-cols-[2fr_1fr_1fr_auto] items-center gap-4 border-b pb-2">
+          <span className="text-muted-foreground font-semibold tracking-wider">
             Name
           </span>
-          <span className="font-semibold tracking-wider text-muted-foreground">
+          <span className="text-muted-foreground font-semibold tracking-wider">
             Last Used
           </span>
           <span />
@@ -72,10 +72,10 @@ export function PasskeyForm({ passkeys }: PasskeyProps) {
             >
               <div>
                 <Label className="flex flex-col space-y-1">
-                  <span className="break-all font-mono leading-6">
+                  <span className="font-mono leading-6 break-all">
                     {passkey.id}
                   </span>
-                  <span className="font-normal leading-snug text-muted-foreground">
+                  <span className="text-muted-foreground leading-snug font-normal">
                     {passkey.user_agent}
                   </span>
                 </Label>

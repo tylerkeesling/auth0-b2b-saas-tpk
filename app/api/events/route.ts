@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { sql } from '@vercel/postgres';
-import { z } from 'zod';
+import { NextRequest, NextResponse } from "next/server"
+import { sql } from "@vercel/postgres"
+import { z } from "zod"
 
 // Define Zod schema matching EventTable
 const eventSchema = z.object({
@@ -12,26 +12,23 @@ const eventSchema = z.object({
   a0stream: z.string(),
   a0tenant: z.string(),
   data: z.record(z.any()),
-});
+})
 
 export async function POST(req: NextRequest) {
-  const authHeader = req.headers.get('authorization');
-  const expectedToken = process.env.EVENT_STREAM_API_TOKEN;
+  const authHeader = req.headers.get("authorization")
+  const expectedToken = process.env.EVENT_STREAM_API_TOKEN
 
   if (
     !authHeader ||
-    !authHeader.startsWith('Bearer ') ||
+    !authHeader.startsWith("Bearer ") ||
     authHeader.slice(7) !== expectedToken
   ) {
-    return NextResponse.json(
-      { error: 'Unauthorized' },
-      { status: 401 }
-    );
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
   try {
-    const body = await req.json();
-    const event = eventSchema.parse(body);
+    const body = await req.json()
+    const event = eventSchema.parse(body)
 
     await sql`
       INSERT INTO webhook_events (
@@ -46,13 +43,13 @@ export async function POST(req: NextRequest) {
         ${event.a0tenant},
         ${JSON.stringify(event.data)}
       )
-    `;
+    `
 
-    return NextResponse.json({ success: true }, { status: 200 });
+    return NextResponse.json({ success: true }, { status: 200 })
   } catch (error) {
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Unknown error' },
+      { error: error instanceof Error ? error.message : "Unknown error" },
       { status: 400 }
-    );
+    )
   }
 }

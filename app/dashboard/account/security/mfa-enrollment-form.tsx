@@ -146,7 +146,7 @@ export function MFAEnrollmentForm({ factors, enforceMfa }: MFAEnrollmentProps) {
                 {idx > 0 && <Separator />}
                 <div
                   key={factor.name}
-                  className="flex flex-col items-center justify-between space-y-6 md:flex-row md:space-x-2 md:space-y-0"
+                  className="flex flex-col items-center justify-between space-y-6 md:flex-row md:space-y-0 md:space-x-2"
                 >
                   <Label className="flex flex-col space-y-1">
                     <span className="leading-6">
@@ -160,7 +160,7 @@ export function MFAEnrollmentForm({ factors, enforceMfa }: MFAEnrollmentProps) {
                         </Badge>
                       )}
                     </span>
-                    <p className="max-w-fit font-normal leading-snug text-muted-foreground">
+                    <p className="text-muted-foreground max-w-fit leading-snug font-normal">
                       {meta.description}
                     </p>
                   </Label>

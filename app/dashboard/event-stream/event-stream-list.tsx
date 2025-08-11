@@ -63,28 +63,28 @@ export default function EventStreamList({
         <Card>
           <CardContent className="p-0">
             {events.length === 0 ? (
-              <div className="p-8 text-center text-muted-foreground">
+              <div className="text-muted-foreground p-8 text-center">
                 <p>No webhook events found matching your criteria.</p>
               </div>
             ) : (
-              <div className="divide-y divide-border">
+              <div className="divide-border divide-y">
                 {events.map((event) => (
                   <div key={event.id} className="transition-all duration-200">
                     <div
-                      className={`flex cursor-pointer items-center justify-between p-4 hover:bg-muted ${
+                      className={`hover:bg-muted flex cursor-pointer items-center justify-between p-4 ${
                         expandedEvents.has(event.id) ? "bg-muted" : ""
                       }`}
                       onClick={() => toggleEventExpansion(event.id)}
                     >
                       <div className="flex items-center space-x-4">
                         {expandedEvents.has(event.id) ? (
-                          <ChevronDown className="h-5 w-5 text-muted-foreground" />
+                          <ChevronDown className="text-muted-foreground h-5 w-5" />
                         ) : (
-                          <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                          <ChevronRight className="text-muted-foreground h-5 w-5" />
                         )}
                         <div>
                           <div className="font-medium">{event.type}</div>
-                          <div className="text-sm text-muted-foreground">
+                          <div className="text-muted-foreground text-sm">
                             {formatDate(event.time?.toString() || "")}
                           </div>
                         </div>
@@ -93,8 +93,8 @@ export default function EventStreamList({
                     </div>
 
                     {expandedEvents.has(event.id) && (
-                      <div className="border-t border-border bg-muted p-4">
-                        <pre className="overflow-x-auto rounded-md border bg-card p-4 text-card-foreground text-xs">
+                      <div className="border-border bg-muted border-t p-4">
+                        <pre className="bg-card text-card-foreground overflow-x-auto rounded-md border p-4 text-xs">
                           <code>{JSON.stringify(event.data, null, 2)}</code>
                         </pre>
                       </div>

@@ -21,7 +21,7 @@ export default async function UpdateSamlConnection({
   // ensure that the connection ID being fetched is owned by the organization
   const { data: enabledConnection } =
     await managementClient.organizations.getEnabledConnection({
-    //@ts-ignore
+      //@ts-ignore
       id: session.user.org_id,
       connectionId,
     })

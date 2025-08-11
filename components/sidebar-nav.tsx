@@ -20,7 +20,7 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
   return (
     <nav
       className={cn(
-        "ml-0 mt-8 flex min-h-full space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1",
+        "mt-8 ml-0 flex min-h-full space-x-2 lg:flex-col lg:space-y-1 lg:space-x-0",
         className
       )}
       {...props}
@@ -34,7 +34,7 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
             buttonVariants({ variant: "ghost" }),
             pathname.includes(item.href) && "text-accent-foreground",
             "hover:bg-muted",
-            "justify-between pl-2.5 pr-1"
+            "justify-between pr-1 pl-2.5"
           )}
         >
           {item.title}

@@ -1,6 +1,6 @@
 import { managementClient } from "@/lib/auth0-manage"
-import { getOrganizationSession } from "@/lib/with-organization-auth"
 import { Role } from "@/lib/roles"
+import { getOrganizationSession } from "@/lib/with-organization-auth"
 import { PageHeader } from "@/components/page-header"
 
 import { CreateInvitationForm } from "./create-invitation-form"

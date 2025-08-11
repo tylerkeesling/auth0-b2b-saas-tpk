@@ -90,7 +90,7 @@ export function SessionSettings({
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <InfoCircle className="h-4 w-4 text-muted-foreground" />
+                    <InfoCircle className="text-muted-foreground h-4 w-4" />
                   </TooltipTrigger>
                   <TooltipContent>
                     <p className="max-w-xs">
@@ -132,7 +132,7 @@ export function SessionSettings({
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <InfoCircle className="h-4 w-4 text-muted-foreground" />
+                        <InfoCircle className="text-muted-foreground h-4 w-4" />
                       </TooltipTrigger>
                       <TooltipContent>
                         <p className="max-w-xs">
@@ -143,7 +143,7 @@ export function SessionSettings({
                     </Tooltip>
                   </TooltipProvider>
                 </div>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   {idleTimeout} minutes
                 </p>
               </div>
@@ -172,7 +172,7 @@ export function SessionSettings({
                   Coming Soon
                 </Badge>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Limit the number of devices a user can be logged in
                 simultaneously.
               </p>
@@ -211,7 +211,7 @@ export function SessionSettings({
                   Coming Soon
                 </Badge>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Users will be required to log in again after closing their
                 browser.
               </p>
