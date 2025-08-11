@@ -273,16 +273,18 @@ export function ScimForm({ scimConfig, scimTokens }: Props) {
                       value={SCIM_ENDPOINT_URL}
                       readOnly
                     />
-                    <Button size="icon" variant="outline" type="button">
-                      <CopyIcon
-                        className="size-4"
-                        onClick={async () => {
-                          await navigator.clipboard.writeText(SCIM_ENDPOINT_URL)
-                          toast.success(
-                            "SCIM endpoint URL copied to clipboard."
-                          )
-                        }}
-                      />
+                    <Button 
+                      size="icon" 
+                      variant="outline" 
+                      type="button"
+                      onClick={async () => {
+                        await navigator.clipboard.writeText(SCIM_ENDPOINT_URL)
+                        toast.success(
+                          "SCIM endpoint URL copied to clipboard."
+                        )
+                      }}
+                    >
+                      <CopyIcon className="size-4" />
                     </Button>
                   </div>
                 </AlertDescription>

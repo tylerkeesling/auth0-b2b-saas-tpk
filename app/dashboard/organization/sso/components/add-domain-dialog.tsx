@@ -110,14 +110,16 @@ export function AddDomainDialog({
                   <Label>Name</Label>
                   <div className="flex space-x-2">
                     <Input className="font-mono" value="@ (root)" readOnly />
-                    <Button size="icon" variant="outline" type="button">
-                      <CopyIcon
-                        className="size-4"
-                        onClick={async () => {
-                          await navigator.clipboard.writeText("@")
-                          toast.success("TXT record name copied to clipboard.")
-                        }}
-                      />
+                    <Button 
+                      size="icon" 
+                      variant="outline" 
+                      type="button"
+                      onClick={async () => {
+                        await navigator.clipboard.writeText("@")
+                        toast.success("TXT record name copied to clipboard.")
+                      }}
+                    >
+                      <CopyIcon className="size-4" />
                     </Button>
                   </div>
                 </div>
@@ -130,16 +132,18 @@ export function AddDomainDialog({
                       value={`${DOMAIN_VERIFICATION_RECORD_IDENTIFIER}=${domainVerificationToken}`}
                       readOnly
                     />
-                    <Button size="icon" variant="outline" type="button">
-                      <CopyIcon
-                        className="size-4"
-                        onClick={async () => {
-                          await navigator.clipboard.writeText(
-                            `${DOMAIN_VERIFICATION_RECORD_IDENTIFIER}=${domainVerificationToken}`
-                          )
-                          toast.success("TXT record value copied to clipboard.")
-                        }}
-                      />
+                    <Button 
+                      size="icon" 
+                      variant="outline" 
+                      type="button"
+                      onClick={async () => {
+                        await navigator.clipboard.writeText(
+                          `${DOMAIN_VERIFICATION_RECORD_IDENTIFIER}=${domainVerificationToken}`
+                        )
+                        toast.success("TXT record value copied to clipboard.")
+                      }}
+                    >
+                      <CopyIcon className="size-4" />
                     </Button>
                   </div>
                 </div>

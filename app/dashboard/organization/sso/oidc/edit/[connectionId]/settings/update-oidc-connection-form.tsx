@@ -239,14 +239,16 @@ export function UpdateOidcConnectionForm({
               callback URL:
               <div className="mt-2 flex w-full space-x-2">
                 <Input className="font-mono" value={CALLBACK_URL} readOnly />
-                <Button size="icon" variant="outline" type="button">
-                  <CopyIcon
-                    className="size-4"
-                    onClick={async () => {
-                      await navigator.clipboard.writeText(CALLBACK_URL)
-                      toast.success("Callback URL copied to clipboard.")
-                    }}
-                  />
+                <Button 
+                  size="icon" 
+                  variant="outline" 
+                  type="button"
+                  onClick={async () => {
+                    await navigator.clipboard.writeText(CALLBACK_URL)
+                    toast.success("Callback URL copied to clipboard.")
+                  }}
+                >
+                  <CopyIcon className="size-4" />
                 </Button>
               </div>
             </AlertDescription>
