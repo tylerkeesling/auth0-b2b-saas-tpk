@@ -21,6 +21,7 @@ export default async function CreateLayout({
       headers: {
         Authorization: `Bearer ${(await onboardingClient.getAccessToken()).token}`,
       },
+      cache: 'no-store'
     }
   ).then((res) => res.json())
 

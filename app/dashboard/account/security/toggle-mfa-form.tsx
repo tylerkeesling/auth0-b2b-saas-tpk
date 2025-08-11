@@ -8,6 +8,10 @@ import { SubmitButton } from "@/components/submit-button"
 
 import { toggleMfa } from "./actions"
 
+async function handleToggleMfa(formData: FormData) {
+  await toggleMfa(formData)
+}
+
 type ToggleMfaProps = {
   enforceMfa?: boolean
 }
@@ -16,7 +20,7 @@ export function ToggleMfaForm({ enforceMfa = false }: ToggleMfaProps) {
   const [isEnabled, setIsEnabled] = useState(enforceMfa)
 
   return (
-    <form className="" action={toggleMfa}>
+    <form className="" action={handleToggleMfa}>
       <Label className="mr-2" htmlFor="toggle-mfa">
         Enable MFA?
       </Label>

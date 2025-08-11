@@ -9,8 +9,9 @@ import { UpdateOidcConnectionForm } from "./update-oidc-connection-form"
 export default async function UpdateOidcConnection({
   params,
 }: {
-  params: { connectionId: string }
+  params: Promise<{ connectionId: string }>
 }) {
+  const { connectionId } = await params
   const session = await appClient.getSession()
 
   if (!session) {
@@ -22,7 +23,7 @@ export default async function UpdateOidcConnection({
     await managementClient.organizations.getEnabledConnection({
       //@ts-ignore
       id: session.user.org_id,
-      connectionId: params.connectionId,
+      connectionId,
     })
 
   if (!enabledConnection) {
@@ -32,7 +33,7 @@ export default async function UpdateOidcConnection({
   const [domainVerificationToken, { data: connection }] = await Promise.all([
     //@ts-ignore
     getOrCreateDomainVerificationToken(session!.user.org_id),
-    managementClient.connections.get({ id: params.connectionId }),
+    managementClient.connections.get({ id: connectionId }),
   ])
 
   return (
