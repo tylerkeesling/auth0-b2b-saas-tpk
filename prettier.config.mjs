@@ -24,7 +24,7 @@ const config = {
     "",
     "^[./]",
   ],
-  importOrderTypeScriptVersion: "5.3.0",
+  importOrderTypeScriptVersion: "5.4.5",
   importOrderParserPlugins: ["typescript", "jsx", "decorators-legacy"],
   plugins: [
     "@ianvs/prettier-plugin-sort-imports",

@@ -107,7 +107,7 @@ export function IpRestrictions() {
             <div className="space-y-2">
               <Label>Current allowed IPs</Label>
               {allowedIps.length === 0 ? (
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   No allowed IPs configured
                 </p>
               ) : (
@@ -121,7 +121,7 @@ export function IpRestrictions() {
                       {ip}
                       <button
                         onClick={() => removeIp(ip, "allow")}
-                        className="ml-1 rounded-full p-0.5 hover:bg-muted"
+                        className="hover:bg-muted ml-1 rounded-full p-0.5"
                       >
                         <X className="h-3 w-3" />
                         <span className="sr-only">Remove</span>
@@ -152,7 +152,7 @@ export function IpRestrictions() {
             <div className="space-y-2">
               <Label>Current blocked IPs</Label>
               {blockedIps.length === 0 ? (
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   No blocked IPs configured
                 </p>
               ) : (
@@ -166,7 +166,7 @@ export function IpRestrictions() {
                       {ip}
                       <button
                         onClick={() => removeIp(ip, "block")}
-                        className="ml-1 rounded-full p-0.5 hover:bg-muted"
+                        className="hover:bg-muted ml-1 rounded-full p-0.5"
                       >
                         <X className="h-3 w-3" />
                         <span className="sr-only">Remove</span>
@@ -179,7 +179,7 @@ export function IpRestrictions() {
           </TabsContent>
         </Tabs>
 
-        <div className="rounded-md bg-muted p-4">
+        <div className="bg-muted rounded-md p-4">
           <div className="text-sm">
             <h4 className="font-medium">Notes:</h4>
             <ul className="mt-2 list-disc space-y-1 pl-5">

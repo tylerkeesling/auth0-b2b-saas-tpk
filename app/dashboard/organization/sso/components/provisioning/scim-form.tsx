@@ -145,7 +145,7 @@ export function ScimForm({ scimConfig, scimTokens }: Props) {
                   placeholder="externalId"
                   defaultValue={scimConfig?.userIdAttribute || "externalId"}
                 />
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   The attribute that uniquely identifies a user
                 </p>
               </div>
@@ -228,7 +228,7 @@ export function ScimForm({ scimConfig, scimTokens }: Props) {
                   </div>
                 ) : (
                   <div className="space-y-2">
-                    <div className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
+                    <div className="text-muted-foreground rounded-md border border-dashed p-4 text-sm">
                       <p>No tokens have been generated yet.</p>
                     </div>
                     <div>

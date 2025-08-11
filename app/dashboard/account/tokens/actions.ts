@@ -19,7 +19,8 @@ export async function refreshTokens() {
   } catch (error) {
     console.error("failed to refresh tokens", error)
     return {
-      error: "Failed to refresh your tokens. Is the offline_access scope present?",
+      error:
+        "Failed to refresh your tokens. Is the offline_access scope present?",
     }
   }
 

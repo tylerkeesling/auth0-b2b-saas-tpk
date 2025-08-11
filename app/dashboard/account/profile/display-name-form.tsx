@@ -1,10 +1,10 @@
 "use client"
 
-import { toast } from "sonner"
 import { useState } from "react"
+import { toast } from "sonner"
+
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-
 import {
   Card,
   CardContent,
@@ -48,7 +48,15 @@ export function DisplayProfileForm({ profile }: Props) {
             </div>
             <div className="flex-1">
               <Label>Phone Number</Label>
-              <Input value={profile.phone_number ? formatPhoneNumber(profile.phone_number) : ''} disabled placeholder="(not set)" />
+              <Input
+                value={
+                  profile.phone_number
+                    ? formatPhoneNumber(profile.phone_number)
+                    : ""
+                }
+                disabled
+                placeholder="(not set)"
+              />
             </div>
           </div>
           <div className="flex gap-4">
@@ -56,7 +64,7 @@ export function DisplayProfileForm({ profile }: Props) {
               <Label>Email</Label>
               <Input value={profile.email} disabled />
             </div>
-            <div className="flex-1 flex items-end">
+            <div className="flex flex-1 items-end">
               <div className="w-full">
                 <Label>Email Verified</Label>
                 <div>
@@ -112,7 +120,11 @@ export function DisplayProfileForm({ profile }: Props) {
             <div className="flex-1">
               <Label>Phone Number</Label>
               <Input
-                value={profile.phone_number ? formatPhoneNumber(profile.phone_number) : ''}
+                value={
+                  profile.phone_number
+                    ? formatPhoneNumber(profile.phone_number)
+                    : ""
+                }
                 disabled
                 placeholder="(not set)"
               />
@@ -129,7 +141,7 @@ export function DisplayProfileForm({ profile }: Props) {
                 disabled
               />
             </div>
-            <div className="flex-1 flex items-end">
+            <div className="flex flex-1 items-end">
               <div className="w-full">
                 <Label>Email Verified</Label>
                 <div>
@@ -145,7 +157,11 @@ export function DisplayProfileForm({ profile }: Props) {
         </CardContent>
         <CardFooter className="flex justify-end gap-2">
           <SubmitButton>Save</SubmitButton>
-          <Button type="button" variant="destructive" onClick={() => setEditMode(false)}>
+          <Button
+            type="button"
+            variant="destructive"
+            onClick={() => setEditMode(false)}
+          >
             Cancel
           </Button>
         </CardFooter>

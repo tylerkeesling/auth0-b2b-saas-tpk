@@ -4,12 +4,12 @@ import { appClient, onboardingClient } from "./lib/auth0"
 
 // Helper function to detect onboarding routes
 const isOnboardingRoute = (pathname: string): boolean => {
-  return pathname.startsWith('/onboarding')
+  return pathname.startsWith("/onboarding")
 }
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-  
+
   // Route to appropriate Auth0 client based on path
   if (isOnboardingRoute(pathname)) {
     // Use onboarding client for organization creation flow

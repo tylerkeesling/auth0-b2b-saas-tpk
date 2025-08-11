@@ -15,7 +15,7 @@ export const AppBreadcrumb = ({ href, title }: AppBreadcrumbProps) => {
       <Link
         href={href}
         className={cn(
-          "flex items-center text-sm text-muted-foreground",
+          "text-muted-foreground flex items-center text-sm",
           "hover:text-accent-foreground"
         )}
       >

@@ -77,11 +77,11 @@ export default async function AccountLayout({ children }: AccountLayoutProps) {
 
   return (
     <div className="space-y-1">
-      <div className="flex min-h-full flex-col space-y-8 lg:flex-row lg:space-x-4 lg:space-y-0">
+      <div className="flex min-h-full flex-col space-y-8 lg:flex-row lg:space-y-0 lg:space-x-4">
         <aside className="lg:w-1/5">
           <SidebarNav items={sidebarNavItems} />
         </aside>
-        <div className="rounded-2xl border border-border bg-field p-2 shadow-xs lg:w-4/5">
+        <div className="border-border bg-field rounded-2xl border p-2 shadow-xs lg:w-4/5">
           <div className="mx-auto max-w-6xl">{children}</div>
         </div>
       </div>

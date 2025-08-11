@@ -44,7 +44,7 @@ export default function UserSessions({ user, sessions }: UserSessionsProps) {
               <Separator />
               <div className="flex items-center justify-between space-x-2">
                 <Label className="flex flex-col space-y-2">
-                  <p className="max-w-fit font-normal leading-snug text-muted-foreground">
+                  <p className="text-muted-foreground max-w-fit leading-snug font-normal">
                     There was a problem listing all user sessions. Try again
                     later.
                   </p>
@@ -70,7 +70,7 @@ export default function UserSessions({ user, sessions }: UserSessionsProps) {
                     {idx > 0 && <Separator />}
                     <div
                       key={id}
-                      className="flex flex-col items-center justify-between space-y-6 md:flex-row md:space-x-2 md:space-y-0"
+                      className="flex flex-col items-center justify-between space-y-6 md:flex-row md:space-y-0 md:space-x-2"
                     >
                       <Label className="flex flex-col space-y-1">
                         <span className="leading-6">
@@ -85,7 +85,7 @@ export default function UserSessions({ user, sessions }: UserSessionsProps) {
                             </Badge>
                           )}
                         </span>
-                        <p className="max-w-fit font-normal leading-snug text-muted-foreground">
+                        <p className="text-muted-foreground max-w-fit leading-snug font-normal">
                           Last activity{" "}
                           <span
                             className="cursor-help underline decoration-dotted"

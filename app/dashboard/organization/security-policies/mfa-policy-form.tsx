@@ -55,12 +55,12 @@ export function MfaPolicyForm({ organization }: Props) {
         </CardHeader>
         <CardContent className="grid gap-6">
           {/* MFA Policy Switches Grouped */}
-          <div className="flex flex-col gap-4 rounded-lg border bg-field p-3 shadow-xs">
+          <div className="bg-field flex flex-col gap-4 rounded-lg border p-3 shadow-xs">
             {/* Enforce MFA Switch */}
             <div className="flex flex-row items-center justify-between">
               <div className="space-y-1.5">
                 <Label>Enforce Multi-Factor Authentication</Label>
-                <div className="text-sm text-muted-foreground">
+                <div className="text-muted-foreground text-sm">
                   Users will be required to verify their identity with a second
                   factor.
                 </div>
@@ -78,7 +78,7 @@ export function MfaPolicyForm({ organization }: Props) {
             <div className="flex flex-row items-center justify-between">
               <div className="space-y-1.5">
                 <Label>Do not require MFA when passkeys are used</Label>
-                <div className="text-sm text-muted-foreground">
+                <div className="text-muted-foreground text-sm">
                   Passkeys provide strong authentication on their own and
                   don&apos;t require additional factors.
                 </div>
@@ -96,7 +96,7 @@ export function MfaPolicyForm({ organization }: Props) {
             <div className="flex flex-row items-center justify-between">
               <div className="space-y-1.5">
                 <Label>Do not require MFA for federated logins</Label>
-                <div className="text-sm text-muted-foreground">
+                <div className="text-muted-foreground text-sm">
                   Trust the identity provider&apos;s authentication methods
                   without requiring additional factors.
                 </div>
@@ -121,7 +121,7 @@ export function MfaPolicyForm({ organization }: Props) {
               name="skip_for_domains"
               id="skip_for_domains"
             />
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               Enter a comma-separated list of e-mail domains.
             </p>
           </div>
@@ -133,9 +133,9 @@ export function MfaPolicyForm({ organization }: Props) {
               Select which MFA providers your users are allowed to use
             </Label>
             <div className="grid grid-cols-2 gap-2">
-              <div className="flex justify-between space-x-1 rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent/5 hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">
+              <div className="border-muted bg-popover hover:bg-accent/5 hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary flex justify-between space-x-1 rounded-md border-2 p-4">
                 <Label className="flex items-center space-x-4" htmlFor="otp">
-                  <div className="rounded-md border bg-secondary p-3">
+                  <div className="bg-secondary rounded-md border p-3">
                     <KeyIcon className="size-5" />
                   </div>
                   <div className="space-y-1.5">
@@ -157,12 +157,12 @@ export function MfaPolicyForm({ organization }: Props) {
                 />
               </div>
 
-              <div className="flex justify-between space-x-1 rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent/5 hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">
+              <div className="border-muted bg-popover hover:bg-accent/5 hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary flex justify-between space-x-1 rounded-md border-2 p-4">
                 <Label
                   className="flex items-center space-x-4"
                   htmlFor="webauthn-roaming"
                 >
-                  <div className="rounded-md border bg-secondary p-3">
+                  <div className="bg-secondary rounded-md border p-3">
                     <KeySquareIcon className="size-5" />
                   </div>
                   <div className="space-y-1.5">
@@ -184,9 +184,9 @@ export function MfaPolicyForm({ organization }: Props) {
                 />
               </div>
 
-              <div className="flex justify-between space-x-1 rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent/5 hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary">
+              <div className="border-muted bg-popover hover:bg-accent/5 hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary flex justify-between space-x-1 rounded-md border-2 p-4">
                 <Label className="flex items-center space-x-4" htmlFor="sms">
-                  <div className="rounded-md border bg-secondary p-3">
+                  <div className="bg-secondary rounded-md border p-3">
                     <KeySquareIcon className="size-5" />
                   </div>
                   <div className="space-y-1.5">

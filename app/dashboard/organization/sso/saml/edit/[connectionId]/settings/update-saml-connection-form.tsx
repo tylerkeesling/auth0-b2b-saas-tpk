@@ -93,7 +93,7 @@ export function UpdateSamlConnectionForm({
               placeholder="Acme OIDC"
               defaultValue={connection.displayName}
             />
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               Identifier: <Code>{connection.name}</Code>
             </p>
           </div>
@@ -189,7 +189,7 @@ export function UpdateSamlConnectionForm({
                 </div>
               ))
             ) : (
-              <div className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
+              <div className="text-muted-foreground rounded-md border border-dashed p-4 text-sm">
                 <p>No domains have been added yet.</p>
               </div>
             )}
@@ -205,7 +205,7 @@ export function UpdateSamlConnectionForm({
           <div className="flex flex-row items-center justify-between rounded-lg border p-4">
             <div className="space-y-0.5">
               <Label htmlFor="sign_request">Sign Request</Label>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 The request will be signed with <Code>RSA-SHA256</Code>.{" "}
                 <a
                   className="underline underline-offset-4"
@@ -266,11 +266,11 @@ export function UpdateSamlConnectionForm({
                 />
                 <Label
                   htmlFor="enable_auto_membership"
-                  className="flex h-full rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                  className="border-muted bg-popover hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary flex h-full rounded-md border-2 p-4"
                 >
                   <div className="space-y-1.5">
                     <div>Enable Auto-Membership</div>
-                    <div className="leading-normal text-muted-foreground">
+                    <div className="text-muted-foreground leading-normal">
                       All users logging in with this connection will be
                       automatically added as members of this organization.
                     </div>
@@ -286,11 +286,11 @@ export function UpdateSamlConnectionForm({
                 />
                 <Label
                   htmlFor="disable_auto_membership"
-                  className="flex h-full rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                  className="border-muted bg-popover hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary flex h-full rounded-md border-2 p-4"
                 >
                   <div className="space-y-1.5">
                     <div>Disable Auto-Membership</div>
-                    <div className="leading-normal text-muted-foreground">
+                    <div className="text-muted-foreground leading-normal">
                       All users logging in with this connection will not be
                       added as members to this organization.
                     </div>

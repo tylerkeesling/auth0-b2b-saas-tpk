@@ -69,7 +69,7 @@ export function CreateOidcConnectionForm({ domainVerificationToken }: Props) {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               Identifier: <Code>{slugify(name || "Acme OIDC")}</Code>
             </p>
           </div>
@@ -102,11 +102,11 @@ export function CreateOidcConnectionForm({ domainVerificationToken }: Props) {
                 />
                 <Label
                   htmlFor="front_channel"
-                  className="flex h-full rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                  className="border-muted bg-popover hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary flex h-full rounded-md border-2 p-4"
                 >
                   <div className="space-y-1.5">
                     <div>Front Channel</div>
-                    <div className="leading-normal text-muted-foreground">
+                    <div className="text-muted-foreground leading-normal">
                       Uses <Code>response_mode=form_post</Code> and{" "}
                       <Code>response_type=id_token</Code>.
                     </div>
@@ -122,11 +122,11 @@ export function CreateOidcConnectionForm({ domainVerificationToken }: Props) {
                 />
                 <Label
                   htmlFor="back_channel"
-                  className="flex h-full rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                  className="border-muted bg-popover hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary flex h-full rounded-md border-2 p-4"
                 >
                   <div className="space-y-1.5">
                     <div>Back Channel</div>
-                    <div className="leading-normal text-muted-foreground">
+                    <div className="text-muted-foreground leading-normal">
                       Uses <Code>response_type=code</Code>.
                     </div>
                   </div>
@@ -166,7 +166,7 @@ export function CreateOidcConnectionForm({ domainVerificationToken }: Props) {
               defaultValue="openid profile email"
               placeholder="openid profile email"
             />
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               A space-separated list of scopes. Must contain <Code>openid</Code>
               .
             </p>
@@ -200,7 +200,7 @@ export function CreateOidcConnectionForm({ domainVerificationToken }: Props) {
                 </div>
               ))
             ) : (
-              <div className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
+              <div className="text-muted-foreground rounded-md border border-dashed p-4 text-sm">
                 <p>No domains have been added yet.</p>
               </div>
             )}
@@ -252,11 +252,11 @@ export function CreateOidcConnectionForm({ domainVerificationToken }: Props) {
                 />
                 <Label
                   htmlFor="enable_auto_membership"
-                  className="flex h-full rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                  className="border-muted bg-popover hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary flex h-full rounded-md border-2 p-4"
                 >
                   <div className="space-y-1.5">
                     <div>Enable Auto-Membership</div>
-                    <div className="leading-normal text-muted-foreground">
+                    <div className="text-muted-foreground leading-normal">
                       All users logging in with this connection will be
                       automatically added as members of this organization.
                     </div>
@@ -272,11 +272,11 @@ export function CreateOidcConnectionForm({ domainVerificationToken }: Props) {
                 />
                 <Label
                   htmlFor="disable_auto_membership"
-                  className="flex h-full rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                  className="border-muted bg-popover hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary flex h-full rounded-md border-2 p-4"
                 >
                   <div className="space-y-1.5">
                     <div>Disable Auto-Membership</div>
-                    <div className="leading-normal text-muted-foreground">
+                    <div className="text-muted-foreground leading-normal">
                       All users logging in with this connection will not be
                       added as members to this organization.
                     </div>

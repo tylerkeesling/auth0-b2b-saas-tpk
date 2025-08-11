@@ -66,7 +66,7 @@ export function DisplayNameForm({ organization }: Props) {
               disabled
               readOnly
             />
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               This cannot be changed.
             </p>
           </div>
