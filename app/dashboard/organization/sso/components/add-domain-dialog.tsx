@@ -110,9 +110,9 @@ export function AddDomainDialog({
                   <Label>Name</Label>
                   <div className="flex space-x-2">
                     <Input className="font-mono" value="@ (root)" readOnly />
-                    <Button 
-                      size="icon" 
-                      variant="outline" 
+                    <Button
+                      size="icon"
+                      variant="outline"
                       type="button"
                       onClick={async () => {
                         await navigator.clipboard.writeText("@")
@@ -132,9 +132,9 @@ export function AddDomainDialog({
                       value={`${DOMAIN_VERIFICATION_RECORD_IDENTIFIER}=${domainVerificationToken}`}
                       readOnly
                     />
-                    <Button 
-                      size="icon" 
-                      variant="outline" 
+                    <Button
+                      size="icon"
+                      variant="outline"
                       type="button"
                       onClick={async () => {
                         await navigator.clipboard.writeText(

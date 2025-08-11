@@ -221,9 +221,9 @@ export function CreateOidcConnectionForm({ domainVerificationToken }: Props) {
               callback URL:
               <div className="mt-2 flex w-full space-x-2">
                 <Input className="font-mono" value={CALLBACK_URL} readOnly />
-                <Button 
-                  size="icon" 
-                  variant="outline" 
+                <Button
+                  size="icon"
+                  variant="outline"
                   type="button"
                   onClick={async () => {
                     await navigator.clipboard.writeText(CALLBACK_URL)
