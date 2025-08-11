@@ -17,27 +17,23 @@ import { SubmitButton } from "@/components/submit-button"
 import { updateDisplayName } from "./actions"
 
 interface Props {
-  organization: {
-    id: string
-    displayName: string
-    slug: string
-  }
+  organization: { id: string; displayName: string; slug: string }
 }
 
 export function DisplayNameForm({ organization }: Props) {
   return (
-    <Card>
-      <form
-        action={async (formData: FormData) => {
-          const { error } = await updateDisplayName(formData)
+    <form
+      action={async (formData: FormData) => {
+        const { error } = await updateDisplayName(formData)
 
-          if (error) {
-            toast.error(error)
-          } else {
-            toast.success("The organization's display name has been updated.")
-          }
-        }}
-      >
+        if (error) {
+          toast.error(error)
+        } else {
+          toast.success("The organization's display name has been updated.")
+        }
+      }}
+    >
+      <Card>
         <CardHeader>
           <CardTitle>Display Name</CardTitle>
           <CardDescription>
@@ -74,7 +70,7 @@ export function DisplayNameForm({ organization }: Props) {
         <CardFooter className="flex justify-end">
           <SubmitButton>Save</SubmitButton>
         </CardFooter>
-      </form>
-    </Card>
+      </Card>
+    </form>
   )
 }

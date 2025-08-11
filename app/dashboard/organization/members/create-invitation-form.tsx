@@ -28,20 +28,20 @@ export function CreateInvitationForm() {
   const ref = useRef<HTMLFormElement>(null)
 
   return (
-    <Card>
-      <form
-        ref={ref}
-        action={async (formData: FormData) => {
-          const { error } = await createInvitation(formData)
+    <form
+      ref={ref}
+      action={async (formData: FormData) => {
+        const { error } = await createInvitation(formData)
 
-          if (error) {
-            toast.error(error)
-          } else {
-            toast.success(`Invitation sent to ${formData.get("email")}`)
-            ref.current?.reset()
-          }
-        }}
-      >
+        if (error) {
+          toast.error(error)
+        } else {
+          toast.success(`Invitation sent to ${formData.get("email")}`)
+          ref.current?.reset()
+        }
+      }}
+    >
+      <Card>
         <CardHeader>
           <CardTitle>Invite team members</CardTitle>
           <CardDescription>
@@ -49,6 +49,7 @@ export function CreateInvitationForm() {
             address.
           </CardDescription>
         </CardHeader>
+
         <CardContent>
           <div className="flex space-x-4">
             <div className="grid w-full items-center gap-1.5">
@@ -78,7 +79,7 @@ export function CreateInvitationForm() {
         <CardFooter className="flex justify-end">
           <SubmitButton>Send</SubmitButton>
         </CardFooter>
-      </form>
-    </Card>
+      </Card>
+    </form>
   )
 }

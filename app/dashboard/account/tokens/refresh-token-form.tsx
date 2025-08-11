@@ -2,7 +2,13 @@
 
 import { toast } from "sonner"
 
-import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardAction,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { SubmitButton } from "@/components/submit-button"
 
 import { refreshTokens } from "./actions"
@@ -10,24 +16,24 @@ import { refreshTokens } from "./actions"
 export function RefreshTokenForm() {
   return (
     <Card>
-      <form
-        action={async () => {
-          const { error } = await refreshTokens()
+      <CardHeader>
+        <CardTitle>Refresh Token</CardTitle>
+        <CardAction>
+          <form
+            action={async () => {
+              const { error } = await refreshTokens()
 
-          if (error) {
-            toast.error(error)
-          } else {
-            toast.success("Your tokens have been refreshed.")
-          }
-        }}
-      >
-        <CardHeader>
-          <CardTitle>Refresh Token</CardTitle>
-        </CardHeader>
-        <CardFooter className="flex justify-end">
-          <SubmitButton variant="default">Refresh Token</SubmitButton>
-        </CardFooter>
-      </form>
+              if (error) {
+                toast.error(error)
+              } else {
+                toast.success("Your tokens have been refreshed.")
+              }
+            }}
+          >
+            <SubmitButton variant="default">Refresh Token</SubmitButton>
+          </form>
+        </CardAction>
+      </CardHeader>
     </Card>
   )
 }

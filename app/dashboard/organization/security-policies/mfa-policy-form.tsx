@@ -35,27 +35,28 @@ export function MfaPolicyForm({ organization }: Props) {
   const [enforce, setEnforce] = useState(!!organization.mfaPolicy.enforce)
 
   return (
-    <Card>
-      <form
-        action={async (formData: FormData) => {
-          const { error } = await updateMfaPolicy(formData)
+    <form
+      action={async (formData: FormData) => {
+        const { error } = await updateMfaPolicy(formData)
 
-          if (error) {
-            toast.error(error)
-          } else {
-            toast.success("The organization's MFA policy has been updated.")
-          }
-        }}
-      >
+        if (error) {
+          toast.error(error)
+        } else {
+          toast.success("The organization's MFA policy has been updated.")
+        }
+      }}
+    >
+      <Card>
         <CardHeader>
           <CardTitle>Multi-Factor Authentication (MFA)</CardTitle>
           <CardDescription>
             Configure the MFA policies for your organization.
           </CardDescription>
         </CardHeader>
+
         <CardContent className="grid gap-6">
           {/* MFA Policy Switches Grouped */}
-          <div className="bg-field flex flex-col gap-4 rounded-lg border p-3 shadow-xs">
+          <div className="bg-field flex flex-col gap-6 rounded-lg border p-3 shadow-xs">
             {/* Enforce MFA Switch */}
             <div className="flex flex-row items-center justify-between">
               <div className="space-y-1.5">
@@ -109,8 +110,6 @@ export function MfaPolicyForm({ organization }: Props) {
             </div>
           </div>
 
-          <Separator />
-
           <div className="grid w-full gap-1.5">
             <Label htmlFor="skip_for_domains">
               Do not enforce MFA for the following e-mail domains
@@ -126,9 +125,7 @@ export function MfaPolicyForm({ organization }: Props) {
             </p>
           </div>
 
-          <Separator />
-
-          <div className="grid gap-4">
+          <div className="grid gap-6">
             <Label>
               Select which MFA providers your users are allowed to use
             </Label>
@@ -214,7 +211,7 @@ export function MfaPolicyForm({ organization }: Props) {
         <CardFooter className="flex justify-end">
           <SubmitButton>Save</SubmitButton>
         </CardFooter>
-      </form>
-    </Card>
+      </Card>
+    </form>
   )
 }
