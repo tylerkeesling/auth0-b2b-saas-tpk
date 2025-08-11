@@ -8,7 +8,13 @@ import { Spinner } from "@/components/spinner"
 interface SubmitButtonProps {
   children: React.ReactNode
   disabled?: boolean
-  variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link"
+  variant?:
+    | "default"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | "link"
   size?: "default" | "sm" | "lg" | "icon"
   className?: string
 }

@@ -207,7 +207,7 @@ export function CreateSamlConnectionForm({ domainVerificationToken }: Props) {
             <AlertDescription>
               You will need to configure the SAML identity provider with the
               following post-back URL:
-              <div className="mt-2 flex space-x-2">
+              <div className="mt-2 flex w-full space-x-2">
                 <Input className="font-mono" value={CALLBACK_URL} readOnly />
                 <Button size="icon" variant="outline" type="button">
                   <CopyIcon
