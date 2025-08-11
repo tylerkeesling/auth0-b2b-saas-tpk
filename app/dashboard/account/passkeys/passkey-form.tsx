@@ -6,7 +6,6 @@ import { toast } from "sonner"
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { SubmitButton } from "@/components/submit-button"
 
@@ -30,11 +29,11 @@ export function PasskeyForm({ passkeys }: PasskeyProps) {
         <CardContent className="pt-6">
           <div className="flex flex-col gap-6">
             <div className="flex items-center justify-between space-x-2">
-              <Label className="flex flex-col space-y-2">
+              <div className="flex flex-col space-y-2">
                 <p className="text-muted-foreground max-w-fit leading-snug font-normal">
                   You currently do not have any registered passkeys.
                 </p>
-              </Label>
+              </div>
             </div>
           </div>
         </CardContent>
@@ -47,10 +46,10 @@ export function PasskeyForm({ passkeys }: PasskeyProps) {
       <CardContent className="p-4 md:p-6">
         {/* Header Row */}
         <div className="border-muted mb-2 grid grid-cols-[2fr_1fr_1fr_auto] items-center gap-4 border-b pb-2">
-          <span className="text-muted-foreground font-semibold tracking-wider">
+          <span className="text-muted-foreground text-sm font-semibold tracking-wider">
             Name
           </span>
-          <span className="text-muted-foreground font-semibold tracking-wider">
+          <span className="text-muted-foreground text-sm font-semibold tracking-wider">
             Last Used
           </span>
           <span />
@@ -71,14 +70,12 @@ export function PasskeyForm({ passkeys }: PasskeyProps) {
               }}
             >
               <div>
-                <Label className="flex flex-col space-y-1">
-                  <span className="font-mono leading-6 break-all">
-                    {passkey.id}
-                  </span>
-                  <span className="text-muted-foreground leading-snug font-normal">
+                <div className="flex flex-col space-y-1">
+                  <span className="font-mono">{passkey.id}</span>
+                  <span className="text-muted-foreground text-sm">
                     {passkey.user_agent}
                   </span>
-                </Label>
+                </div>
               </div>
               <div>
                 <span className="text-sm">
@@ -88,10 +85,7 @@ export function PasskeyForm({ passkeys }: PasskeyProps) {
                 </span>
               </div>
               <div>
-                <Badge
-                  variant="default"
-                  className="pointer-events-none h-fit bg-green-300 font-light text-black"
-                >
+                <Badge className="pointer-events-none h-fit bg-green-300 font-light text-black">
                   {passkey.credential_device_type === "single_device"
                     ? "DEVICE BOUND"
                     : "SYNCED"}

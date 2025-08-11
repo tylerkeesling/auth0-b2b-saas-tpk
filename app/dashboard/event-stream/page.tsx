@@ -7,16 +7,12 @@ export default async function WebhookEventsPage() {
   const events = await getEvents()
 
   return (
-    <div className="space-y-2">
+    <>
       <PageHeader
         title="Webhook Events"
         description="View and manage webhook event deliveries for your project."
       />
-      <EventStreamList
-        initialData={{
-          events: events,
-        }}
-      />
-    </div>
+      <EventStreamList initialData={{ events: events }} />
+    </>
   )
 }

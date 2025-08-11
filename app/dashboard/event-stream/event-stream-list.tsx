@@ -13,9 +13,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 export default function EventStreamList({
   initialData,
 }: {
-  initialData: {
-    events: EventsTable[]
-  }
+  initialData: { events: EventsTable[] }
 }) {
   const [events, setEvents] = useState<EventsTable[]>(initialData.events)
   const [isPending, startTransition] = useTransition()
@@ -41,10 +39,10 @@ export default function EventStreamList({
   }
 
   return (
-    <div className="">
+    <>
       {isPending ? (
-        <Card>
-          <CardContent className="py-6">
+        <Card className="py-0">
+          <CardContent>
             <div className="space-y-4">
               {Array.from({ length: 5 }).map((_, index) => (
                 <div key={index} className="flex items-center space-x-4">
@@ -60,8 +58,8 @@ export default function EventStreamList({
           </CardContent>
         </Card>
       ) : (
-        <Card>
-          <CardContent className="p-0">
+        <Card className="py-0">
+          <CardContent>
             {events.length === 0 ? (
               <div className="text-muted-foreground p-8 text-center">
                 <p>No webhook events found matching your criteria.</p>
@@ -71,7 +69,7 @@ export default function EventStreamList({
                 {events.map((event) => (
                   <div key={event.id} className="transition-all duration-200">
                     <div
-                      className={`hover:bg-muted flex cursor-pointer items-center justify-between p-4 ${
+                      className={`hover:bg-muted flex cursor-pointer items-center justify-between py-4 ${
                         expandedEvents.has(event.id) ? "bg-muted" : ""
                       }`}
                       onClick={() => toggleEventExpansion(event.id)}
@@ -106,6 +104,6 @@ export default function EventStreamList({
           </CardContent>
         </Card>
       )}
-    </div>
+    </>
   )
 }

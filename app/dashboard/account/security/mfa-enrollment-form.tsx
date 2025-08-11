@@ -143,7 +143,7 @@ export function MFAEnrollmentForm({ factors, enforceMfa }: MFAEnrollmentProps) {
                   className="flex flex-col items-center justify-between space-y-6 md:flex-row md:space-y-0 md:space-x-2"
                 >
                   <div className="flex flex-col space-y-1 text-sm">
-                    <div className="leading-6">
+                    <div className="font-medium">
                       {meta.title}
                       {factor.enrollmentId && (
                         <Badge
