@@ -6,6 +6,7 @@ import { toast } from "sonner"
 import { Badge } from "@/components/ui/badge"
 import {
   Card,
+  CardAction,
   CardContent,
   CardDescription,
   CardHeader,
@@ -18,11 +19,7 @@ import { SubmitButton } from "@/components/submit-button"
 import { createEnrollment, deleteEnrollment } from "./actions"
 import { ToggleMfaForm } from "./toggle-mfa-form"
 
-type MfaEnrollment = {
-  name: string
-  enabled: boolean
-  enrollmentId?: string
-}
+type MfaEnrollment = { name: string; enabled: boolean; enrollmentId?: string }
 
 interface IPopupWindow {
   width: number
@@ -33,9 +30,7 @@ interface IPopupWindow {
   scrollbars: boolean
 }
 
-const factorsMeta: {
-  [key: string]: any
-} = {
+const factorsMeta: { [key: string]: any } = {
   sms: {
     title: "Phone Message",
     description: "Users will receive a phone message with a verification code",
@@ -115,10 +110,7 @@ function openPopupWindow(popupOptions: IPopupWindow): Window | null {
   return newWindow
 }
 
-type MFAEnrollmentProps = {
-  factors: MfaEnrollment[]
-  enforceMfa?: boolean
-}
+type MFAEnrollmentProps = { factors: MfaEnrollment[]; enforceMfa?: boolean }
 
 export function MFAEnrollmentForm({ factors, enforceMfa }: MFAEnrollmentProps) {
   const router = useRouter()
@@ -128,11 +120,13 @@ export function MFAEnrollmentForm({ factors, enforceMfa }: MFAEnrollmentProps) {
       <CardHeader>
         <CardTitle className="flex justify-between">
           Multi-Factor Authentication
-          <ToggleMfaForm enforceMfa={enforceMfa} />
         </CardTitle>
         <CardDescription>
           Manage the MFA enrollments for your account.
         </CardDescription>
+        <CardAction>
+          <ToggleMfaForm enforceMfa={enforceMfa} />
+        </CardAction>
       </CardHeader>
 
       <CardContent className="grid gap-6 p-4 pt-0 md:p-6 md:pt-0">
@@ -148,8 +142,8 @@ export function MFAEnrollmentForm({ factors, enforceMfa }: MFAEnrollmentProps) {
                   key={factor.name}
                   className="flex flex-col items-center justify-between space-y-6 md:flex-row md:space-y-0 md:space-x-2"
                 >
-                  <Label className="flex flex-col space-y-1">
-                    <span className="leading-6">
+                  <div className="flex flex-col space-y-1 text-sm">
+                    <div className="leading-6">
                       {meta.title}
                       {factor.enrollmentId && (
                         <Badge
@@ -159,11 +153,11 @@ export function MFAEnrollmentForm({ factors, enforceMfa }: MFAEnrollmentProps) {
                           Enrolled
                         </Badge>
                       )}
-                    </span>
+                    </div>
                     <p className="text-muted-foreground max-w-fit leading-snug font-normal">
                       {meta.description}
                     </p>
-                  </Label>
+                  </div>
 
                   <div className="flex items-center justify-end space-x-24 md:min-w-72">
                     {factor.enrollmentId ? (
