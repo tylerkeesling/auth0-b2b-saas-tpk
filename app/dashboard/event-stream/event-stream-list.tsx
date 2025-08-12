@@ -1,12 +1,10 @@
 "use client"
 
 import { useState, useTransition } from "react"
-import { AlertCircle, ChevronDown, ChevronRight, RefreshCw } from "lucide-react"
+import { ChevronDown, ChevronRight } from "lucide-react"
 
 import { EventsTable } from "@/lib/definitions"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 
@@ -20,29 +18,90 @@ export default function EventStreamList({
   const [expandedEvents, setExpandedEvents] = useState<Set<string>>(new Set())
 
   const toggleEventExpansion = (eventId: string) => {
-    const newExpandedEvents = new Set(expandedEvents)
-    if (newExpandedEvents.has(eventId)) {
-      newExpandedEvents.delete(eventId)
-    } else {
-      newExpandedEvents.add(eventId)
-    }
-    setExpandedEvents(newExpandedEvents)
+    setExpandedEvents((prev) => {
+      const newSet = new Set(prev)
+      if (newSet.has(eventId)) {
+        newSet.delete(eventId)
+      } else {
+        newSet.add(eventId)
+      }
+      return newSet
+    })
   }
 
-  const formatDate = (dateString: string) => {
-    try {
-      const date = new Date(dateString)
-      return date.toLocaleString()
-    } catch (e) {
-      return dateString || "Unknown date"
+  interface EventItemProps {
+    event: EventsTable
+    isExpanded: boolean
+    onToggle: (eventId: string) => void
+  }
+
+  function EventItem({ event, isExpanded, onToggle }: EventItemProps) {
+    const formatDate = (dateString: string | Date | null | undefined) => {
+      if (!dateString) return "Unknown date"
+      try {
+        const date = new Date(dateString)
+        return date.toLocaleString()
+      } catch {
+        return "Invalid date"
+      }
     }
+
+    return (
+      <div className="transition-all duration-200">
+        <div
+          className={`hover:bg-muted flex cursor-pointer items-center justify-between p-4 ${
+            isExpanded ? "bg-muted" : ""
+          }`}
+          onClick={() => onToggle(event.id)}
+          role="button"
+          tabIndex={0}
+          aria-expanded={isExpanded}
+          aria-label={`Toggle details for ${event.type} event`}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault()
+              onToggle(event.id)
+            }
+          }}
+        >
+          <div className="flex items-center space-x-4">
+            {isExpanded ? (
+              <ChevronDown
+                className="text-muted-foreground h-5 w-5"
+                aria-hidden="true"
+              />
+            ) : (
+              <ChevronRight
+                className="text-muted-foreground h-5 w-5"
+                aria-hidden="true"
+              />
+            )}
+            <div>
+              <div className="font-medium">{event.type}</div>
+              <div className="text-muted-foreground text-sm">
+                {formatDate(event.time)}
+              </div>
+            </div>
+          </div>
+          <Badge variant="outline">{event.a0stream}</Badge>
+        </div>
+
+        {isExpanded && (
+          <div className="border-border bg-muted border-t p-4">
+            <pre className="bg-card text-card-foreground overflow-x-auto rounded-md border p-4 text-xs">
+              <code>{JSON.stringify(event.data, null, 2)}</code>
+            </pre>
+          </div>
+        )}
+      </div>
+    )
   }
 
   return (
     <>
       {isPending ? (
-        <Card className="py-0">
-          <CardContent>
+        <Card>
+          <CardContent className="p-6">
             <div className="space-y-4">
               {Array.from({ length: 5 }).map((_, index) => (
                 <div key={index} className="flex items-center space-x-4">
@@ -59,7 +118,7 @@ export default function EventStreamList({
         </Card>
       ) : (
         <Card className="py-0">
-          <CardContent>
+          <CardContent className="p-0">
             {events.length === 0 ? (
               <div className="text-muted-foreground p-8 text-center">
                 <p>No webhook events found matching your criteria.</p>
@@ -67,37 +126,12 @@ export default function EventStreamList({
             ) : (
               <div className="divide-border divide-y">
                 {events.map((event) => (
-                  <div key={event.id} className="transition-all duration-200">
-                    <div
-                      className={`hover:bg-muted flex cursor-pointer items-center justify-between py-4 ${
-                        expandedEvents.has(event.id) ? "bg-muted" : ""
-                      }`}
-                      onClick={() => toggleEventExpansion(event.id)}
-                    >
-                      <div className="flex items-center space-x-4">
-                        {expandedEvents.has(event.id) ? (
-                          <ChevronDown className="text-muted-foreground h-5 w-5" />
-                        ) : (
-                          <ChevronRight className="text-muted-foreground h-5 w-5" />
-                        )}
-                        <div>
-                          <div className="font-medium">{event.type}</div>
-                          <div className="text-muted-foreground text-sm">
-                            {formatDate(event.time?.toString() || "")}
-                          </div>
-                        </div>
-                      </div>
-                      <Badge variant="outline">{event.a0stream}</Badge>
-                    </div>
-
-                    {expandedEvents.has(event.id) && (
-                      <div className="border-border bg-muted border-t p-4">
-                        <pre className="bg-card text-card-foreground overflow-x-auto rounded-md border p-4 text-xs">
-                          <code>{JSON.stringify(event.data, null, 2)}</code>
-                        </pre>
-                      </div>
-                    )}
-                  </div>
+                  <EventItem
+                    key={event.id}
+                    event={event}
+                    isExpanded={expandedEvents.has(event.id)}
+                    onToggle={toggleEventExpansion}
+                  />
                 ))}
               </div>
             )}
