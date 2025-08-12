@@ -43,23 +43,25 @@ export function PasskeyForm({ passkeys }: PasskeyProps) {
 
   return (
     <Card>
-      <CardContent className="p-4 md:p-6">
+      <CardContent>
         {/* Header Row */}
-        <div className="border-muted mb-2 grid grid-cols-[2fr_1fr_1fr_auto] items-center gap-4 border-b pb-2">
+        <div className="border-muted mb-2 grid grid-cols-[2fr_2fr_1fr_auto] items-center gap-4 border-b pb-2">
           <span className="text-muted-foreground text-sm font-semibold tracking-wider">
             Name
           </span>
           <span className="text-muted-foreground text-sm font-semibold tracking-wider">
             Last Used
           </span>
-          <span />
+          <span className="text-muted-foreground text-sm font-semibold tracking-wider">
+            Type
+          </span>
           <span className="w-9"></span>
         </div>
         {passkeys.map((passkey, idx) => (
           <div key={passkey.id}>
             {idx > 0 && <Separator className="my-4" />}
             <form
-              className="grid grid-cols-[2fr_1fr_1fr_auto] items-center gap-4 py-2"
+              className="grid grid-cols-[2fr_2fr_1fr_auto] items-center gap-4 py-2"
               action={async (formData: FormData) => {
                 const { error } = await revokePasskey(formData)
                 if (error) {
