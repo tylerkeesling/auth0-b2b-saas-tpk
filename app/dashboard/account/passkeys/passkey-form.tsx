@@ -73,7 +73,7 @@ export function PasskeyForm({ passkeys }: PasskeyProps) {
             >
               <div>
                 <div className="flex flex-col space-y-1">
-                  <span className="font-mono">{passkey.id}</span>
+                  <span>{passkey.id}</span>
                   <span className="text-muted-foreground text-sm">
                     {passkey.user_agent}
                   </span>
