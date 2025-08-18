@@ -41,7 +41,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -65,14 +64,8 @@ import {
 } from "./actions"
 
 interface Props {
-  scimConfig: {
-    userIdAttribute: string
-  } | null
-  scimTokens: Array<{
-    id: string
-    lastUsedAt?: string
-    createdAt: string
-  }>
+  scimConfig: { userIdAttribute: string } | null
+  scimTokens: Array<{ id: string; lastUsedAt?: string; createdAt: string }>
 }
 
 export function ScimForm({ scimConfig, scimTokens }: Props) {
@@ -268,28 +261,28 @@ export function ScimForm({ scimConfig, scimTokens }: Props) {
                   </div>
                 )}
               </div>
-              <Alert>
+              <Alert className="bg-background">
                 <InfoCircledIcon className="size-4" />
                 <AlertTitle>SCIM Endpoint URL</AlertTitle>
                 <AlertDescription>
                   Copy this URL and provide it to your identity provider or
                   other SCIM client
-                  <div className="mt-2 flex space-x-2">
+                  <div className="mt-2 flex w-full space-x-2">
                     <Input
                       className="font-mono"
                       value={SCIM_ENDPOINT_URL}
                       readOnly
                     />
-                    <Button size="icon" variant="outline" type="button">
-                      <CopyIcon
-                        className="size-4"
-                        onClick={async () => {
-                          await navigator.clipboard.writeText(SCIM_ENDPOINT_URL)
-                          toast.success(
-                            "SCIM endpoint URL copied to clipboard."
-                          )
-                        }}
-                      />
+                    <Button
+                      size="icon"
+                      variant="outline"
+                      type="button"
+                      onClick={async () => {
+                        await navigator.clipboard.writeText(SCIM_ENDPOINT_URL)
+                        toast.success("SCIM endpoint URL copied to clipboard.")
+                      }}
+                    >
+                      <CopyIcon className="size-4" />
                     </Button>
                   </div>
                 </AlertDescription>

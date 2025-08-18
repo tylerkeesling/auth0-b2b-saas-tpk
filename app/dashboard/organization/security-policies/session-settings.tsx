@@ -56,6 +56,12 @@ export function SessionSettings({
 
   return (
     <Card>
+      <CardHeader>
+        <CardTitle>Session Management</CardTitle>
+        <CardDescription>
+          Configure how user sessions are managed
+        </CardDescription>
+      </CardHeader>
       <form
         action={async (formData: FormData) => {
           // Convert minutes to ms before sending to server action
@@ -75,12 +81,6 @@ export function SessionSettings({
           }
         }}
       >
-        <CardHeader>
-          <CardTitle>Session Management</CardTitle>
-          <CardDescription>
-            Configure how user sessions are managed
-          </CardDescription>
-        </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-3">
             <div className="flex items-center gap-2">

@@ -42,11 +42,11 @@ export function DisplayProfileForm({ profile }: Props) {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex gap-4">
-            <div className="flex-1">
+            <div className="flex-1 space-y-2">
               <Label>Name</Label>
               <Input value={profile.name} disabled />
             </div>
-            <div className="flex-1">
+            <div className="flex-1 space-y-2">
               <Label>Phone Number</Label>
               <Input
                 value={
@@ -60,12 +60,12 @@ export function DisplayProfileForm({ profile }: Props) {
             </div>
           </div>
           <div className="flex gap-4">
-            <div className="flex-1">
+            <div className="flex-1 space-y-2">
               <Label>Email</Label>
               <Input value={profile.email} disabled />
             </div>
             <div className="flex flex-1 items-end">
-              <div className="w-full">
+              <div className="w-full space-y-2">
                 <Label>Email Verified</Label>
                 <div>
                   {profile.email_verified ? (
@@ -89,25 +89,26 @@ export function DisplayProfileForm({ profile }: Props) {
 
   return (
     <Card>
-      <form
-        action={async (formData: FormData) => {
-          const { error } = await updateProfile(formData)
+      <CardHeader>
+        <CardTitle>Edit Profile</CardTitle>
+        <CardDescription>Update your profile information.</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <form
+          className="contents"
+          action={async (formData: FormData) => {
+            const { error } = await updateProfile(formData)
 
-          if (error) {
-            toast.error(error)
-          } else {
-            toast.success("Your profile has been updated.")
-            setEditMode(false)
-          }
-        }}
-      >
-        <CardHeader>
-          <CardTitle>Edit Profile</CardTitle>
-          <CardDescription>Update your profile information.</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex gap-4">
-            <div className="flex-1">
+            if (error) {
+              toast.error(error)
+            } else {
+              toast.success("Your profile has been updated.")
+              setEditMode(false)
+            }
+          }}
+        >
+          <div className="mb-4 flex gap-4">
+            <div className="flex-1 space-y-2">
               <Label htmlFor="name">Name</Label>
               <Input
                 id="name"
@@ -117,7 +118,7 @@ export function DisplayProfileForm({ profile }: Props) {
                 required
               />
             </div>
-            <div className="flex-1">
+            <div className="flex-1 space-y-2">
               <Label>Phone Number</Label>
               <Input
                 value={
@@ -131,7 +132,7 @@ export function DisplayProfileForm({ profile }: Props) {
             </div>
           </div>
           <div className="flex gap-4">
-            <div className="flex-1">
+            <div className="flex-1 space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
@@ -142,7 +143,7 @@ export function DisplayProfileForm({ profile }: Props) {
               />
             </div>
             <div className="flex flex-1 items-end">
-              <div className="w-full">
+              <div className="w-full space-y-2">
                 <Label>Email Verified</Label>
                 <div>
                   {profile.email_verified ? (
@@ -154,18 +155,18 @@ export function DisplayProfileForm({ profile }: Props) {
               </div>
             </div>
           </div>
-        </CardContent>
-        <CardFooter className="flex justify-end gap-2">
-          <SubmitButton>Save</SubmitButton>
-          <Button
-            type="button"
-            variant="destructive"
-            onClick={() => setEditMode(false)}
-          >
-            Cancel
-          </Button>
-        </CardFooter>
-      </form>
+          <div className="flex justify-end gap-2">
+            <SubmitButton>Save</SubmitButton>
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={() => setEditMode(false)}
+            >
+              Cancel
+            </Button>
+          </div>
+        </form>
+      </CardContent>
     </Card>
   )
 }

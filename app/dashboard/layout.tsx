@@ -13,9 +13,7 @@ import { UserNav } from "@/components/user-nav"
 
 export default async function DashboardLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   const session = await appClient.getSession()
 
   // if the user is not authenticated, redirect to login
@@ -63,7 +61,7 @@ export default async function DashboardLayout({
         <div className="flex flex-row gap-x-4">
           <Button variant="ghost" asChild className="px-2 py-2">
             <Link href="/dashboard/organization/general">
-              <SettingsIcon className="h-[1.2rem] w-[1.2rem]" />
+              <SettingsIcon className="size-5" />
             </Link>
           </Button>
           <UserNav />

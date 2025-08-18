@@ -20,18 +20,19 @@ export function ToggleMfaForm({ enforceMfa = false }: ToggleMfaProps) {
   const [isEnabled, setIsEnabled] = useState(enforceMfa)
 
   return (
-    <form className="" action={handleToggleMfa}>
-      <Label className="mr-2" htmlFor="toggle-mfa">
-        Enable MFA?
+    <form className="flex items-center gap-3" action={handleToggleMfa}>
+      <Label htmlFor="toggle-mfa" className="text-sm font-medium">
+        Enable MFA
       </Label>
       <Switch
-        className="mr-2"
         id="toggle-mfa"
         checked={isEnabled}
         onCheckedChange={(checked) => setIsEnabled(checked)}
       />
       <input type="hidden" name="toggle-mfa" value={isEnabled.toString()} />
-      <SubmitButton>Save</SubmitButton>
+      <SubmitButton size="sm" variant="outline">
+        Save
+      </SubmitButton>
     </form>
   )
 }

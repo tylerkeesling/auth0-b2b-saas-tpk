@@ -30,6 +30,7 @@ export default async function GeneralSettings() {
           id: org.id,
           slug: org.name,
           displayName: org.display_name,
+          logoUrl: org.branding?.logo_url,
         }}
       />
     </div>
