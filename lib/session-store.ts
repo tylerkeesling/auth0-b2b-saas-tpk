@@ -22,12 +22,12 @@ const cleanupIndexes = async (session?: SessionData | null) => {
 
 const sessionStore: SessionDataStore = {
   async get(id: string): Promise<SessionData | null> {
-    console.log(`Getting session for ID: ${id}`)
+    // console.log(`Getting session for ID: ${id}`)
     return await kv.get<SessionData>(id)
   },
 
   async set(id: string, session: SessionData): Promise<void> {
-    console.log(`Setting session for ID: ${id}`, session.user.sub)
+    // console.log(`Setting session for ID: ${id}`, session.user.sub)
 
     // First, get existing session to clean up old indexes if this is an update
     const existingSession = await kv.get<SessionData>(id).catch(() => null)
@@ -40,7 +40,7 @@ const sessionStore: SessionDataStore = {
 
     // Create SID index mapping
     if (session.internal?.sid) {
-      console.log(`Creating SID index: ${session.internal.sid} -> ${id}`)
+      // console.log(`Creating SID index: ${session.internal.sid} -> ${id}`)
       try {
         await kv.set(getSidIndexKey(session.internal.sid), id)
       } catch (err) {
