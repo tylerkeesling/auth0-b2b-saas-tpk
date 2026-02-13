@@ -21,6 +21,10 @@ const sidebarNavItems = [
     title: "Sessions",
     href: "/dashboard/account/sessions",
   },
+  {
+    title: "Logs",
+    href: "/dashboard/account/logs",
+  },
 ]
 
 interface AccountLayoutProps {
