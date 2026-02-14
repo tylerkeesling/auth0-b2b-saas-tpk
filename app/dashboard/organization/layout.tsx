@@ -56,5 +56,5 @@ export default async function OrganizationLayout({
     )
   }
 
-  return <div className="mx-auto max-w-6xl">{children}</div>
+  return <div className="mx-auto w-full max-w-6xl">{children}</div>
 }
