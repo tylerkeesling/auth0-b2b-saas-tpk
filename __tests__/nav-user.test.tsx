@@ -1,10 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from "vitest"
+import { describe, it, expect, vi } from "vitest"
 import { render, screen, fireEvent } from "@testing-library/react"
-
-const mockSetTheme = vi.fn()
-vi.mock("next-themes", () => ({
-  useTheme: () => ({ setTheme: mockSetTheme, theme: "light" }),
-}))
 
 vi.mock("next/navigation", () => ({
   usePathname: () => "/dashboard",
@@ -48,10 +43,6 @@ function openUserDropdown() {
 }
 
 describe("NavUser", () => {
-  beforeEach(() => {
-    mockSetTheme.mockClear()
-  })
-
   it("renders user name and email", () => {
     renderNavUser()
     expect(screen.getByText("Jane Smith")).toBeInTheDocument()
@@ -72,57 +63,5 @@ describe("NavUser", () => {
 
     const logoutLink = screen.getByText("Log out").closest("a")
     expect(logoutLink).toHaveAttribute("href", "/auth/logout")
-  })
-
-  it("shows theme submenu with Light, Dark, System options", () => {
-    renderNavUser()
-    openUserDropdown()
-
-    expect(screen.getByText("Theme")).toBeInTheDocument()
-
-    // Open the theme submenu - Radix sub-triggers use pointerMove + pointerLeave
-    const themeTrigger = screen.getByText("Theme").closest('[role="menuitem"]')!
-    fireEvent.pointerMove(themeTrigger, { pointerType: "mouse" })
-    fireEvent.click(themeTrigger)
-
-    expect(screen.getByText("Light")).toBeInTheDocument()
-    expect(screen.getByText("Dark")).toBeInTheDocument()
-    expect(screen.getByText("System")).toBeInTheDocument()
-  })
-
-  it("calls setTheme('light') when Light is clicked", () => {
-    renderNavUser()
-    openUserDropdown()
-
-    const themeTrigger = screen.getByText("Theme").closest('[role="menuitem"]')!
-    fireEvent.pointerMove(themeTrigger, { pointerType: "mouse" })
-    fireEvent.click(themeTrigger)
-
-    fireEvent.click(screen.getByText("Light"))
-    expect(mockSetTheme).toHaveBeenCalledWith("light")
-  })
-
-  it("calls setTheme('dark') when Dark is clicked", () => {
-    renderNavUser()
-    openUserDropdown()
-
-    const themeTrigger = screen.getByText("Theme").closest('[role="menuitem"]')!
-    fireEvent.pointerMove(themeTrigger, { pointerType: "mouse" })
-    fireEvent.click(themeTrigger)
-
-    fireEvent.click(screen.getByText("Dark"))
-    expect(mockSetTheme).toHaveBeenCalledWith("dark")
-  })
-
-  it("calls setTheme('system') when System is clicked", () => {
-    renderNavUser()
-    openUserDropdown()
-
-    const themeTrigger = screen.getByText("Theme").closest('[role="menuitem"]')!
-    fireEvent.pointerMove(themeTrigger, { pointerType: "mouse" })
-    fireEvent.click(themeTrigger)
-
-    fireEvent.click(screen.getByText("System"))
-    expect(mockSetTheme).toHaveBeenCalledWith("system")
   })
 })

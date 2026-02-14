@@ -4,12 +4,8 @@ import Link from "next/link"
 import {
   ChevronsUpDown,
   LogOut,
-  Moon,
-  Sun,
-  Monitor,
   User as UserIcon,
 } from "lucide-react"
-import { useTheme } from "next-themes"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
@@ -19,9 +15,6 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
@@ -41,7 +34,6 @@ interface NavUserProps {
 
 export function NavUser({ user }: NavUserProps) {
   const { isMobile } = useSidebar()
-  const { setTheme } = useTheme()
 
   return (
     <SidebarMenu>
@@ -99,30 +91,6 @@ export function NavUser({ user }: NavUserProps) {
                   Profile
                 </Link>
               </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger>
-                  <Sun className="mr-2 size-4 dark:hidden" />
-                  <Moon className="mr-2 hidden size-4 dark:block" />
-                  Theme
-                </DropdownMenuSubTrigger>
-                <DropdownMenuSubContent>
-                  <DropdownMenuItem onClick={() => setTheme("light")}>
-                    <Sun className="mr-2 size-4" />
-                    Light
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setTheme("dark")}>
-                    <Moon className="mr-2 size-4" />
-                    Dark
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setTheme("system")}>
-                    <Monitor className="mr-2 size-4" />
-                    System
-                  </DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuSub>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
