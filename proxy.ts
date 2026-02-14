@@ -7,7 +7,7 @@ const isOnboardingRoute = (pathname: string): boolean => {
   return pathname.startsWith('/onboarding')
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Route to appropriate Auth0 client based on path

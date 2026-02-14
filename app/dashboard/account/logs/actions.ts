@@ -75,7 +75,7 @@ export async function getLogs({
 
     // Sanitize userId to prevent Lucene query injection
     const safeUserId = userId.replace(/"/g, '\\"')
-    let query = `user_id:"${safeUserId}"`
+    let query = `user_id:"${safeUserId}" AND NOT type:seacft`
 
     if (type && type !== 'all') {
       if (!VALID_LOG_TYPES.has(type)) {
@@ -102,7 +102,7 @@ export async function getLogs({
     // Note: Limited to 1,000 results total, but this is fine for user logs
     // Request one extra to detect if there are more pages
     const params = {
-      q: query,
+      search: query,
       sort: 'date:-1',
       page,
       per_page: perPage + 1,
