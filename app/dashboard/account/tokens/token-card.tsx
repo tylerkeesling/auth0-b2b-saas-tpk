@@ -12,9 +12,11 @@ import {
 } from '@/components/ui/card'
 import { JsonViewerSkeleton } from '@/components/json-viewer-skeleton'
 
+const jsonViewerFallback = <JsonViewerSkeleton />
+
 const JsonViewer = dynamic(() => import('@/components/json-viewer'), {
   ssr: false,
-  loading: () => <JsonViewerSkeleton />,
+  loading: () => jsonViewerFallback,
 })
 
 export function TokenCard({

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState, useTransition } from 'react'
 import dynamic from 'next/dynamic'
 import { Calendar } from 'lucide-react'
 import { toast } from 'sonner'
@@ -84,16 +84,21 @@ const timeFormatter = new Intl.DateTimeFormat('en-US', {
 export default function UserLogs({ userId }: UserLogsProps) {
   const [logs, setLogs] = useState<LogEntry[]>([])
   const [hasMore, setHasMore] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [isPending, startTransition] = useTransition()
+  const [isInitialLoad, setIsInitialLoad] = useState(true)
   const [page, setPage] = useState(0)
   const [perPage] = useState(10)
   const [selectedType, setSelectedType] = useState('all')
   const [fromDate, setFromDate] = useState('')
   const [toDate, setToDate] = useState('')
   const [selectedLog, setSelectedLog] = useState<LogEntry | null>(null)
+  const hadDataBefore = useRef(false)
+
+  useEffect(() => {
+    if (logs.length > 0) hadDataBefore.current = true
+  }, [logs])
 
   const fetchLogs = async () => {
-    setLoading(true)
     const result = await getLogs({
       userId,
       page,
@@ -111,18 +116,21 @@ export default function UserLogs({ userId }: UserLogsProps) {
       setLogs(result.logs)
       setHasMore(result.hasMore)
     }
-    setLoading(false)
+    setIsInitialLoad(false)
   }
 
   useEffect(() => {
-    fetchLogs()
+    startTransition(async () => {
+      await fetchLogs()
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page])
 
   const handleFilterChange = () => {
-    // Reset to first page when filters change
     setPage(0)
-    fetchLogs()
+    startTransition(async () => {
+      await fetchLogs()
+    })
   }
 
   const handleClearFilters = () => {
@@ -130,8 +138,11 @@ export default function UserLogs({ userId }: UserLogsProps) {
     setFromDate('')
     setToDate('')
     setPage(0)
-    // Trigger fetch with cleared filters
-    setTimeout(() => fetchLogs(), 0)
+    setTimeout(() => {
+      startTransition(async () => {
+        await fetchLogs()
+      })
+    }, 0)
   }
 
   const handleNextPage = () => {
@@ -202,10 +213,10 @@ export default function UserLogs({ userId }: UserLogsProps) {
         </div>
 
         {/* Loading State (only on initial load with no data) */}
-        {loading && logs.length === 0 && <UserLogsSkeleton />}
+        {isInitialLoad && logs.length === 0 && <UserLogsSkeleton />}
 
         {/* Empty State */}
-        {!loading && logs.length === 0 && (
+        {!isInitialLoad && !isPending && logs.length === 0 && (
           <div className="flex flex-col items-center justify-center py-8">
             <p className="text-muted-foreground">No logs found</p>
             <p className="text-muted-foreground text-sm">
@@ -218,7 +229,7 @@ export default function UserLogs({ userId }: UserLogsProps) {
         {logs.length > 0 && (
           <>
             <div
-              className={`rounded-md border transition-opacity ${loading ? 'pointer-events-none opacity-50' : ''}`}
+              className={`rounded-md border transition-opacity ${isPending && hadDataBefore.current ? 'pointer-events-none opacity-50' : ''}`}
             >
               <Table>
                 <TableHeader>
@@ -309,7 +320,7 @@ export default function UserLogs({ userId }: UserLogsProps) {
               <div className="flex gap-2">
                 <Button
                   onClick={handlePreviousPage}
-                  disabled={page === 0 || loading}
+                  disabled={page === 0 || isPending}
                   variant="outline"
                   size="sm"
                 >
@@ -317,7 +328,7 @@ export default function UserLogs({ userId }: UserLogsProps) {
                 </Button>
                 <Button
                   onClick={handleNextPage}
-                  disabled={!hasMore || loading}
+                  disabled={!hasMore || isPending}
                   variant="outline"
                   size="sm"
                 >
