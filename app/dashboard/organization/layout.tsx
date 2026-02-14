@@ -12,35 +12,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { SidebarNav } from "@/components/sidebar-nav"
 
-const sidebarNavItems = [
-  {
-    title: "General Settings",
-    href: "/dashboard/organization/general",
-  },
-  {
-    title: "Members",
-    href: "/dashboard/organization/members",
-  },
-  {
-    title: "SSO",
-    href: "/dashboard/organization/sso",
-  },
-  {
-    title: "Security Policies",
-    href: "/dashboard/organization/security-policies",
-  },
-]
-
-interface AccountLayoutProps {
+interface OrganizationLayoutProps {
   children: React.ReactNode
 }
 
-export default async function AccountLayout({ children }: AccountLayoutProps) {
+export default async function OrganizationLayout({
+  children,
+}: OrganizationLayoutProps) {
   const session = await appClient.getSession()
 
-  // if the user is not authenticated, redirect to login
   if (!session?.user) {
     redirect("/auth/login")
   }
@@ -53,7 +34,7 @@ export default async function AccountLayout({ children }: AccountLayoutProps) {
             <CardTitle>Unauthorized</CardTitle>
             <CardDescription className="space-y-1.5">
               <p>
-                You’re currently logged in with the role of{" "}
+                You&apos;re currently logged in with the role of{" "}
                 <span className="font-semibold">{getRole(session.user)}</span>.
               </p>
               <p>
@@ -64,9 +45,9 @@ export default async function AccountLayout({ children }: AccountLayoutProps) {
             </CardDescription>
           </CardHeader>
           <CardFooter>
-            <Link href="/dashboard" className="w-full">
+            <Link href="/dashboard/account/profile" className="w-full">
               <Button className="w-full">
-                <ArrowLeftIcon className="mr-2 h-4 w-4" /> Go Back to Home
+                <ArrowLeftIcon className="mr-2 h-4 w-4" /> Go Back
               </Button>
             </Link>
           </CardFooter>
@@ -75,16 +56,5 @@ export default async function AccountLayout({ children }: AccountLayoutProps) {
     )
   }
 
-  return (
-    <div className="space-y-1">
-      <div className="flex min-h-full flex-col space-y-8 lg:flex-row lg:space-y-0 lg:space-x-4">
-        <aside className="lg:w-1/5">
-          <SidebarNav items={sidebarNavItems} />
-        </aside>
-        <div className="bg-sidebar rounded-2xl border p-2 shadow-xs lg:w-4/5">
-          <div className="mx-auto max-w-6xl">{children}</div>
-        </div>
-      </div>
-    </div>
-  )
+  return <div className="mx-auto max-w-6xl">{children}</div>
 }

@@ -1,15 +1,17 @@
-import Link from "next/link"
 import { redirect } from "next/navigation"
 import { Auth0Provider } from "@auth0/nextjs-auth0"
-import { SettingsIcon } from "lucide-react"
 
 import { appClient } from "@/lib/auth0"
 import { managementClient } from "@/lib/auth0-manage"
-import { Button } from "@/components/ui/button"
-import { Auth0Logo } from "@/components/auth0-logo"
-import { ModeToggle } from "@/components/mode-toggle"
-import { OrganizationSwitcher } from "@/components/organization-switcher"
-import { UserNav } from "@/components/user-nav"
+import { getRole } from "@/lib/roles"
+import { Separator } from "@/components/ui/separator"
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar"
+import { SidebarBreadcrumbs } from "@/components/sidebar-breadcrumbs"
 
 export default async function DashboardLayout({
   children,
@@ -30,78 +32,39 @@ export default async function DashboardLayout({
     redirect("/onboarding/create")
   }
 
+  const role = getRole(session.user)
+
   return (
     <Auth0Provider user={session.user}>
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-2 py-4 sm:px-8">
-        <div className="flex items-center space-x-6">
-          <OrganizationSwitcher
-            organizations={orgs.map((o) => ({
-              id: o.id,
-              slug: o.name,
-              displayName: o.display_name!,
-              logoUrl: o.branding?.logo_url,
-            }))}
-            currentOrgId={session.user?.org_id ?? ""}
-          />
-
-          <Link
-            href="/dashboard"
-            className="text-muted-foreground hover:text-foreground text-sm font-medium transition-colors"
-          >
-            Home
-          </Link>
-          <Link
-            href="/dashboard/event-stream"
-            className="text-muted-foreground hover:text-foreground w-auto text-sm font-medium whitespace-nowrap transition-colors"
-          >
-            Event Stream
-          </Link>
-        </div>
-
-        <div className="flex flex-row gap-x-4">
-          <Button variant="ghost" asChild className="px-2 py-2">
-            <Link href="/dashboard/organization/general">
-              <SettingsIcon className="size-5" />
-            </Link>
-          </Button>
-          <UserNav />
-        </div>
-      </nav>
-
-      <main className="mx-auto grid min-h-[calc(100svh-164px)] max-w-7xl px-2 sm:px-8 lg:py-6">
-        {children}
-      </main>
-
-      <footer className="mx-auto max-w-7xl px-2 py-6 sm:px-6 lg:px-8">
-        <div className="flex justify-between">
-          <div className="flex items-center space-x-2">
-            <Auth0Logo className="h-6 w-6" />
-
-            <div className="font-mono font-semibold">
-              <Link href="/">SaaStart</Link>
+      <SidebarProvider>
+        <AppSidebar
+          organizations={orgs.map((o) => ({
+            id: o.id,
+            slug: o.name,
+            displayName: o.display_name!,
+            logoUrl: o.branding?.logo_url,
+          }))}
+          currentOrgId={session.user.org_id ?? ""}
+          user={{
+            name: session.user.name ?? "",
+            email: session.user.email ?? "",
+            picture: session.user.picture ?? "",
+          }}
+          userRole={role}
+        />
+        <SidebarInset>
+          <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+            <div className="flex items-center gap-2 px-4">
+              <SidebarTrigger className="-ml-1" />
+              <Separator orientation="vertical" className="mr-2 h-4" />
+              <SidebarBreadcrumbs />
             </div>
-
-            <div>
-              <Button variant="link" asChild>
-                <Link href="/">Home</Link>
-              </Button>
-
-              <Button variant="link" asChild>
-                <Link
-                  href="https://github.com/auth0-developer-hub/auth0-b2b-saas-starter"
-                  target="_blank"
-                >
-                  Source
-                </Link>
-              </Button>
-            </div>
-          </div>
-
-          <div className="items-center gap-x-2">
-            <ModeToggle />
-          </div>
-        </div>
-      </footer>
+          </header>
+          <main className="flex flex-1 flex-col gap-4 p-4 pt-0">
+            {children}
+          </main>
+        </SidebarInset>
+      </SidebarProvider>
     </Auth0Provider>
   )
 }

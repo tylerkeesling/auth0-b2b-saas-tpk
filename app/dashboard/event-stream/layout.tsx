@@ -1,24 +1,9 @@
-import { redirect } from "next/navigation"
-
-import { appClient } from "@/lib/auth0"
-
-interface AccountLayoutProps {
+interface EventStreamLayoutProps {
   children: React.ReactNode
 }
 
-export default async function AccountLayout({ children }: AccountLayoutProps) {
-  const session = await appClient.getSession()
-
-  // if the user is not authenticated, redirect to login
-  if (!session?.user) {
-    redirect("/auth/login")
-  }
-
-  return (
-    <div className="space-y-1">
-      <div className="border-border bg-field min-h-full rounded-2xl border p-2 shadow-xs">
-        <div className="mx-auto">{children}</div>
-      </div>
-    </div>
-  )
+export default function EventStreamLayout({
+  children,
+}: EventStreamLayoutProps) {
+  return <>{children}</>
 }
