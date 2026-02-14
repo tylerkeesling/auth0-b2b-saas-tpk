@@ -1,17 +1,17 @@
-"use client"
+'use client'
 
-import { useState } from "react"
+import { useState } from 'react'
 import {
   CheckIcon,
   CopyIcon,
   PlusIcon,
   SymbolIcon,
-} from "@radix-ui/react-icons"
-import { toast } from "sonner"
+} from '@radix-ui/react-icons'
+import { toast } from 'sonner'
 
-import { DOMAIN_VERIFICATION_RECORD_IDENTIFIER } from "@/lib/constants"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { DOMAIN_VERIFICATION_RECORD_IDENTIFIER } from '@/lib/constants'
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -19,7 +19,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from '@/components/ui/card'
 import {
   Dialog,
   DialogContent,
@@ -28,11 +28,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
-import { verifyDomain } from "../actions"
+import { verifyDomain } from '../actions'
 
 interface Props {
   domains: string[]
@@ -46,7 +46,7 @@ export function AddDomainDialog({
   domainVerificationToken,
 }: Props) {
   const [domainVerified, setDomainVerified] = useState(false)
-  const [domain, setDomain] = useState("")
+  const [domain, setDomain] = useState('')
   const [checkingVerificationStatus, setCheckingVerificationStatus] =
     useState(false)
   const [showDomainVerificationDialog, setShowDomainVerificationDialog] =
@@ -57,7 +57,7 @@ export function AddDomainDialog({
       open={showDomainVerificationDialog}
       onOpenChange={() => {
         setShowDomainVerificationDialog(!showDomainVerificationDialog)
-        setDomain("")
+        setDomain('')
         setDomainVerified(false)
         setCheckingVerificationStatus(false)
       }}
@@ -72,7 +72,7 @@ export function AddDomainDialog({
           <DialogTitle>Add a Domain</DialogTitle>
           <DialogDescription>
             Add a verified domain so that your organization&apos;s end-users can
-            be forwarded directly to this IdP to log in.{" "}
+            be forwarded directly to this IdP to log in.{' '}
             <a
               className="underline underline-offset-4"
               href={`https://auth0.com/docs/authenticate/login/auth0-universal-login/identifier-first#define-home-realm-discovery-identity-providers`}
@@ -115,8 +115,8 @@ export function AddDomainDialog({
                       variant="outline"
                       type="button"
                       onClick={async () => {
-                        await navigator.clipboard.writeText("@")
-                        toast.success("TXT record name copied to clipboard.")
+                        await navigator.clipboard.writeText('@')
+                        toast.success('TXT record name copied to clipboard.')
                       }}
                     >
                       <CopyIcon className="size-4" />
@@ -140,7 +140,7 @@ export function AddDomainDialog({
                         await navigator.clipboard.writeText(
                           `${DOMAIN_VERIFICATION_RECORD_IDENTIFIER}=${domainVerificationToken}`
                         )
-                        toast.success("TXT record value copied to clipboard.")
+                        toast.success('TXT record value copied to clipboard.')
                       }}
                     >
                       <CopyIcon className="size-4" />
@@ -159,9 +159,9 @@ export function AddDomainDialog({
 
                   if (result.error) {
                     toast.error(result.error)
-                  } else if ("verified" in result && result.verified) {
+                  } else if ('verified' in result && result.verified) {
                     setDomainVerified(result.verified)
-                    toast.success("Domain has been verified.")
+                    toast.success('Domain has been verified.')
                   }
 
                   setCheckingVerificationStatus(false)
@@ -175,11 +175,11 @@ export function AddDomainDialog({
                   <>
                     <SymbolIcon
                       className={cn(
-                        "mr-2 size-4",
-                        checkingVerificationStatus ? "animate-spin" : ""
+                        'mr-2 size-4',
+                        checkingVerificationStatus ? 'animate-spin' : ''
                       )}
-                    />{" "}
-                    {checkingVerificationStatus ? "Checking..." : "Check Again"}
+                    />{' '}
+                    {checkingVerificationStatus ? 'Checking...' : 'Check Again'}
                   </>
                 )}
               </Button>
@@ -194,7 +194,7 @@ export function AddDomainDialog({
               // ensure that the domain does not already exist
               const domainExists = domains.find((d) => d === domain)
               if (domainExists) {
-                toast.error("Domain has already been added.")
+                toast.error('Domain has already been added.')
                 return
               }
 

@@ -1,28 +1,28 @@
-"use server"
+'use server'
 
-import { revalidatePath } from "next/cache"
-import { type SessionData } from "@auth0/nextjs-auth0/types"
+import { revalidatePath } from 'next/cache'
+import { type SessionData } from '@auth0/nextjs-auth0/types'
 
-import { managementClient } from "@/lib/auth0-manage"
+import { managementClient } from '@/lib/auth0-manage'
 import {
   DEFAULT_MFA_POLICY,
   DEFAULT_SESSION_POLICY,
   SUPPORTED_PROVIDERS,
-} from "@/lib/mfa-policy"
-import { withServerActionAuth } from "@/lib/with-server-action-auth"
+} from '@/lib/mfa-policy'
+import { withServerActionAuth } from '@/lib/with-server-action-auth'
 
 export const updateMfaPolicy = withServerActionAuth(
   async function updateMfaPolicy(formData: FormData, session: SessionData) {
-    const enforce = !!formData.get("enforce")
-    const skipForPasskey = !!formData.get("skip_for_passkey")
-    const skipForDomains = formData.get("skip_for_domains")
+    const enforce = !!formData.get('enforce')
+    const skipForPasskey = !!formData.get('skip_for_passkey')
+    const skipForDomains = formData.get('skip_for_domains')
     const providers = SUPPORTED_PROVIDERS.map((p) => formData.get(p)).filter(
       Boolean
     )
 
     const parsedSkipForDomains =
-      skipForDomains && typeof skipForDomains === "string"
-        ? skipForDomains.split(",").map((d) => d.trim())
+      skipForDomains && typeof skipForDomains === 'string'
+        ? skipForDomains.split(',').map((d) => d.trim())
         : []
 
     try {
@@ -50,7 +50,7 @@ export const updateMfaPolicy = withServerActionAuth(
         }
       )
 
-      revalidatePath("/dashboard/organization/security-policies")
+      revalidatePath('/dashboard/organization/security-policies')
     } catch (error) {
       console.error("failed to update the organization's MFA policy", error)
       return {
@@ -61,14 +61,14 @@ export const updateMfaPolicy = withServerActionAuth(
     return {}
   },
   {
-    role: "admin",
+    role: 'admin',
   }
 )
 
 export const updateSessionPolicy = withServerActionAuth(
   async function updateSessionPolicy(formData: FormData, session: SessionData) {
-    const sessionLifetimeMs = formData.get("session_lifetime_ms")
-    const idleTimeoutMs = formData.get("idle_timeout_ms")
+    const sessionLifetimeMs = formData.get('session_lifetime_ms')
+    const idleTimeoutMs = formData.get('idle_timeout_ms')
 
     try {
       const { data: org } = await managementClient.organizations.get({
@@ -109,9 +109,9 @@ export const updateSessionPolicy = withServerActionAuth(
         }),
       }
 
-      console.log("metadata", metadata)
+      console.log('metadata', metadata)
 
-      revalidatePath("/dashboard/organization/security-policies")
+      revalidatePath('/dashboard/organization/security-policies')
     } catch (error) {
       console.error("failed to update the organization's session policy", error)
       return {
@@ -122,6 +122,6 @@ export const updateSessionPolicy = withServerActionAuth(
     return {}
   },
   {
-    role: "admin",
+    role: 'admin',
   }
 )

@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import Image from "next/image"
-import { toast } from "sonner"
+import Image from 'next/image'
+import { toast } from 'sonner'
 
 import {
   Card,
@@ -10,12 +10,12 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { SubmitButton } from "@/components/submit-button"
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { SubmitButton } from '@/components/submit-button'
 
-import { updateOrganization } from "./actions"
+import { updateOrganization } from './actions'
 
 interface Props {
   organization: {
@@ -35,7 +35,7 @@ export function DisplayNameForm({ organization }: Props) {
         if (error) {
           toast.error(error)
         } else {
-          toast.success("The organization has been updated.")
+          toast.success('The organization has been updated.')
         }
       }}
     >
@@ -88,7 +88,7 @@ export function DisplayNameForm({ organization }: Props) {
                 name="logo_url"
                 type="url"
                 placeholder="https://example.com/logo.png"
-                defaultValue={organization.logoUrl || ""}
+                defaultValue={organization.logoUrl || ''}
               />
               <p className="text-muted-foreground text-xs">
                 Enter a URL for your organization logo. Recommended size:

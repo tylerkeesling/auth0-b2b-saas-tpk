@@ -25,7 +25,7 @@ export default function Privacy() {
                       If you are a California resident, please review the
                       section of this
                       <a href="https://www.okta.com/privacy-policy/#xi">
-                        {" "}
+                        {' '}
                         <u>Privacy Policy for California residents</u>
                       </a>
                       .
@@ -37,7 +37,7 @@ export default function Privacy() {
                       offices, where Okta, Inc. and our affiliates are located,
                       can be found at
                       <a href="https://www.okta.com/contact">
-                        {" "}
+                        {' '}
                         <u>https://www.okta.com/contact</u>
                       </a>
                       .
@@ -114,7 +114,7 @@ export default function Privacy() {
                       including our Trust &amp; Compliance Documentation, all of
                       which are available online at
                       <a href="https://www.okta.com/agreements">
-                        {" "}
+                        {' '}
                         <u>https://www.okta.com/agreements</u>
                       </a>
                       .
@@ -574,7 +574,7 @@ export default function Privacy() {
                       permissions to share data with cookie providers, please
                       visit the section below on
                       <a href="https://www.okta.com/privacy-policy/#x">
-                        {" "}
+                        {' '}
                         <u>Your Information Choices</u>
                       </a>
                       .
@@ -594,7 +594,7 @@ export default function Privacy() {
                       If you would like to manage your email subscriptions with
                       us, please visit the section below on
                       <a href="https://www.okta.com/privacy-policy/#x">
-                        {" "}
+                        {' '}
                         <u>Your Information Choices</u>
                       </a>
                       .
@@ -616,7 +616,7 @@ export default function Privacy() {
                       <strong>
                         For the purpose of communicating with you about our
                         products and services and facilitate other interaction.
-                      </strong>{" "}
+                      </strong>{' '}
                       We may use your Personal Data, such as contact data,
                       Ancillary Data, and metadata, to send you transactional
                       communications, notices, updates, security alerts, and
@@ -931,7 +931,7 @@ export default function Privacy() {
                       intentionally disclose your details by providing your
                       information to these sponsors through consent via a
                       registration form. You can review a list of our current
-                      partners{" "}
+                      partners{' '}
                       <a href="https://www.okta.com/partners/meet-our-partners/">
                         <u>here</u>
                       </a>
@@ -997,9 +997,9 @@ export default function Privacy() {
                       consent banner on our website. For details on your choices
                       with respect this sharing or disclosure, please see
                       <a href="https://www.okta.com/privacy-policy/#x">
-                        {" "}
+                        {' '}
                         <u>Your Information Choices</u>
-                      </a>{" "}
+                      </a>{' '}
                       below. For specific details on these companies&apos;
                       privacy practices, please visit their privacy policies.
                     </p>
@@ -1115,7 +1115,7 @@ export default function Privacy() {
                       Trust &amp; Compliance documentation, which is available
                       at
                       <a href="https://www.okta.com/agreements">
-                        {" "}
+                        {' '}
                         <u>https://www.okta.com/agreements</u>
                       </a>
                       .
@@ -1129,7 +1129,7 @@ export default function Privacy() {
                       where Okta, Inc. and its affiliates are located can be
                       found online at
                       <a href="https://www.okta.com/contact">
-                        {" "}
+                        {' '}
                         <u>https://www.okta.com/contact</u>
                       </a>
                       .
@@ -1185,7 +1185,7 @@ export default function Privacy() {
                       more about the Data Privacy Framework (DPF) program, and
                       to view our certification, please visit
                       <a href="https://www.dataprivacyframework.gov/">
-                        {" "}
+                        {' '}
                         <u>https://www.dataprivacyframework.gov/</u>
                       </a>
                       .
@@ -1205,7 +1205,7 @@ export default function Privacy() {
                       complaints to the Data Privacy Framework Services owned
                       and operated by BBB National Programs
                       <a href="https://bbbprograms.org/programs/all-programs/dpf-consumers/ProcessForConsumers">
-                        {" "}
+                        {' '}
                         <u>here</u>
                       </a>
                       .&nbsp; The services of the Data Privacy Framework
@@ -1215,7 +1215,7 @@ export default function Privacy() {
                       invoke binding arbitration for some residual claims not
                       resolved by other redress mechanisms, as described
                       <a href="https://www.dataprivacyframework.gov/s/article/ANNEX-I-introduction-dpf?tabset-35584=2">
-                        {" "}
+                        {' '}
                         <u>here</u>
                       </a>
                       . Individuals located in the EEA, UK or in Switzerland
@@ -1309,7 +1309,7 @@ export default function Privacy() {
                       <li>
                         Visit our
                         <a href="https://pages.okta.com/Subscription-Center.html?_ga=2.102160513.123408423.1673385006-370614266.1671549320&amp;_gl=1*59vry7*_ga*MzcwNjE0MjY2LjE2NzE1NDkzMjA.*_ga_QKMSDV5369*MTY3MzUzNjExMi4yNzcuMS4xNjczNTM4Mzg1LjU5LjAuMA..">
-                          {" "}
+                          {' '}
                           <u>Subscription Center</u>
                         </a>
                         . Please note, you cannot unsubscribe from critical
@@ -1321,7 +1321,7 @@ export default function Privacy() {
                         For the Okta Talent Community, then you may visit our
                         Talent Community unsubscribe page
                         <a href="https://talent.okta.com/UnsubscribePage.html">
-                          {" "}
+                          {' '}
                           <u>here</u>
                         </a>
                         .
@@ -1330,7 +1330,7 @@ export default function Privacy() {
                         For Okta Consumer Products, you may update your
                         preferences by logging into your account
                         <a href="https://personal.okta.com/enduser/settings">
-                          {" "}
+                          {' '}
                           <u>here</u>
                         </a>
                         .
@@ -1339,12 +1339,12 @@ export default function Privacy() {
                     <p>
                       <strong>
                         Direct Marketing – Phone or Postal Mailings.
-                      </strong>{" "}
+                      </strong>{' '}
                       If you wish to withdraw from phone call or postal mail
                       marketing communications from Okta, please request to do
                       so through our
                       <a href="https://www.okta.com/subject-right-requests/">
-                        {" "}
+                        {' '}
                         <u>form</u>
                       </a>
                       .
@@ -1355,12 +1355,12 @@ export default function Privacy() {
                       described below. For more information on how to opt-out of
                       tracking technology from Google Analytics, click
                       <a href="https://tools.google.com/dlpage/gaoptout?hl=en">
-                        {" "}
+                        {' '}
                         <u>here</u>
                       </a>
                       . To opt-out of Marketo&apos;s tracking technology, click
                       <a href="https://pages.okta.com/Global-Cookie-Opt-Out-Request.html">
-                        {" "}
+                        {' '}
                         <u>here</u>
                       </a>
                       .
@@ -1373,7 +1373,7 @@ export default function Privacy() {
                       please contact us at privacy@okta.com or please make a
                       request for this through our
                       <a href="https://www.okta.com/subject-right-requests/">
-                        {" "}
+                        {' '}
                         <u>form</u>
                       </a>
                       .
@@ -1386,13 +1386,13 @@ export default function Privacy() {
                     <ul>
                       <li>
                         We use OneTrust as a service provider to help you manage
-                        cookies. Click the following{" "}
+                        cookies. Click the following{' '}
                         <a href="#">Cookies Settings</a> OneTrust preference
                         center or the
                         <a href="https://auth0.com/?open_pref=true">
-                          {" "}
+                          {' '}
                           <u>Auth0 by Okta Cookie Settings</u>
-                        </a>{" "}
+                        </a>{' '}
                         to opt-out of relevant advertising and other
                         non-essential cookies. (You may need to adjust your
                         browser or cookie settings to access if you have already
@@ -1411,22 +1411,22 @@ export default function Privacy() {
                         through the Digital Advertising Alliance by using the
                         following, applicable link(s): (i)
                         <a href="https://optout.aboutads.info/?c=2&amp;lang=EN">
-                          {" "}
+                          {' '}
                           <u>USA</u>
                         </a>
                         ; (ii)
                         <a href="https://www.youronlinechoices.com/">
-                          {" "}
+                          {' '}
                           <u>Europe</u>
                         </a>
                         ; (iii)
                         <a href="https://youradchoices.ca/">
-                          {" "}
+                          {' '}
                           <u>Canada</u>
                         </a>
                         ; and (iv)
                         <a href="https://optout.aboutads.info/?c=2&amp;lang=EN">
-                          {" "}
+                          {' '}
                           <u>Other regions</u>
                         </a>
                         .
@@ -1523,9 +1523,9 @@ export default function Privacy() {
                       rights described above or have questions or concerns,
                       please complete our online
                       <a href="https://preferences.okta.com/privacy/">
-                        {" "}
+                        {' '}
                         <u>form</u>
-                      </a>{" "}
+                      </a>{' '}
                       or reach out to us using the contact information below.
                       You also have the right to lodge a complaint with your
                       relevant supervisory authority.
@@ -1556,7 +1556,7 @@ export default function Privacy() {
                       details that you must provide to us to verify your
                       request,
                       <a href="https://www.okta.com/verification-process/">
-                        {" "}
+                        {' '}
                         <u>click here</u>
                       </a>
                       . To learn more about how we collect, use, disclose, and
@@ -1632,9 +1632,9 @@ export default function Privacy() {
                       CCPA.&nbsp; For further information on our retention
                       criteria see
                       <a href="https://www.okta.com/privacy-policy/#ix">
-                        {" "}
+                        {' '}
                         <u>Section IX</u>
-                      </a>{" "}
+                      </a>{' '}
                       above.
                     </p>
                     <p>
@@ -1743,7 +1743,7 @@ export default function Privacy() {
                       <strong>
                         Business Purposes For Which Sensitive Personal Data will
                         be Used or Disclosed
-                      </strong>{" "}
+                      </strong>{' '}
                       We may collect the categories of Sensitive Personal Data
                       listed for processing job applications and the purposes as
                       further described in Section IV above, and to further our
@@ -1775,7 +1775,7 @@ export default function Privacy() {
                     <p>
                       <strong>
                         Right to Know About Personal Data Collected, Disclosed,
-                        or Sold.{" "}
+                        or Sold.{' '}
                       </strong>
                       You have the right to request to know what Personal Data
                       we collect, use, disclose, share and sell about you.
@@ -1791,7 +1791,7 @@ export default function Privacy() {
                       <strong>
                         Right to Opt-Out of the Sale or Sharing of Personal
                         Data.
-                      </strong>{" "}
+                      </strong>{' '}
                       You have the right to opt-out of the sale of your Personal
                       Data by us as a business. Okta shares Personal Data as
                       described above, which may be considered a “sale” of
@@ -1811,7 +1811,7 @@ export default function Privacy() {
                       extension incorporating the GPC signal, you can visit the
                       GPC website
                       <a href="https://globalprivacycontrol.org/">
-                        {" "}
+                        {' '}
                         <u>here</u>
                       </a>
                       .
@@ -1867,7 +1867,7 @@ export default function Privacy() {
                       If you would like to make a request and exercise your
                       rights described above, please complete our online
                       <a href="https://preferences.okta.com/privacy/">
-                        {" "}
+                        {' '}
                         <u>form</u>
                       </a>
                       , or contact us via the telephone number listed in the
@@ -1895,7 +1895,7 @@ export default function Privacy() {
                     <p>
                       Online Form: Click
                       <a href="https://preferences.okta.com/privacy/">
-                        {" "}
+                        {' '}
                         <u>here</u>
                       </a>
                       .
@@ -1960,7 +1960,7 @@ export default function Privacy() {
                     </p>
                     <p>
                       For the January 01, 2023 archived Privacy Policy, please
-                      visit{" "}
+                      visit{' '}
                       <a href="https://www.okta.com/privacy-policy/2023-01-archived/">
                         https://www.okta.com/privacy-policy/2023-01-archived/
                       </a>

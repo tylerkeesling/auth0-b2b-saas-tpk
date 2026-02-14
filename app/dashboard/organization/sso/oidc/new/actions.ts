@@ -1,67 +1,67 @@
-"use server"
+'use server'
 
-import crypto from "crypto"
-import { revalidatePath } from "next/cache"
-import { type SessionData } from "@auth0/nextjs-auth0/types"
-import slugify from "@sindresorhus/slugify"
+import crypto from 'crypto'
+import { revalidatePath } from 'next/cache'
+import { type SessionData } from '@auth0/nextjs-auth0/types'
+import slugify from '@sindresorhus/slugify'
 
-import { managementClient } from "@/lib/auth0-manage"
-import { verifyDnsRecords } from "@/lib/domain-verification"
-import { withServerActionAuth } from "@/lib/with-server-action-auth"
+import { managementClient } from '@/lib/auth0-manage'
+import { verifyDnsRecords } from '@/lib/domain-verification'
+import { withServerActionAuth } from '@/lib/with-server-action-auth'
 
 export const createConnection = withServerActionAuth(
   async function createConnection(formData: FormData, session: SessionData) {
-    const displayName = formData.get("display_name")
-    const discoveryUrl = formData.get("discovery_url")
-    const clientId = formData.get("client_id")
-    const clientSecret = formData.get("client_secret")
-    const domainAliases = formData.get("domains")
-    const type = formData.get("type")
-    const scope = formData.get("scope")
-    const assignMembershipOnLogin = formData.get("assign_membership_on_login")
+    const displayName = formData.get('display_name')
+    const discoveryUrl = formData.get('discovery_url')
+    const clientId = formData.get('client_id')
+    const clientSecret = formData.get('client_secret')
+    const domainAliases = formData.get('domains')
+    const type = formData.get('type')
+    const scope = formData.get('scope')
+    const assignMembershipOnLogin = formData.get('assign_membership_on_login')
 
-    if (!displayName || typeof displayName !== "string") {
+    if (!displayName || typeof displayName !== 'string') {
       return {
-        error: "Connection name is required.",
+        error: 'Connection name is required.',
       }
     }
 
-    if (!discoveryUrl || typeof discoveryUrl !== "string") {
+    if (!discoveryUrl || typeof discoveryUrl !== 'string') {
       return {
-        error: "Discovery URL is required.",
+        error: 'Discovery URL is required.',
       }
     }
 
-    if (!clientId || typeof clientId !== "string") {
+    if (!clientId || typeof clientId !== 'string') {
       return {
-        error: "Client ID is required.",
+        error: 'Client ID is required.',
       }
     }
 
-    if (!type || typeof type !== "string") {
+    if (!type || typeof type !== 'string') {
       return {
-        error: "Type is required.",
+        error: 'Type is required.',
       }
     }
 
-    if (!scope || typeof scope !== "string") {
+    if (!scope || typeof scope !== 'string') {
       return {
-        error: "Scope is required.",
+        error: 'Scope is required.',
       }
     }
 
     if (
       !assignMembershipOnLogin ||
-      typeof assignMembershipOnLogin !== "string"
+      typeof assignMembershipOnLogin !== 'string'
     ) {
       return {
-        error: "Auto-membership is required.",
+        error: 'Auto-membership is required.',
       }
     }
 
     const parsedDomains =
-      domainAliases && typeof domainAliases === "string"
-        ? domainAliases.split(",").map((d) => d.trim())
+      domainAliases && typeof domainAliases === 'string'
+        ? domainAliases.split(',').map((d) => d.trim())
         : []
 
     // ensure that the domains are verified
@@ -81,8 +81,8 @@ export const createConnection = withServerActionAuth(
         display_name: displayName,
         // we append a suffix to the connection identifier as they must be globally
         // unique and we want to avoid collisions when supplied by the user
-        name: `${slugify(displayName)}-${crypto.randomBytes(4).toString("hex")}`,
-        strategy: "oidc",
+        name: `${slugify(displayName)}-${crypto.randomBytes(4).toString('hex')}`,
+        strategy: 'oidc',
         enabled_clients: [process.env.AUTH0_CLIENT_ID],
         options: {
           type,
@@ -100,30 +100,30 @@ export const createConnection = withServerActionAuth(
         {
           connection_id: connection.id,
           assign_membership_on_login:
-            assignMembershipOnLogin === "enabled" ? true : false,
+            assignMembershipOnLogin === 'enabled' ? true : false,
         }
       )
 
-      revalidatePath("/dashboard/organization/sso")
+      revalidatePath('/dashboard/organization/sso')
     } catch (error) {
-      console.error("failed to create the SSO connection", error)
+      console.error('failed to create the SSO connection', error)
       return {
-        error: "Failed to create the SSO connection.",
+        error: 'Failed to create the SSO connection.',
       }
     }
 
     return {}
   },
   {
-    role: "admin",
+    role: 'admin',
   }
 )
 
 export const deleteConnection = withServerActionAuth(
   async function deleteConnection(connectionId: string, session: SessionData) {
-    if (!connectionId || typeof connectionId !== "string") {
+    if (!connectionId || typeof connectionId !== 'string') {
       return {
-        error: "Connection ID is required.",
+        error: 'Connection ID is required.',
       }
     }
 
@@ -138,7 +138,7 @@ export const deleteConnection = withServerActionAuth(
 
       if (!connection) {
         return {
-          error: "Connection not found.",
+          error: 'Connection not found.',
         }
       }
 
@@ -146,17 +146,17 @@ export const deleteConnection = withServerActionAuth(
         id: connectionId,
       })
 
-      revalidatePath("/dashboard/organization/sso")
+      revalidatePath('/dashboard/organization/sso')
 
       return {}
     } catch (error) {
-      console.error("failed to delete the SSO connection", error)
+      console.error('failed to delete the SSO connection', error)
       return {
-        error: "Failed to delete the SSO connection.",
+        error: 'Failed to delete the SSO connection.',
       }
     }
   },
   {
-    role: "admin",
+    role: 'admin',
   }
 )

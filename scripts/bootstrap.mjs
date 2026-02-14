@@ -1,18 +1,18 @@
-import { randomBytes } from "node:crypto"
-import { readFile, writeFile } from "node:fs/promises"
-import { $ } from "execa"
-import ora from "ora"
+import { randomBytes } from 'node:crypto'
+import { readFile, writeFile } from 'node:fs/promises'
+import { $ } from 'execa'
+import ora from 'ora'
 
-const APP_BASE_URL = "http://localhost:3000"
-const MANAGEMENT_CLIENT_NAME = "SaaStart Management"
-const DASHBOARD_CLIENT_NAME = "SaaStart Dashboard"
-const DEFAULT_CONNECTION_NAME = "SaaStart-Shared-Database"
-const CUSTOM_CLAIMS_NAMESPACE = "https://example.com"
+const APP_BASE_URL = 'http://localhost:3000'
+const MANAGEMENT_CLIENT_NAME = 'SaaStart Management'
+const DASHBOARD_CLIENT_NAME = 'SaaStart Dashboard'
+const DEFAULT_CONNECTION_NAME = 'SaaStart-Shared-Database'
+const CUSTOM_CLAIMS_NAMESPACE = 'https://example.com'
 
 // checks
 
-if (process.version.replace("v", "").split(".")[0] < 20) {
-  console.error("Node.js version 20 or later is required to run this script.")
+if (process.version.replace('v', '').split('.')[0] < 20) {
+  console.error('Node.js version 20 or later is required to run this script.')
   process.exit(1)
 }
 
@@ -24,24 +24,24 @@ try {
   cliCheck.succeed()
 } catch (e) {
   cliCheck.fail(
-    "The Auth0 CLI must be installed: https://github.com/auth0/auth0-cli"
+    'The Auth0 CLI must be installed: https://github.com/auth0/auth0-cli'
   )
   process.exit(1)
 }
 
 // NOTE: we're outputting as CSV here due to a bug in the Auth0 CLI that doesn't respect the --json flag
 // https://github.com/auth0/auth0-cli/pull/1002
-const tenantSettingsArgs = ["tenants", "list", "--csv"]
+const tenantSettingsArgs = ['tenants', 'list', '--csv']
 
 const { stdout } = await $`auth0 ${tenantSettingsArgs}`
 
 // parse the CSV to get the current active tenant (skip the first line)
 // and get the one that starts with the "→" symbol
 const AUTH0_DOMAIN = stdout
-  .split("\n")
+  .split('\n')
   .slice(1)
-  .find((line) => line.includes("→"))
-  .split(",")[1]
+  .find((line) => line.includes('→'))
+  .split(',')[1]
   .trim()
 
 // tenant settings
@@ -305,8 +305,8 @@ const createSecurityPoliesAction = ora({
 }).start()
 let securityPoliciesAction
 try {
-  const code = await readFile("./actions/security-policies.js", {
-    encoding: "utf-8",
+  const code = await readFile('./actions/security-policies.js', {
+    encoding: 'utf-8',
   })
 
   // prettier-ignore
@@ -345,8 +345,8 @@ const createAddDefaultRoleAction = ora({
 }).start()
 let addDefaultRoleAction
 try {
-  const code = await readFile("./actions/add-default-role.js", {
-    encoding: "utf-8",
+  const code = await readFile('./actions/add-default-role.js', {
+    encoding: 'utf-8',
   })
 
   // prettier-ignore
@@ -388,8 +388,8 @@ const createAddRoleToTokensAction = ora({
 }).start()
 let addRoleToTokensAction
 try {
-  const code = await readFile("./actions/add-role-to-tokens.js", {
-    encoding: "utf-8",
+  const code = await readFile('./actions/add-role-to-tokens.js', {
+    encoding: 'utf-8',
   })
 
   // prettier-ignore
@@ -470,14 +470,14 @@ const writeEnvVars = ora({
 }).start()
 try {
   await writeFile(
-    ".env.local",
+    '.env.local',
     `
 APP_BASE_URL=${APP_BASE_URL}
 
 # Global Auth0 SDK configuration
 NEXT_PUBLIC_AUTH0_DOMAIN=${AUTH0_DOMAIN}
 AUTH0_MANAGEMENT_API_DOMAIN=${AUTH0_DOMAIN}
-SESSION_ENCRYPTION_SECRET=${randomBytes(32).toString("hex")}
+SESSION_ENCRYPTION_SECRET=${randomBytes(32).toString('hex')}
 
 # Client ID and secret for the application within the context of an organization
 AUTH0_CLIENT_ID=${dashboardClient.client_id}
@@ -513,8 +513,8 @@ const createUniversalLoginTheme = ora({
 }).start()
 
 try {
-  const theme = await readFile("./themes/universal-login.json", {
-    encoding: "utf-8",
+  const theme = await readFile('./themes/universal-login.json', {
+    encoding: 'utf-8',
   })
 
   // prettier-ignore
@@ -607,7 +607,7 @@ async function waitUntilActionIsBuilt(actionId) {
   while (true) {
     const { stdout } = await $`auth0 actions show ${actionId} --json`
     const action = JSON.parse(stdout)
-    if (action.status === "built") {
+    if (action.status === 'built') {
       break
     }
     await new Promise((resolve) => setTimeout(resolve, 1500))

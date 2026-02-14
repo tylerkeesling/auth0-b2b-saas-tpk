@@ -1,10 +1,10 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { toast } from "sonner"
+import { useState } from 'react'
+import { toast } from 'sonner'
 
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -12,12 +12,12 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { SubmitButton } from "@/components/submit-button"
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { SubmitButton } from '@/components/submit-button'
 
-import { updateProfile } from "./actions"
+import { updateProfile } from './actions'
 
 interface Profile {
   name: string
@@ -52,7 +52,7 @@ export function DisplayProfileForm({ profile }: Props) {
                 value={
                   profile.phone_number
                     ? formatPhoneNumber(profile.phone_number)
-                    : ""
+                    : ''
                 }
                 disabled
                 placeholder="(not set)"
@@ -102,7 +102,7 @@ export function DisplayProfileForm({ profile }: Props) {
             if (error) {
               toast.error(error)
             } else {
-              toast.success("Your profile has been updated.")
+              toast.success('Your profile has been updated.')
               setEditMode(false)
             }
           }}
@@ -124,7 +124,7 @@ export function DisplayProfileForm({ profile }: Props) {
                 value={
                   profile.phone_number
                     ? formatPhoneNumber(profile.phone_number)
-                    : ""
+                    : ''
                 }
                 disabled
                 placeholder="(not set)"
@@ -173,7 +173,7 @@ export function DisplayProfileForm({ profile }: Props) {
 
 function formatPhoneNumber(phone: string) {
   // Simple US formatting, can be improved for international
-  const cleaned = ("" + phone).replace(/\D/g, "")
+  const cleaned = ('' + phone).replace(/\D/g, '')
   const match = cleaned.match(/^1?(\d{3})(\d{3})(\d{4})$/)
   if (match) {
     return `(${match[1]}) ${match[2]}-${match[3]}`

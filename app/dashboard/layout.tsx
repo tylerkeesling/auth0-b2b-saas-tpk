@@ -1,18 +1,18 @@
-import { redirect } from "next/navigation"
-import { Auth0Provider } from "@auth0/nextjs-auth0"
+import { redirect } from 'next/navigation'
+import { Auth0Provider } from '@auth0/nextjs-auth0'
 
-import { appClient } from "@/lib/auth0"
-import { managementClient } from "@/lib/auth0-manage"
-import { getRole } from "@/lib/roles"
-import { Separator } from "@/components/ui/separator"
+import { appClient } from '@/lib/auth0'
+import { managementClient } from '@/lib/auth0-manage'
+import { getRole } from '@/lib/roles'
+import { Separator } from '@/components/ui/separator'
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/app-sidebar"
-import { SidebarBreadcrumbs } from "@/components/sidebar-breadcrumbs"
-import { ModeToggle } from "@/components/mode-toggle"
+} from '@/components/ui/sidebar'
+import { AppSidebar } from '@/components/app-sidebar'
+import { ModeToggle } from '@/components/mode-toggle'
+import { SidebarBreadcrumbs } from '@/components/sidebar-breadcrumbs'
 
 export default async function DashboardLayout({
   children,
@@ -21,7 +21,7 @@ export default async function DashboardLayout({
 
   // if the user is not authenticated, redirect to login
   if (!session?.user) {
-    redirect("/auth/login")
+    redirect('/auth/login')
   }
 
   const { data: orgs } = await managementClient.users.getUserOrganizations({
@@ -30,7 +30,7 @@ export default async function DashboardLayout({
 
   // if the user does not belong to any organizations, redirect to onboarding
   if (!orgs.length) {
-    redirect("/onboarding/create")
+    redirect('/onboarding/create')
   }
 
   const role = getRole(session.user)
@@ -45,11 +45,11 @@ export default async function DashboardLayout({
             displayName: o.display_name!,
             logoUrl: o.branding?.logo_url,
           }))}
-          currentOrgId={session.user.org_id ?? ""}
+          currentOrgId={session.user.org_id ?? ''}
           user={{
-            name: session.user.name ?? "",
-            email: session.user.email ?? "",
-            picture: session.user.picture ?? "",
+            name: session.user.name ?? '',
+            email: session.user.email ?? '',
+            picture: session.user.picture ?? '',
           }}
           userRole={role}
         />

@@ -1,15 +1,15 @@
-"use client"
+'use client'
 
-import { Trash2 } from "lucide-react"
-import moment from "moment"
-import { toast } from "sonner"
+import { Trash2 } from 'lucide-react'
+import moment from 'moment'
+import { toast } from 'sonner'
 
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
-import { SubmitButton } from "@/components/submit-button"
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
+import { SubmitButton } from '@/components/submit-button'
 
-import { revokePasskey } from "./actions"
+import { revokePasskey } from './actions'
 
 export type Passkey = {
   id: string
@@ -67,7 +67,7 @@ export function PasskeyForm({ passkeys }: PasskeyProps) {
                 if (error) {
                   toast.error(error)
                 } else {
-                  toast.success("Your passkey has been deleted.")
+                  toast.success('Your passkey has been deleted.')
                 }
               }}
             >
@@ -82,15 +82,15 @@ export function PasskeyForm({ passkeys }: PasskeyProps) {
               <div>
                 <span className="text-sm">
                   {moment(passkey.last_auth_at).format(
-                    "MMMM DD, YYYY, hh:mm:ss A"
+                    'MMMM DD, YYYY, hh:mm:ss A'
                   )}
                 </span>
               </div>
               <div>
                 <Badge className="pointer-events-none h-fit bg-green-300 font-light text-black">
-                  {passkey.credential_device_type === "single_device"
-                    ? "DEVICE BOUND"
-                    : "SYNCED"}
+                  {passkey.credential_device_type === 'single_device'
+                    ? 'DEVICE BOUND'
+                    : 'SYNCED'}
                 </Badge>
               </div>
               <div className="flex justify-end">

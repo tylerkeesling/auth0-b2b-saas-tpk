@@ -1,23 +1,23 @@
-"use server"
+'use server'
 
-import { revalidatePath } from "next/cache"
-import { redirect } from "next/navigation"
+import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
 
-import { appClient } from "@/lib/auth0"
-import { managementClient } from "@/lib/auth0-manage"
+import { appClient } from '@/lib/auth0'
+import { managementClient } from '@/lib/auth0-manage'
 
 export async function updateProfile(formData: FormData) {
   const session = await appClient.getSession()
 
   if (!session) {
-    return redirect("/auth/login")
+    return redirect('/auth/login')
   }
 
-  const name = formData.get("name")
+  const name = formData.get('name')
 
-  if (!name || typeof name !== "string") {
+  if (!name || typeof name !== 'string') {
     return {
-      error: "Name is required.",
+      error: 'Name is required.',
     }
   }
 
@@ -39,11 +39,11 @@ export async function updateProfile(formData: FormData) {
         name,
       },
     })
-    revalidatePath("/", "layout")
+    revalidatePath('/', 'layout')
   } catch (error) {
-    console.error("failed to update profile", error)
+    console.error('failed to update profile', error)
     return {
-      error: "Failed to update your profile.",
+      error: 'Failed to update your profile.',
     }
   }
 
@@ -54,7 +54,7 @@ export async function deleteAccount() {
   const session = await appClient.getSession()
 
   if (!session) {
-    return redirect("/auth/login")
+    return redirect('/auth/login')
   }
 
   try {
@@ -64,9 +64,9 @@ export async function deleteAccount() {
 
     return {}
   } catch (error) {
-    console.error("failed to delete account", error)
+    console.error('failed to delete account', error)
     return {
-      error: "Failed to delete your account.",
+      error: 'Failed to delete your account.',
     }
   }
 }

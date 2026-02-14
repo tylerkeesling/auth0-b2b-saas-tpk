@@ -1,9 +1,9 @@
-import { redirect } from "next/navigation"
+import { redirect } from 'next/navigation'
 
-import { appClient } from "@/lib/auth0"
-import { managementClient } from "@/lib/auth0-manage"
+import { appClient } from '@/lib/auth0'
+import { managementClient } from '@/lib/auth0-manage'
 
-import { ScimForm } from "../../../../components/provisioning/scim-form"
+import { ScimForm } from '../../../../components/provisioning/scim-form'
 
 export default async function Provisioning({
   params,
@@ -14,7 +14,7 @@ export default async function Provisioning({
   const session = await appClient.getSession()
 
   if (!session) {
-    return redirect("/auth/login")
+    return redirect('/auth/login')
   }
 
   // ensure that the connection ID being fetched is owned by the organization
@@ -26,7 +26,7 @@ export default async function Provisioning({
     })
 
   if (!enabledConnection) {
-    redirect("/dashboard/organization/sso")
+    redirect('/dashboard/organization/sso')
   }
 
   let scimConfig

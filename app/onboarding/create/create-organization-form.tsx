@@ -1,20 +1,20 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { useUser } from "@auth0/nextjs-auth0"
-import slugify from "@sindresorhus/slugify"
-import { toast } from "sonner"
+import { useState } from 'react'
+import { useUser } from '@auth0/nextjs-auth0'
+import slugify from '@sindresorhus/slugify'
+import { toast } from 'sonner'
 
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Code } from "@/components/code"
-import { SubmitButton } from "@/components/submit-button"
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Code } from '@/components/code'
+import { SubmitButton } from '@/components/submit-button'
 
-import { createOrganization } from "./actions"
+import { createOrganization } from './actions'
 
 export function CreateOrganizationForm() {
   const { user } = useUser()
-  const [name, setName] = useState("")
+  const [name, setName] = useState('')
 
   return (
     <form
@@ -24,7 +24,7 @@ export function CreateOrganizationForm() {
         if (error) {
           toast.error(error)
         } else {
-          toast.success("Your organization has been created.")
+          toast.success('Your organization has been created.')
         }
       }}
     >
@@ -32,7 +32,7 @@ export function CreateOrganizationForm() {
         <div className="grid gap-2">
           <Label htmlFor="email">Email</Label>
           <Input
-            value={user?.email || ""}
+            value={user?.email || ''}
             id="email"
             placeholder="name@example.com"
             type="email"
@@ -55,7 +55,7 @@ export function CreateOrganizationForm() {
             onChange={(e) => setName(e.target.value)}
           />
           <p className="text-muted-foreground text-sm">
-            Slug: <Code>{slugify(name || "Acme Corp")}</Code>
+            Slug: <Code>{slugify(name || 'Acme Corp')}</Code>
           </p>
         </div>
         <SubmitButton>Create Organization</SubmitButton>

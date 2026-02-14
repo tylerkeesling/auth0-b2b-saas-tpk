@@ -159,7 +159,7 @@ export default function Privacy() {
             <h3>Your personal information</h3>
             <p>
               Use of your personal information submitted to or via the Site is
-              governed by our{" "}
+              governed by our{' '}
               <a href="https://auth0.com/privacy">privacy policy</a>.
             </p>
             <hr />

@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 import {
   Card,
@@ -9,10 +9,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { SubmitButton } from "@/components/submit-button"
+} from '@/components/ui/card'
+import { SubmitButton } from '@/components/submit-button'
 
-import { deleteAccount } from "./actions"
+import { deleteAccount } from './actions'
 
 export function DeleteAccountForm() {
   const router = useRouter()
@@ -27,10 +27,10 @@ export function DeleteAccountForm() {
             toast.error(error)
           } else {
             toast.success(
-              "Your account has been deleted and you will be logged out."
+              'Your account has been deleted and you will be logged out.'
             )
 
-            router.push("/auth/logout")
+            router.push('/auth/logout')
           }
         }}
       >

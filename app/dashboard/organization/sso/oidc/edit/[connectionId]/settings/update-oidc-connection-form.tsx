@@ -1,11 +1,11 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { CopyIcon, InfoCircledIcon, TrashIcon } from "@radix-ui/react-icons"
-import { toast } from "sonner"
+import { useState } from 'react'
+import { CopyIcon, InfoCircledIcon, TrashIcon } from '@radix-ui/react-icons'
+import { toast } from 'sonner'
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Button } from "@/components/ui/button"
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -13,16 +13,16 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Separator } from "@/components/ui/separator"
-import { Code } from "@/components/code"
-import { SubmitButton } from "@/components/submit-button"
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { Separator } from '@/components/ui/separator'
+import { Code } from '@/components/code'
+import { SubmitButton } from '@/components/submit-button'
 
-import { AddDomainDialog } from "../../../../components/add-domain-dialog"
-import { updateConnection } from "./actions"
+import { AddDomainDialog } from '../../../../components/add-domain-dialog'
+import { updateConnection } from './actions'
 
 const CALLBACK_URL = `https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/login/callback`
 
@@ -37,7 +37,7 @@ export interface OidcConnection {
     clientId: string
     clientSecret?: string
     scope: string
-    type: "front_channel" | "back_channel"
+    type: 'front_channel' | 'back_channel'
   }
 }
 
@@ -64,7 +64,7 @@ export function UpdateOidcConnectionForm({
           if (error) {
             toast.error(error)
           } else {
-            toast.success("The connection has been updated.")
+            toast.success('The connection has been updated.')
           }
         }}
       >
@@ -123,7 +123,7 @@ export function UpdateOidcConnectionForm({
                   <div className="space-y-1.5">
                     <div>Front Channel</div>
                     <div className="text-muted-foreground leading-normal">
-                      Uses <Code>response_mode=form_post</Code> and{" "}
+                      Uses <Code>response_mode=form_post</Code> and{' '}
                       <Code>response_type=id_token</Code>.
                     </div>
                   </div>
@@ -162,7 +162,7 @@ export function UpdateOidcConnectionForm({
             />
           </div>
 
-          {type === "back_channel" && (
+          {type === 'back_channel' && (
             <div className="grid w-full items-center gap-2">
               <Label htmlFor="client_secret">Client Secret</Label>
               <Input
@@ -197,7 +197,7 @@ export function UpdateOidcConnectionForm({
               name="domains"
               type="text"
               className="hidden"
-              value={domains.join(",")}
+              value={domains.join(',')}
               readOnly
             />
             {domains.length > 0 ? (
@@ -245,7 +245,7 @@ export function UpdateOidcConnectionForm({
                   type="button"
                   onClick={async () => {
                     await navigator.clipboard.writeText(CALLBACK_URL)
-                    toast.success("Callback URL copied to clipboard.")
+                    toast.success('Callback URL copied to clipboard.')
                   }}
                 >
                   <CopyIcon className="size-4" />
@@ -262,7 +262,7 @@ export function UpdateOidcConnectionForm({
               id="assign_membership_on_login"
               name="assign_membership_on_login"
               defaultValue={
-                connection.assignMembershipOnLogin ? "enabled" : "disabled"
+                connection.assignMembershipOnLogin ? 'enabled' : 'disabled'
               }
               className="grid grid-cols-2 gap-2"
             >

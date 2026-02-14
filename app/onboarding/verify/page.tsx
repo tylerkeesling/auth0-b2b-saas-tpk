@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import { EnvelopeClosedIcon } from "@radix-ui/react-icons"
-import { toast } from "sonner"
+import { EnvelopeClosedIcon } from '@radix-ui/react-icons'
+import { toast } from 'sonner'
 
 import {
   Card,
@@ -9,10 +9,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { SubmitButton } from "@/components/submit-button"
+} from '@/components/ui/card'
+import { SubmitButton } from '@/components/submit-button'
 
-import { resendVerificationEmail } from "./actions"
+import { resendVerificationEmail } from './actions'
 
 export default function Verify() {
   return (
@@ -38,7 +38,7 @@ export default function Verify() {
             }
 
             toast.success(
-              "The verification e-mail has successfully been sent. Please check your inbox."
+              'The verification e-mail has successfully been sent. Please check your inbox.'
             )
           }}
         >

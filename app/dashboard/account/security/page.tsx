@@ -1,17 +1,17 @@
-import { redirect } from "next/navigation"
+import { redirect } from 'next/navigation'
 
-import { appClient } from "@/lib/auth0"
-import { managementClient } from "@/lib/auth0-manage"
-import { SUPPORTED_PROVIDERS } from "@/lib/mfa-policy"
-import { PageHeader } from "@/components/page-header"
+import { appClient } from '@/lib/auth0'
+import { managementClient } from '@/lib/auth0-manage'
+import { SUPPORTED_PROVIDERS } from '@/lib/mfa-policy'
+import { PageHeader } from '@/components/page-header'
 
-import { MFAEnrollmentForm } from "./mfa-enrollment-form"
+import { MFAEnrollmentForm } from './mfa-enrollment-form'
 
 export default async function Profile() {
   const session = await appClient.getSession()
 
   if (!session) {
-    return redirect("/auth/login?returnTo=/dashboard/account/security")
+    return redirect('/auth/login?returnTo=/dashboard/account/security')
   }
 
   const userId = session?.user.sub
@@ -20,7 +20,7 @@ export default async function Profile() {
     await Promise.all([
       managementClient.guardian.getFactors(),
       managementClient.users.getAuthenticationMethods({ id: userId }),
-      managementClient.users.get({ id: userId, fields: "user_metadata" }),
+      managementClient.users.get({ id: userId, fields: 'user_metadata' }),
     ])
 
   const factors = factorsResponse.data
@@ -37,12 +37,12 @@ export default async function Profile() {
       const enrollmentInfo = enrollments.find((enrollment: any) => {
         let factorName: string = factor.name
 
-        if (factor.name === "push-notification") {
-          factorName = "guardian"
+        if (factor.name === 'push-notification') {
+          factorName = 'guardian'
         }
 
-        if (factor.name === "sms" || factor.name === "voice") {
-          factorName = "phone"
+        if (factor.name === 'sms' || factor.name === 'voice') {
+          factorName = 'phone'
         }
 
         return enrollment.type.includes(factorName)

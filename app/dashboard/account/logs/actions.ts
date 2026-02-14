@@ -1,8 +1,9 @@
-"use server"
+'use server'
 
-import { managementClient } from "@/lib/auth0-manage"
-import { appClient } from "@/lib/auth0"
-import { GetLogsRequest } from "auth0"
+import { GetLogsRequest } from 'auth0'
+
+import { appClient } from '@/lib/auth0'
+import { managementClient } from '@/lib/auth0-manage'
 
 export interface LogEntry {
   log_id: string
@@ -40,9 +41,21 @@ export interface GetLogsResult {
 }
 
 const VALID_LOG_TYPES = new Set([
-  "s", "f", "fp", "fu", "ss", "fs", "slo", "flo",
-  "seacft", "svr", "fvr", "scpn", "fcpn", "api",
-  "oidc_backchannel_logout_succeeded",
+  's',
+  'f',
+  'fp',
+  'fu',
+  'ss',
+  'fs',
+  'slo',
+  'flo',
+  'seacft',
+  'svr',
+  'fvr',
+  'scpn',
+  'fcpn',
+  'api',
+  'oidc_backchannel_logout_succeeded',
 ])
 
 const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/
@@ -59,30 +72,30 @@ export async function getLogs({
     // Verify the session and ensure the user can only fetch their own logs
     const session = await appClient.getSession()
     if (!session || session.user.sub !== userId) {
-      return { logs: [], hasMore: false, error: "Unauthorized" }
+      return { logs: [], hasMore: false, error: 'Unauthorized' }
     }
 
     // Sanitize userId to prevent Lucene query injection
     const safeUserId = userId.replace(/"/g, '\\"')
     let query = `user_id:"${safeUserId}"`
 
-    if (type && type !== "all") {
+    if (type && type !== 'all') {
       if (!VALID_LOG_TYPES.has(type)) {
-        return { logs: [], hasMore: false, error: "Invalid log type" }
+        return { logs: [], hasMore: false, error: 'Invalid log type' }
       }
       query += ` AND type:${type}`
     }
 
     if (fromDate) {
       if (!ISO_DATE_RE.test(fromDate)) {
-        return { logs: [], hasMore: false, error: "Invalid from date" }
+        return { logs: [], hasMore: false, error: 'Invalid from date' }
       }
       query += ` AND date:[${fromDate} TO *]`
     }
 
     if (toDate) {
       if (!ISO_DATE_RE.test(toDate)) {
-        return { logs: [], hasMore: false, error: "Invalid to date" }
+        return { logs: [], hasMore: false, error: 'Invalid to date' }
       }
       query += ` AND date:[* TO ${toDate}]`
     }
@@ -92,7 +105,7 @@ export async function getLogs({
     // Request one extra to detect if there are more pages
     const params: GetLogsRequest = {
       q: query,
-      sort: "date:-1",
+      sort: 'date:-1',
       page,
       per_page: perPage + 1,
     }
@@ -110,14 +123,14 @@ export async function getLogs({
       hasMore,
     }
   } catch (error) {
-    console.error("Error fetching logs:", error)
+    console.error('Error fetching logs:', error)
     return {
       logs: [],
       hasMore: false,
       error:
         error instanceof Error
           ? error.message
-          : "An error occurred while fetching logs",
+          : 'An error occurred while fetching logs',
     }
   }
 }

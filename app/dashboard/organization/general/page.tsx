@@ -1,16 +1,16 @@
-import { redirect } from "next/navigation"
+import { redirect } from 'next/navigation'
 
-import { appClient } from "@/lib/auth0"
-import { managementClient } from "@/lib/auth0-manage"
-import { PageHeader } from "@/components/page-header"
+import { appClient } from '@/lib/auth0'
+import { managementClient } from '@/lib/auth0-manage'
+import { PageHeader } from '@/components/page-header'
 
-import { DisplayNameForm } from "./display-name-form"
+import { DisplayNameForm } from './display-name-form'
 
 export default async function GeneralSettings() {
   const session = await appClient.getSession()
 
   if (!session) {
-    redirect("/auth/login")
+    redirect('/auth/login')
   }
 
   const { data: org } = await managementClient.organizations.get({

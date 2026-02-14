@@ -1,11 +1,14 @@
-import { describe, it, expect, vi } from "vitest"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { fireEvent, render, screen } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
 
-vi.mock("next/navigation", () => ({
-  usePathname: () => "/dashboard",
+import { SidebarProvider } from '@/components/ui/sidebar'
+import { NavUser } from '@/components/nav-user'
+
+vi.mock('next/navigation', () => ({
+  usePathname: () => '/dashboard',
 }))
 
-vi.mock("next/link", () => ({
+vi.mock('next/link', () => ({
   default: ({
     children,
     href,
@@ -20,13 +23,10 @@ vi.mock("next/link", () => ({
   ),
 }))
 
-import { NavUser } from "@/components/nav-user"
-import { SidebarProvider } from "@/components/ui/sidebar"
-
 const user = {
-  name: "Jane Smith",
-  email: "jane@example.com",
-  picture: "https://example.com/avatar.jpg",
+  name: 'Jane Smith',
+  email: 'jane@example.com',
+  picture: 'https://example.com/avatar.jpg',
 }
 
 function renderNavUser(props = {}) {
@@ -38,30 +38,30 @@ function renderNavUser(props = {}) {
 }
 
 function openUserDropdown() {
-  const trigger = screen.getByText("Jane Smith").closest("button")!
-  fireEvent.pointerDown(trigger, { button: 0, pointerType: "mouse" })
+  const trigger = screen.getByText('Jane Smith').closest('button')!
+  fireEvent.pointerDown(trigger, { button: 0, pointerType: 'mouse' })
 }
 
-describe("NavUser", () => {
-  it("renders user name and email", () => {
+describe('NavUser', () => {
+  it('renders user name and email', () => {
     renderNavUser()
-    expect(screen.getByText("Jane Smith")).toBeInTheDocument()
-    expect(screen.getByText("jane@example.com")).toBeInTheDocument()
+    expect(screen.getByText('Jane Smith')).toBeInTheDocument()
+    expect(screen.getByText('jane@example.com')).toBeInTheDocument()
   })
 
-  it("renders avatar fallback from first letter of name", () => {
+  it('renders avatar fallback from first letter of name', () => {
     renderNavUser()
-    expect(screen.getByText("J")).toBeInTheDocument()
+    expect(screen.getByText('J')).toBeInTheDocument()
   })
 
-  it("opens dropdown with profile and logout links", () => {
+  it('opens dropdown with profile and logout links', () => {
     renderNavUser()
     openUserDropdown()
 
-    const profileLink = screen.getByText("Profile").closest("a")
-    expect(profileLink).toHaveAttribute("href", "/dashboard/account/profile")
+    const profileLink = screen.getByText('Profile').closest('a')
+    expect(profileLink).toHaveAttribute('href', '/dashboard/account/profile')
 
-    const logoutLink = screen.getByText("Log out").closest("a")
-    expect(logoutLink).toHaveAttribute("href", "/auth/logout")
+    const logoutLink = screen.getByText('Log out').closest('a')
+    expect(logoutLink).toHaveAttribute('href', '/auth/logout')
   })
 })

@@ -1,7 +1,7 @@
-import Link from "next/link"
-import { ArrowRightIcon } from "lucide-react"
+import Link from 'next/link'
+import { ArrowRightIcon } from 'lucide-react'
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
 
 export function WelcomeBackCard() {
   return (

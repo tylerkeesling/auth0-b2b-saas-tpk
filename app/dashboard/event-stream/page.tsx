@@ -1,7 +1,7 @@
-import { getEvents } from "@/lib/data"
-import { PageHeader } from "@/components/page-header"
+import { getEvents } from '@/lib/data'
+import { PageHeader } from '@/components/page-header'
 
-import EventStreamList from "./event-stream-list"
+import EventStreamList from './event-stream-list'
 
 export default async function WebhookEventsPage() {
   const events = await getEvents()

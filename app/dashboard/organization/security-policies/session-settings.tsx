@@ -1,10 +1,10 @@
-"use client"
+'use client'
 
-import { useEffect, useState } from "react"
-import { InfoIcon as InfoCircle } from "lucide-react"
-import { toast } from "sonner"
+import { useEffect, useState } from 'react'
+import { InfoIcon as InfoCircle } from 'lucide-react'
+import { toast } from 'sonner'
 
-import { Badge } from "@/components/ui/badge"
+import { Badge } from '@/components/ui/badge'
 import {
   Card,
   CardContent,
@@ -12,26 +12,26 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
+} from '@/components/ui/card'
+import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Slider } from "@/components/ui/slider"
-import { Switch } from "@/components/ui/switch"
+} from '@/components/ui/select'
+import { Slider } from '@/components/ui/slider'
+import { Switch } from '@/components/ui/switch'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { SubmitButton } from "@/components/submit-button"
+} from '@/components/ui/tooltip'
+import { SubmitButton } from '@/components/submit-button'
 
-import { updateSessionPolicy } from "./actions"
+import { updateSessionPolicy } from './actions'
 
 export function SessionSettings({
   sessionPolicy,
@@ -46,8 +46,8 @@ export function SessionSettings({
   )
 
   useEffect(() => {
-    console.log("sessionLifetime", sessionLifetime)
-    console.log("idleTimeout", idleTimeout)
+    console.log('sessionLifetime', sessionLifetime)
+    console.log('idleTimeout', idleTimeout)
   }, [sessionLifetime, idleTimeout])
 
   // Placeholder state for disabled fields
@@ -66,11 +66,11 @@ export function SessionSettings({
         action={async (formData: FormData) => {
           // Convert minutes to ms before sending to server action
           formData.set(
-            "session_lifetime_ms",
+            'session_lifetime_ms',
             (Number(sessionLifetime) * 60 * 1000).toString()
           )
           formData.set(
-            "idle_timeout_ms",
+            'idle_timeout_ms',
             (Number(idleTimeout) * 60 * 1000).toString()
           )
           const { error } = await updateSessionPolicy(formData)

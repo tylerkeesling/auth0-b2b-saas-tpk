@@ -1,4 +1,4 @@
-import { Suspense } from "react"
+import { Suspense } from 'react'
 
 export default async function ErrorLayout({
   children,

@@ -1,11 +1,11 @@
-import Link from "next/link"
-import { ArrowLeftIcon } from "@radix-ui/react-icons"
+import Link from 'next/link'
+import { ArrowLeftIcon } from '@radix-ui/react-icons'
 
-import { appClient } from "@/lib/auth0"
-import { getOrCreateDomainVerificationToken } from "@/lib/domain-verification"
-import { Button } from "@/components/ui/button"
+import { appClient } from '@/lib/auth0'
+import { getOrCreateDomainVerificationToken } from '@/lib/domain-verification'
+import { Button } from '@/components/ui/button'
 
-import { CreateOidcConnectionForm } from "./create-oidc-connection-form"
+import { CreateOidcConnectionForm } from './create-oidc-connection-form'
 
 export default async function CreateOidcConnection() {
   const session = await appClient.getSession()

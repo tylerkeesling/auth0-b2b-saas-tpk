@@ -1,19 +1,19 @@
-"use client"
+'use client'
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { type LucideIcon } from "lucide-react"
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { type LucideIcon } from 'lucide-react'
 
 import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuItem,
   SidebarMenuButton,
+  SidebarMenuItem,
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from "@/components/ui/sidebar"
+} from '@/components/ui/sidebar'
 
 interface NavMainProps {
   title: string

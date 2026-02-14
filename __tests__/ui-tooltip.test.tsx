@@ -1,15 +1,16 @@
-import * as React from "react"
-import { describe, it, expect } from "vitest"
-import { render, screen } from "@testing-library/react"
+import * as React from 'react'
+import { render, screen } from '@testing-library/react'
+import { describe, expect, it } from 'vitest'
+
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from '@/components/ui/tooltip'
 
-describe("TooltipContent", () => {
-  it("renders inside provider", () => {
+describe('TooltipContent', () => {
+  it('renders inside provider', () => {
     render(
       <TooltipProvider>
         <Tooltip defaultOpen>
@@ -18,10 +19,10 @@ describe("TooltipContent", () => {
         </Tooltip>
       </TooltipProvider>
     )
-    expect(screen.getAllByText("Tooltip text").length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('Tooltip text').length).toBeGreaterThanOrEqual(1)
   })
 
-  it("forwards ref", () => {
+  it('forwards ref', () => {
     const ref = React.createRef<HTMLDivElement>()
     render(
       <TooltipProvider>

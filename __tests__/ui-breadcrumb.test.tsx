@@ -1,16 +1,17 @@
-import * as React from "react"
-import { describe, it, expect } from "vitest"
-import { render, screen } from "@testing-library/react"
+import * as React from 'react'
+import { render, screen } from '@testing-library/react'
+import { describe, expect, it } from 'vitest'
+
 import {
   Breadcrumb,
-  BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
+  BreadcrumbList,
   BreadcrumbPage,
-} from "@/components/ui/breadcrumb"
+} from '@/components/ui/breadcrumb'
 
-describe("Breadcrumb", () => {
-  it("renders nav with aria-label", () => {
+describe('Breadcrumb', () => {
+  it('renders nav with aria-label', () => {
     render(
       <Breadcrumb>
         <BreadcrumbList>
@@ -20,20 +21,20 @@ describe("Breadcrumb", () => {
         </BreadcrumbList>
       </Breadcrumb>
     )
-    expect(screen.getByRole("navigation")).toHaveAttribute(
-      "aria-label",
-      "breadcrumb"
+    expect(screen.getByRole('navigation')).toHaveAttribute(
+      'aria-label',
+      'breadcrumb'
     )
   })
 
-  it("forwards ref on Breadcrumb", () => {
+  it('forwards ref on Breadcrumb', () => {
     const ref = React.createRef<HTMLElement>()
     render(<Breadcrumb ref={ref}>content</Breadcrumb>)
     expect(ref.current).toBeInstanceOf(HTMLElement)
-    expect(ref.current?.tagName).toBe("NAV")
+    expect(ref.current?.tagName).toBe('NAV')
   })
 
-  it("forwards ref on BreadcrumbList", () => {
+  it('forwards ref on BreadcrumbList', () => {
     const ref = React.createRef<HTMLOListElement>()
     render(
       <Breadcrumb>
@@ -45,7 +46,7 @@ describe("Breadcrumb", () => {
     expect(ref.current).toBeInstanceOf(HTMLOListElement)
   })
 
-  it("forwards ref on BreadcrumbItem", () => {
+  it('forwards ref on BreadcrumbItem', () => {
     const ref = React.createRef<HTMLLIElement>()
     render(
       <Breadcrumb>
@@ -57,7 +58,7 @@ describe("Breadcrumb", () => {
     expect(ref.current).toBeInstanceOf(HTMLLIElement)
   })
 
-  it("forwards ref on BreadcrumbLink", () => {
+  it('forwards ref on BreadcrumbLink', () => {
     const ref = React.createRef<HTMLAnchorElement>()
     render(
       <Breadcrumb>
@@ -73,7 +74,7 @@ describe("Breadcrumb", () => {
     expect(ref.current).toBeInstanceOf(HTMLAnchorElement)
   })
 
-  it("renders BreadcrumbLink with asChild", () => {
+  it('renders BreadcrumbLink with asChild', () => {
     render(
       <Breadcrumb>
         <BreadcrumbList>
@@ -85,10 +86,10 @@ describe("Breadcrumb", () => {
         </BreadcrumbList>
       </Breadcrumb>
     )
-    expect(screen.getByText("Custom Link")).toBeInTheDocument()
+    expect(screen.getByText('Custom Link')).toBeInTheDocument()
   })
 
-  it("renders BreadcrumbPage with aria-current", () => {
+  it('renders BreadcrumbPage with aria-current', () => {
     const ref = React.createRef<HTMLSpanElement>()
     render(
       <Breadcrumb>
@@ -100,6 +101,6 @@ describe("Breadcrumb", () => {
       </Breadcrumb>
     )
     expect(ref.current).toBeInstanceOf(HTMLSpanElement)
-    expect(screen.getByText("Current")).toHaveAttribute("aria-current", "page")
+    expect(screen.getByText('Current')).toHaveAttribute('aria-current', 'page')
   })
 })

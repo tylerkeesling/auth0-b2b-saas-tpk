@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation"
+import { redirect } from 'next/navigation'
 
 export default function DashboardHome() {
-  redirect("/dashboard/account/profile")
+  redirect('/dashboard/account/profile')
 }

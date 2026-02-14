@@ -1,7 +1,7 @@
-import { type SessionData } from "@auth0/nextjs-auth0/types"
+import { type SessionData } from '@auth0/nextjs-auth0/types'
 
-import { appClient } from "./auth0"
-import { getRole, Role } from "./roles"
+import { appClient } from './auth0'
+import { getRole, Role } from './roles'
 
 interface Options {
   role?: Role
@@ -20,7 +20,7 @@ export function withServerActionAuth<T extends any[], U extends any>(
 
     if (!session) {
       return {
-        error: "You must be authenticated to perform this action.",
+        error: 'You must be authenticated to perform this action.',
       }
     }
 

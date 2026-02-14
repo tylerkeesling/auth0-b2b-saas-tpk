@@ -1,46 +1,46 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { X } from "lucide-react"
+import { useState } from 'react'
+import { X } from 'lucide-react'
 
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Switch } from '@/components/ui/switch'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 export function IpRestrictions() {
   const [enableIpRestrictions, setEnableIpRestrictions] = useState(false)
   const [allowedIps, setAllowedIps] = useState<string[]>([
-    "192.168.1.0/24",
-    "10.0.0.1",
+    '192.168.1.0/24',
+    '10.0.0.1',
   ])
-  const [blockedIps, setBlockedIps] = useState<string[]>(["1.2.3.4"])
-  const [newIpInput, setNewIpInput] = useState("")
-  const [activeTab, setActiveTab] = useState("allow")
+  const [blockedIps, setBlockedIps] = useState<string[]>(['1.2.3.4'])
+  const [newIpInput, setNewIpInput] = useState('')
+  const [activeTab, setActiveTab] = useState('allow')
 
   const addIp = () => {
     if (!newIpInput.trim()) return
 
-    if (activeTab === "allow") {
+    if (activeTab === 'allow') {
       setAllowedIps([...allowedIps, newIpInput])
     } else {
       setBlockedIps([...blockedIps, newIpInput])
     }
 
-    setNewIpInput("")
+    setNewIpInput('')
   }
 
-  const removeIp = (ip: string, type: "allow" | "block") => {
-    if (type === "allow") {
+  const removeIp = (ip: string, type: 'allow' | 'block') => {
+    if (type === 'allow') {
       setAllowedIps(allowedIps.filter((item) => item !== ip))
     } else {
       setBlockedIps(blockedIps.filter((item) => item !== ip))
@@ -53,7 +53,7 @@ export function IpRestrictions() {
         <div className="flex items-center justify-between">
           <div>
             <CardTitle>
-              IP Restrictions{" "}
+              IP Restrictions{' '}
               <Badge
                 variant="outline"
                 className="no-pointer-events bg-amber-50 text-amber-700"
@@ -75,8 +75,8 @@ export function IpRestrictions() {
       <CardContent
         className={
           enableIpRestrictions
-            ? "space-y-6"
-            : "pointer-events-none space-y-6 opacity-50"
+            ? 'space-y-6'
+            : 'pointer-events-none space-y-6 opacity-50'
         }
       >
         <Tabs
@@ -120,7 +120,7 @@ export function IpRestrictions() {
                     >
                       {ip}
                       <button
-                        onClick={() => removeIp(ip, "allow")}
+                        onClick={() => removeIp(ip, 'allow')}
                         className="hover:bg-muted ml-1 rounded-full p-0.5"
                       >
                         <X className="h-3 w-3" />
@@ -165,7 +165,7 @@ export function IpRestrictions() {
                     >
                       {ip}
                       <button
-                        onClick={() => removeIp(ip, "block")}
+                        onClick={() => removeIp(ip, 'block')}
                         className="hover:bg-muted ml-1 rounded-full p-0.5"
                       >
                         <X className="h-3 w-3" />

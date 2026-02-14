@@ -1,11 +1,11 @@
-"use server"
+'use server'
 
-import { revalidatePath } from "next/cache"
-import { type SessionData } from "@auth0/nextjs-auth0/types"
+import { revalidatePath } from 'next/cache'
+import { type SessionData } from '@auth0/nextjs-auth0/types'
 
-import { managementClient } from "@/lib/auth0-manage"
-import { verifyDnsRecords } from "@/lib/domain-verification"
-import { withServerActionAuth } from "@/lib/with-server-action-auth"
+import { managementClient } from '@/lib/auth0-manage'
+import { verifyDnsRecords } from '@/lib/domain-verification'
+import { withServerActionAuth } from '@/lib/with-server-action-auth'
 
 export const updateConnection = withServerActionAuth(
   async function updateConnection(
@@ -13,57 +13,57 @@ export const updateConnection = withServerActionAuth(
     formData: FormData,
     session: SessionData
   ) {
-    const displayName = formData.get("display_name")
-    const discoveryUrl = formData.get("discovery_url")
-    const clientId = formData.get("client_id")
-    const clientSecret = formData.get("client_secret")
-    const domainAliases = formData.get("domains")
-    const type = formData.get("type")
-    const scope = formData.get("scope")
-    const assignMembershipOnLogin = formData.get("assign_membership_on_login")
+    const displayName = formData.get('display_name')
+    const discoveryUrl = formData.get('discovery_url')
+    const clientId = formData.get('client_id')
+    const clientSecret = formData.get('client_secret')
+    const domainAliases = formData.get('domains')
+    const type = formData.get('type')
+    const scope = formData.get('scope')
+    const assignMembershipOnLogin = formData.get('assign_membership_on_login')
 
-    if (!displayName || typeof displayName !== "string") {
+    if (!displayName || typeof displayName !== 'string') {
       return {
-        error: "Connection name is required.",
+        error: 'Connection name is required.',
       }
     }
 
-    if (!discoveryUrl || typeof discoveryUrl !== "string") {
+    if (!discoveryUrl || typeof discoveryUrl !== 'string') {
       return {
-        error: "Discovery URL is required.",
+        error: 'Discovery URL is required.',
       }
     }
 
-    if (!clientId || typeof clientId !== "string") {
+    if (!clientId || typeof clientId !== 'string') {
       return {
-        error: "Client ID is required.",
+        error: 'Client ID is required.',
       }
     }
 
-    if (!type || typeof type !== "string") {
+    if (!type || typeof type !== 'string') {
       return {
-        error: "Type is required.",
+        error: 'Type is required.',
       }
     }
 
-    if (!scope || typeof scope !== "string") {
+    if (!scope || typeof scope !== 'string') {
       return {
-        error: "Scope is required.",
+        error: 'Scope is required.',
       }
     }
 
     if (
       !assignMembershipOnLogin ||
-      typeof assignMembershipOnLogin !== "string"
+      typeof assignMembershipOnLogin !== 'string'
     ) {
       return {
-        error: "Auto-membership is required.",
+        error: 'Auto-membership is required.',
       }
     }
 
     const parsedDomains =
-      domainAliases && typeof domainAliases === "string"
-        ? domainAliases.split(",").map((d) => d.trim())
+      domainAliases && typeof domainAliases === 'string'
+        ? domainAliases.split(',').map((d) => d.trim())
         : []
 
     // ensure that the domains are verified
@@ -88,7 +88,7 @@ export const updateConnection = withServerActionAuth(
 
     if (!enabledConnection) {
       return {
-        error: "Connection not found.",
+        error: 'Connection not found.',
       }
     }
 
@@ -116,22 +116,22 @@ export const updateConnection = withServerActionAuth(
           },
           {
             assign_membership_on_login:
-              assignMembershipOnLogin === "enabled" ? true : false,
+              assignMembershipOnLogin === 'enabled' ? true : false,
           }
         ),
       ])
 
-      revalidatePath("/dashboard/organization/sso")
+      revalidatePath('/dashboard/organization/sso')
     } catch (error) {
-      console.error("failed to update the SSO connection", error)
+      console.error('failed to update the SSO connection', error)
       return {
-        error: "Failed to update the SSO connection.",
+        error: 'Failed to update the SSO connection.',
       }
     }
 
     return {}
   },
   {
-    role: "admin",
+    role: 'admin',
   }
 )

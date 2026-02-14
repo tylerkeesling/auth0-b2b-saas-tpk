@@ -1,10 +1,10 @@
-import { type NextRequest } from "next/server"
+import { type NextRequest } from 'next/server'
 
-import { appClient, onboardingClient } from "./lib/auth0"
+import { appClient, onboardingClient } from './lib/auth0'
 
 // Helper function to detect onboarding routes
 const isOnboardingRoute = (pathname: string): boolean => {
-  return pathname.startsWith("/onboarding")
+  return pathname.startsWith('/onboarding')
 }
 
 export async function middleware(request: NextRequest) {
@@ -28,6 +28,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico, sitemap.xml, robots.txt (metadata files)
      */
-    "/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+    '/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
   ],
 }

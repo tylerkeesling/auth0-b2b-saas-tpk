@@ -1,18 +1,18 @@
-import { managementClient } from "@/lib/auth0-manage"
-import { Role } from "@/lib/roles"
-import { getOrganizationSession } from "@/lib/with-organization-auth"
-import { PageHeader } from "@/components/page-header"
+import { managementClient } from '@/lib/auth0-manage'
+import { Role } from '@/lib/roles'
+import { getOrganizationSession } from '@/lib/with-organization-auth'
+import { PageHeader } from '@/components/page-header'
 
-import { CreateInvitationForm } from "./create-invitation-form"
-import { InvitationsList } from "./invitations-list"
-import { MembersList } from "./members-list"
+import { CreateInvitationForm } from './create-invitation-form'
+import { InvitationsList } from './invitations-list'
+import { MembersList } from './members-list'
 
 export default async function Members() {
   const session = await getOrganizationSession()
 
   const { data: members } = await managementClient.organizations.getMembers({
     id: session.user.org_id,
-    fields: ["user_id", "name", "email", "picture", "roles"].join(","),
+    fields: ['user_id', 'name', 'email', 'picture', 'roles'].join(','),
     include_fields: true,
   })
   const { data: invitations } =
@@ -33,7 +33,7 @@ export default async function Members() {
           name: m.name,
           email: m.email,
           picture: m.picture,
-          role: ((m.roles && m.roles[0]?.name) || "member") as Role,
+          role: ((m.roles && m.roles[0]?.name) || 'member') as Role,
         }))}
       />
 
@@ -50,8 +50,8 @@ export default async function Members() {
             i.roles &&
             i.roles[0] &&
             i.roles[0] === process.env.AUTH0_ADMIN_ROLE_ID
-              ? "admin"
-              : "member",
+              ? 'admin'
+              : 'member',
           url: i.invitation_url,
         }))}
       />

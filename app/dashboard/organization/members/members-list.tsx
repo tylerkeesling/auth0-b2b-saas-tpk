@@ -1,24 +1,24 @@
-"use client"
+'use client'
 
-import { DotsVerticalIcon, TrashIcon } from "@radix-ui/react-icons"
-import { toast } from "sonner"
+import { DotsVerticalIcon, TrashIcon } from '@radix-ui/react-icons'
+import { toast } from 'sonner'
 
-import { Role } from "@/lib/roles"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
+import { Role } from '@/lib/roles'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from '@/components/ui/card'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from '@/components/ui/dropdown-menu'
 import {
   Select,
   SelectContent,
@@ -26,7 +26,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from '@/components/ui/select'
 import {
   Table,
   TableBody,
@@ -34,9 +34,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from '@/components/ui/table'
 
-import { removeMember, updateRole } from "./actions"
+import { removeMember, updateRole } from './actions'
 
 interface Props {
   members: {

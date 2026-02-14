@@ -1,10 +1,10 @@
-"use client"
+'use client'
 
-import React, { useState } from "react"
-import { KeyIcon, KeySquareIcon } from "lucide-react"
-import { toast } from "sonner"
+import React, { useState } from 'react'
+import { KeyIcon, KeySquareIcon } from 'lucide-react'
+import { toast } from 'sonner'
 
-import { MfaPolicy } from "@/lib/mfa-policy"
+import { MfaPolicy } from '@/lib/mfa-policy'
 import {
   Card,
   CardContent,
@@ -12,15 +12,15 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
-import { Separator } from "@/components/ui/separator"
-import { Switch } from "@/components/ui/switch"
-import { Textarea } from "@/components/ui/textarea"
-import { SubmitButton } from "@/components/submit-button"
+} from '@/components/ui/card'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Label } from '@/components/ui/label'
+import { Separator } from '@/components/ui/separator'
+import { Switch } from '@/components/ui/switch'
+import { Textarea } from '@/components/ui/textarea'
+import { SubmitButton } from '@/components/submit-button'
 
-import { updateMfaPolicy } from "./actions"
+import { updateMfaPolicy } from './actions'
 
 interface Props {
   organization: {
@@ -115,7 +115,7 @@ export function MfaPolicyForm({ organization }: Props) {
               Do not enforce MFA for the following e-mail domains
             </Label>
             <Textarea
-              defaultValue={organization.mfaPolicy.skipForDomains.join(", ")}
+              defaultValue={organization.mfaPolicy.skipForDomains.join(', ')}
               placeholder="example.com, auth0.com"
               name="skip_for_domains"
               id="skip_for_domains"
@@ -145,7 +145,7 @@ export function MfaPolicyForm({ organization }: Props) {
 
                 <Checkbox
                   defaultChecked={organization.mfaPolicy.providers.includes(
-                    "otp"
+                    'otp'
                   )}
                   value="otp"
                   id="otp"
@@ -172,7 +172,7 @@ export function MfaPolicyForm({ organization }: Props) {
 
                 <Checkbox
                   defaultChecked={organization.mfaPolicy.providers.includes(
-                    "webauthn-roaming"
+                    'webauthn-roaming'
                   )}
                   value="webauthn-roaming"
                   id="webauthn-roaming"
@@ -197,7 +197,7 @@ export function MfaPolicyForm({ organization }: Props) {
 
                 <Checkbox
                   defaultChecked={organization.mfaPolicy.providers.includes(
-                    "phone"
+                    'phone'
                   )}
                   value="phone"
                   id="sms"

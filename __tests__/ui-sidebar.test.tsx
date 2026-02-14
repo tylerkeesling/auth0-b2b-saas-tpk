@@ -1,46 +1,48 @@
-import * as React from "react"
-import { describe, it, expect, vi } from "vitest"
-import { render, screen } from "@testing-library/react"
+import * as React from 'react'
+import { render, screen } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
+
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+} from '@/components/ui/sidebar'
 
 // Mock next/navigation
-vi.mock("next/navigation", () => ({
-  usePathname: () => "/dashboard",
+vi.mock('next/navigation', () => ({
+  usePathname: () => '/dashboard',
   useRouter: () => ({ push: vi.fn() }),
 }))
 
 // Mock next-themes
-vi.mock("next-themes", () => ({
-  useTheme: () => ({ setTheme: vi.fn(), theme: "light" }),
+vi.mock('next-themes', () => ({
+  useTheme: () => ({ setTheme: vi.fn(), theme: 'light' }),
 }))
-
-import {
-  SidebarProvider,
-  Sidebar,
-  SidebarHeader,
-  SidebarContent,
-  SidebarFooter,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
-  SidebarGroup,
-  SidebarGroupLabel,
-} from "@/components/ui/sidebar"
 
 function renderWithProvider(ui: React.ReactNode) {
   return render(<SidebarProvider>{ui}</SidebarProvider>)
 }
 
-describe("Sidebar components", () => {
-  it("renders SidebarProvider", () => {
+describe('Sidebar components', () => {
+  it('renders SidebarProvider', () => {
     const { container } = render(
       <SidebarProvider>
         <div>content</div>
       </SidebarProvider>
     )
-    expect(container.querySelector(".group\\/sidebar-wrapper")).toBeInTheDocument()
+    expect(
+      container.querySelector('.group\\/sidebar-wrapper')
+    ).toBeInTheDocument()
   })
 
-  it("forwards ref on SidebarProvider", () => {
+  it('forwards ref on SidebarProvider', () => {
     const ref = React.createRef<HTMLDivElement>()
     render(
       <SidebarProvider ref={ref}>
@@ -50,7 +52,7 @@ describe("Sidebar components", () => {
     expect(ref.current).toBeInstanceOf(HTMLDivElement)
   })
 
-  it("renders Sidebar with data-sidebar attribute", () => {
+  it('renders Sidebar with data-sidebar attribute', () => {
     renderWithProvider(
       <Sidebar>
         <SidebarContent>content</SidebarContent>
@@ -61,7 +63,7 @@ describe("Sidebar components", () => {
     ).toBeInTheDocument()
   })
 
-  it("forwards ref on SidebarHeader", () => {
+  it('forwards ref on SidebarHeader', () => {
     const ref = React.createRef<HTMLDivElement>()
     renderWithProvider(
       <Sidebar>
@@ -70,10 +72,10 @@ describe("Sidebar components", () => {
       </Sidebar>
     )
     expect(ref.current).toBeInstanceOf(HTMLDivElement)
-    expect(ref.current?.getAttribute("data-sidebar")).toBe("header")
+    expect(ref.current?.getAttribute('data-sidebar')).toBe('header')
   })
 
-  it("forwards ref on SidebarContent", () => {
+  it('forwards ref on SidebarContent', () => {
     const ref = React.createRef<HTMLDivElement>()
     renderWithProvider(
       <Sidebar>
@@ -81,10 +83,10 @@ describe("Sidebar components", () => {
       </Sidebar>
     )
     expect(ref.current).toBeInstanceOf(HTMLDivElement)
-    expect(ref.current?.getAttribute("data-sidebar")).toBe("content")
+    expect(ref.current?.getAttribute('data-sidebar')).toBe('content')
   })
 
-  it("forwards ref on SidebarFooter", () => {
+  it('forwards ref on SidebarFooter', () => {
     const ref = React.createRef<HTMLDivElement>()
     renderWithProvider(
       <Sidebar>
@@ -93,10 +95,10 @@ describe("Sidebar components", () => {
       </Sidebar>
     )
     expect(ref.current).toBeInstanceOf(HTMLDivElement)
-    expect(ref.current?.getAttribute("data-sidebar")).toBe("footer")
+    expect(ref.current?.getAttribute('data-sidebar')).toBe('footer')
   })
 
-  it("renders SidebarMenu and SidebarMenuItem", () => {
+  it('renders SidebarMenu and SidebarMenuItem', () => {
     const menuItemRef = React.createRef<HTMLLIElement>()
     renderWithProvider(
       <Sidebar>
@@ -110,10 +112,10 @@ describe("Sidebar components", () => {
       </Sidebar>
     )
     expect(menuItemRef.current).toBeInstanceOf(HTMLLIElement)
-    expect(screen.getByText("Click me")).toBeInTheDocument()
+    expect(screen.getByText('Click me')).toBeInTheDocument()
   })
 
-  it("forwards ref on SidebarMenuButton", () => {
+  it('forwards ref on SidebarMenuButton', () => {
     const ref = React.createRef<HTMLButtonElement>()
     renderWithProvider(
       <Sidebar>
@@ -129,7 +131,7 @@ describe("Sidebar components", () => {
     expect(ref.current).toBeInstanceOf(HTMLButtonElement)
   })
 
-  it("renders SidebarGroup and SidebarGroupLabel", () => {
+  it('renders SidebarGroup and SidebarGroupLabel', () => {
     const groupRef = React.createRef<HTMLDivElement>()
     const labelRef = React.createRef<HTMLDivElement>()
     renderWithProvider(
@@ -142,8 +144,8 @@ describe("Sidebar components", () => {
       </Sidebar>
     )
     expect(groupRef.current).toBeInstanceOf(HTMLDivElement)
-    expect(groupRef.current?.getAttribute("data-sidebar")).toBe("group")
+    expect(groupRef.current?.getAttribute('data-sidebar')).toBe('group')
     expect(labelRef.current).toBeInstanceOf(HTMLDivElement)
-    expect(screen.getByText("Group Title")).toBeInTheDocument()
+    expect(screen.getByText('Group Title')).toBeInTheDocument()
   })
 })

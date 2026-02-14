@@ -1,12 +1,12 @@
-import { appClient } from "@/lib/auth0"
-import { managementClient } from "@/lib/auth0-manage"
-import { DEFAULT_MFA_POLICY, DEFAULT_SESSION_POLICY } from "@/lib/mfa-policy"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { PageHeader } from "@/components/page-header"
+import { appClient } from '@/lib/auth0'
+import { managementClient } from '@/lib/auth0-manage'
+import { DEFAULT_MFA_POLICY, DEFAULT_SESSION_POLICY } from '@/lib/mfa-policy'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { PageHeader } from '@/components/page-header'
 
-import { IpRestrictions } from "./ip-restrictions"
-import { MfaPolicyForm } from "./mfa-policy-form"
-import { SessionSettings } from "./session-settings"
+import { IpRestrictions } from './ip-restrictions'
+import { MfaPolicyForm } from './mfa-policy-form'
+import { SessionSettings } from './session-settings'
 
 export default async function SecurityPolicies() {
   const session = await appClient.getSession()

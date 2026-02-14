@@ -1,13 +1,13 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { CopyIcon, InfoCircledIcon, TrashIcon } from "@radix-ui/react-icons"
-import slugify from "@sindresorhus/slugify"
-import { toast } from "sonner"
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { CopyIcon, InfoCircledIcon, TrashIcon } from '@radix-ui/react-icons'
+import slugify from '@sindresorhus/slugify'
+import { toast } from 'sonner'
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Button } from "@/components/ui/button"
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -15,24 +15,24 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Separator } from "@/components/ui/separator"
-import { Switch } from "@/components/ui/switch"
-import { Code } from "@/components/code"
-import { SubmitButton } from "@/components/submit-button"
+} from '@/components/ui/select'
+import { Separator } from '@/components/ui/separator'
+import { Switch } from '@/components/ui/switch'
+import { Code } from '@/components/code'
+import { SubmitButton } from '@/components/submit-button'
 
-import { AddDomainDialog } from "../../components/add-domain-dialog"
-import { createConnection } from "./actions"
+import { AddDomainDialog } from '../../components/add-domain-dialog'
+import { createConnection } from './actions'
 
 const CALLBACK_URL = `https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/login/callback`
 
@@ -42,7 +42,7 @@ interface Props {
 
 export function CreateSamlConnectionForm({ domainVerificationToken }: Props) {
   const router = useRouter()
-  const [name, setName] = useState("")
+  const [name, setName] = useState('')
   const [domains, setDomains] = useState<string[]>([])
 
   return (
@@ -54,8 +54,8 @@ export function CreateSamlConnectionForm({ domainVerificationToken }: Props) {
           if (error) {
             toast.error(error)
           } else {
-            toast.success("The connection has been created.")
-            router.push("/dashboard/organization/sso")
+            toast.success('The connection has been created.')
+            router.push('/dashboard/organization/sso')
           }
         }}
       >
@@ -77,7 +77,7 @@ export function CreateSamlConnectionForm({ domainVerificationToken }: Props) {
               onChange={(e) => setName(e.target.value)}
             />
             <p className="text-muted-foreground text-sm">
-              Identifier: <Code>{slugify(name || "Acme SAML")}</Code>
+              Identifier: <Code>{slugify(name || 'Acme SAML')}</Code>
             </p>
           </div>
 
@@ -148,7 +148,7 @@ export function CreateSamlConnectionForm({ domainVerificationToken }: Props) {
               name="domains"
               type="text"
               className="hidden"
-              value={domains.join(",")}
+              value={domains.join(',')}
               readOnly
             />
             {domains.length > 0 ? (
@@ -186,14 +186,14 @@ export function CreateSamlConnectionForm({ domainVerificationToken }: Props) {
             <div className="space-y-0.5">
               <Label htmlFor="sign_request">Sign Request</Label>
               <p className="text-muted-foreground text-sm">
-                The request will be signed with <Code>RSA-SHA256</Code>.{" "}
+                The request will be signed with <Code>RSA-SHA256</Code>.{' '}
                 <a
                   className="underline underline-offset-4"
                   href={`https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/pem?cert=connection`}
                   target="_blank"
                 >
                   Download the certificate
-                </a>{" "}
+                </a>{' '}
                 to configure your identity provider to validate the request
                 signature.
               </p>
@@ -215,7 +215,7 @@ export function CreateSamlConnectionForm({ domainVerificationToken }: Props) {
                   type="button"
                   onClick={async () => {
                     await navigator.clipboard.writeText(CALLBACK_URL)
-                    toast.success("Post-back URL copied to clipboard.")
+                    toast.success('Post-back URL copied to clipboard.')
                   }}
                 >
                   <CopyIcon className="size-4" />

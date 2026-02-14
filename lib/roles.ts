@@ -1,4 +1,4 @@
-import { User } from "@auth0/nextjs-auth0/types"
+import { User } from '@auth0/nextjs-auth0/types'
 
 const ROLES_CLAIM_KEY = `${process.env.CUSTOM_CLAIMS_NAMESPACE}/roles`
 
@@ -14,5 +14,5 @@ export function getRole(user: User) {
   const role = (user[ROLES_CLAIM_KEY] as string[])[0]
 
   // if no role is assigned, set them to the default member role
-  return role || "member"
+  return role || 'member'
 }

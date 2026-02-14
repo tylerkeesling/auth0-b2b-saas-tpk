@@ -1,13 +1,9 @@
-"use client"
+'use client'
 
-import Link from "next/link"
-import {
-  ChevronsUpDown,
-  LogOut,
-  User as UserIcon,
-} from "lucide-react"
+import Link from 'next/link'
+import { ChevronsUpDown, LogOut, User as UserIcon } from 'lucide-react'
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,13 +12,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from '@/components/ui/dropdown-menu'
 import {
   SidebarMenu,
-  SidebarMenuItem,
   SidebarMenuButton,
+  SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar"
+} from '@/components/ui/sidebar'
 
 interface NavUserProps {
   user: {
@@ -46,11 +42,11 @@ export function NavUser({ user }: NavUserProps) {
             >
               <Avatar className="size-8 rounded-lg">
                 <AvatarImage
-                  src={user.picture || "/avatar.svg"}
+                  src={user.picture || '/avatar.svg'}
                   alt={user.name}
                 />
                 <AvatarFallback className="rounded-lg">
-                  {user.name?.[0]?.toUpperCase() ?? "U"}
+                  {user.name?.[0]?.toUpperCase() ?? 'U'}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -62,7 +58,7 @@ export function NavUser({ user }: NavUserProps) {
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-            side={isMobile ? "top" : "right"}
+            side={isMobile ? 'top' : 'right'}
             align="end"
             sideOffset={4}
           >
@@ -70,11 +66,11 @@ export function NavUser({ user }: NavUserProps) {
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="size-8 rounded-lg">
                   <AvatarImage
-                    src={user.picture || "/avatar.svg"}
+                    src={user.picture || '/avatar.svg'}
                     alt={user.name}
                   />
                   <AvatarFallback className="rounded-lg">
-                    {user.name?.[0]?.toUpperCase() ?? "U"}
+                    {user.name?.[0]?.toUpperCase() ?? 'U'}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">

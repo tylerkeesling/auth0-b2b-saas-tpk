@@ -1,6 +1,6 @@
-import { sql } from "@vercel/postgres"
+import { sql } from '@vercel/postgres'
 
-import { EventsTable } from "./definitions"
+import { EventsTable } from './definitions'
 
 export async function getEvents(): Promise<EventsTable[]> {
   try {
@@ -8,7 +8,7 @@ export async function getEvents(): Promise<EventsTable[]> {
       await sql<EventsTable>`SELECT * FROM webhook_events ORDER BY time DESC LIMIT 25`
     return rows
   } catch (error) {
-    console.error("Error fetching events:", error)
-    throw new Error("Failed to fetch events")
+    console.error('Error fetching events:', error)
+    throw new Error('Failed to fetch events')
   }
 }

@@ -1,24 +1,24 @@
-"use client"
+'use client'
 
-import { CopyIcon, DotsVerticalIcon, TrashIcon } from "@radix-ui/react-icons"
-import { toast } from "sonner"
+import { CopyIcon, DotsVerticalIcon, TrashIcon } from '@radix-ui/react-icons'
+import { toast } from 'sonner'
 
-import { Role } from "@/lib/roles"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { Role } from '@/lib/roles'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from '@/components/ui/card'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from '@/components/ui/dropdown-menu'
 import {
   Table,
   TableBody,
@@ -26,9 +26,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from '@/components/ui/table'
 
-import { revokeInvitation } from "./actions"
+import { revokeInvitation } from './actions'
 
 interface Props {
   invitations: {
@@ -84,7 +84,7 @@ export function InvitationsList({ invitations }: Props) {
                       <DropdownMenuItem
                         onSelect={async () => {
                           await navigator.clipboard.writeText(invitation.url)
-                          toast.success("Invitation link copied to clipboard.")
+                          toast.success('Invitation link copied to clipboard.')
                         }}
                       >
                         <CopyIcon className="mr-1 size-4" />

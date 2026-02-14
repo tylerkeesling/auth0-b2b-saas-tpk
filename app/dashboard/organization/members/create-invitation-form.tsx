@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import { useRef } from "react"
-import { toast } from "sonner"
+import { useRef } from 'react'
+import { toast } from 'sonner'
 
 import {
   Card,
@@ -10,19 +10,19 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { SubmitButton } from "@/components/submit-button"
+} from '@/components/ui/select'
+import { SubmitButton } from '@/components/submit-button'
 
-import { createInvitation } from "./actions"
+import { createInvitation } from './actions'
 
 export function CreateInvitationForm() {
   const ref = useRef<HTMLFormElement>(null)
@@ -36,7 +36,7 @@ export function CreateInvitationForm() {
         if (error) {
           toast.error(error)
         } else {
-          toast.success(`Invitation sent to ${formData.get("email")}`)
+          toast.success(`Invitation sent to ${formData.get('email')}`)
           ref.current?.reset()
         }
       }}

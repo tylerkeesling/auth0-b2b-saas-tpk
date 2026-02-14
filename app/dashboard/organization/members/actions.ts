@@ -1,28 +1,28 @@
-"use server"
+'use server'
 
-import { revalidatePath } from "next/cache"
-import { type SessionData } from "@auth0/nextjs-auth0/types"
+import { revalidatePath } from 'next/cache'
+import { type SessionData } from '@auth0/nextjs-auth0/types'
 
-import { managementClient } from "@/lib/auth0-manage"
-import { Role, roles } from "@/lib/roles"
-import { withServerActionAuth } from "@/lib/with-server-action-auth"
+import { managementClient } from '@/lib/auth0-manage'
+import { Role, roles } from '@/lib/roles'
+import { withServerActionAuth } from '@/lib/with-server-action-auth'
 
 export const createInvitation = withServerActionAuth(
   async function createInvitation(formData: FormData, session: SessionData) {
-    const email = formData.get("email")
+    const email = formData.get('email')
 
-    if (!email || typeof email !== "string") {
+    if (!email || typeof email !== 'string') {
       return {
-        error: "Email address is required.",
+        error: 'Email address is required.',
       }
     }
 
-    const role = formData.get("role") as Role
+    const role = formData.get('role') as Role
 
     if (
       !role ||
-      typeof role !== "string" ||
-      !["member", "admin"].includes(role)
+      typeof role !== 'string' ||
+      !['member', 'admin'].includes(role)
     ) {
       return {
         error: "Role is required and must be either 'member' or 'admin'.",
@@ -51,18 +51,18 @@ export const createInvitation = withServerActionAuth(
         }
       )
 
-      revalidatePath("/dashboard/organization/members")
+      revalidatePath('/dashboard/organization/members')
     } catch (error) {
-      console.error("failed to create invitation", error)
+      console.error('failed to create invitation', error)
       return {
-        error: "Failed to create invitation.",
+        error: 'Failed to create invitation.',
       }
     }
 
     return {}
   },
   {
-    role: "admin",
+    role: 'admin',
   }
 )
 
@@ -75,18 +75,18 @@ export const revokeInvitation = withServerActionAuth(
         invitation_id: invitationId,
       })
 
-      revalidatePath("/dashboard/organization/members")
+      revalidatePath('/dashboard/organization/members')
     } catch (error) {
-      console.error("failed to revoke invitation", error)
+      console.error('failed to revoke invitation', error)
       return {
-        error: "Failed to revoke invitation.",
+        error: 'Failed to revoke invitation.',
       }
     }
 
     return {}
   },
   {
-    role: "admin",
+    role: 'admin',
   }
 )
 
@@ -94,7 +94,7 @@ export const removeMember = withServerActionAuth(
   async function removeMember(userId: string, session: SessionData) {
     if (userId === session.user.sub) {
       return {
-        error: "You cannot remove yourself from an organization.",
+        error: 'You cannot remove yourself from an organization.',
       }
     }
 
@@ -109,18 +109,18 @@ export const removeMember = withServerActionAuth(
         }
       )
 
-      revalidatePath("/dashboard/organization/members")
+      revalidatePath('/dashboard/organization/members')
     } catch (error) {
-      console.error("failed to remove member", error)
+      console.error('failed to remove member', error)
       return {
-        error: "Failed to remove member.",
+        error: 'Failed to remove member.',
       }
     }
 
     return {}
   },
   {
-    role: "admin",
+    role: 'admin',
   }
 )
 
@@ -128,14 +128,14 @@ export const updateRole = withServerActionAuth(
   async function updateRole(userId: string, role: Role, session: SessionData) {
     if (userId === session.user.sub) {
       return {
-        error: "You cannot update your own role.",
+        error: 'You cannot update your own role.',
       }
     }
 
     if (
       !role ||
-      typeof role !== "string" ||
-      !["member", "admin"].includes(role)
+      typeof role !== 'string' ||
+      !['member', 'admin'].includes(role)
     ) {
       return {
         error: "Role is required and must be either 'member' or 'admin'.",
@@ -180,7 +180,7 @@ export const updateRole = withServerActionAuth(
         )
       }
 
-      revalidatePath("/dashboard/organization/members")
+      revalidatePath('/dashboard/organization/members')
     } catch (error) {
       console.error("failed to update member's role", error)
       return {
@@ -191,6 +191,6 @@ export const updateRole = withServerActionAuth(
     return {}
   },
   {
-    role: "admin",
+    role: 'admin',
   }
 )

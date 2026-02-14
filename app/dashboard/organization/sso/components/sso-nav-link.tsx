@@ -1,9 +1,9 @@
-"use client"
+'use client'
 
-import Link from "next/link"
-import { useParams, useSelectedLayoutSegment } from "next/navigation"
+import Link from 'next/link'
+import { useParams, useSelectedLayoutSegment } from 'next/navigation'
 
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils'
 
 export default function SsoNavLink({
   slug,
@@ -21,8 +21,8 @@ export default function SsoNavLink({
       href={`/dashboard/organization/sso/oidc/edit/${connectionId}/${slug}`}
       className={cn(
         isActive
-          ? "text-primary font-semibold underline underline-offset-12"
-          : "text-muted-foreground hover:text-foreground font-normal transition-colors"
+          ? 'text-primary font-semibold underline underline-offset-12'
+          : 'text-muted-foreground hover:text-foreground font-normal transition-colors'
       )}
     >
       {children}

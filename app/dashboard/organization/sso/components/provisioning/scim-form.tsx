@@ -1,18 +1,18 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { useParams } from "next/navigation"
+import { useState } from 'react'
+import { useParams } from 'next/navigation'
 import {
   CopyIcon,
   InfoCircledIcon,
   TrashIcon,
   UpdateIcon,
-} from "@radix-ui/react-icons"
-import { format, formatDistance } from "date-fns"
-import { toast } from "sonner"
+} from '@radix-ui/react-icons'
+import { format, formatDistance } from 'date-fns'
+import { toast } from 'sonner'
 
-import { cn } from "@/lib/utils"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { cn } from '@/lib/utils'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,8 +23,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
+} from '@/components/ui/alert-dialog'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -32,7 +32,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from '@/components/ui/card'
 import {
   Dialog,
   DialogClose,
@@ -41,10 +41,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Switch } from '@/components/ui/switch'
 import {
   Table,
   TableBody,
@@ -52,8 +52,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { SubmitButton } from "@/components/submit-button"
+} from '@/components/ui/table'
+import { SubmitButton } from '@/components/submit-button'
 
 import {
   createScimConfig,
@@ -61,7 +61,7 @@ import {
   deleteScimConfig,
   deleteScimToken,
   updateScimConfig,
-} from "./actions"
+} from './actions'
 
 interface Props {
   scimConfig: { userIdAttribute: string } | null
@@ -71,7 +71,7 @@ interface Props {
 export function ScimForm({ scimConfig, scimTokens }: Props) {
   const [generatingToken, setGeneratingToken] = useState(false)
   const [showTokenDialog, setShowTokenDialog] = useState(false)
-  const [token, setToken] = useState("")
+  const [token, setToken] = useState('')
   const { connectionId } = useParams<{ connectionId: string }>()
   const SCIM_ENDPOINT_URL = `https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/scim/v2/connections/${connectionId}/`
 
@@ -98,14 +98,14 @@ export function ScimForm({ scimConfig, scimTokens }: Props) {
                       return toast.error(error)
                     }
 
-                    toast.success("SCIM has been enabled.")
+                    toast.success('SCIM has been enabled.')
                   } else {
                     const { error } = await deleteScimConfig(connectionId)
                     if (error) {
                       return toast.error(error)
                     }
 
-                    toast.success("SCIM has been disabled.")
+                    toast.success('SCIM has been disabled.')
                   }
                 }}
               />
@@ -125,7 +125,7 @@ export function ScimForm({ scimConfig, scimTokens }: Props) {
                 return
               }
 
-              toast.success("SCIM configuration updated successfully.")
+              toast.success('SCIM configuration updated successfully.')
             }}
           >
             <CardContent className="grid gap-4">
@@ -136,7 +136,7 @@ export function ScimForm({ scimConfig, scimTokens }: Props) {
                   name="user_id_attribute"
                   type="text"
                   placeholder="externalId"
-                  defaultValue={scimConfig?.userIdAttribute || "externalId"}
+                  defaultValue={scimConfig?.userIdAttribute || 'externalId'}
                 />
                 <p className="text-muted-foreground text-sm">
                   The attribute that uniquely identifies a user
@@ -164,10 +164,10 @@ export function ScimForm({ scimConfig, scimTokens }: Props) {
                             <TableCell>
                               {token.lastUsedAt
                                 ? formatDistance(token.lastUsedAt, new Date())
-                                : "Never"}
+                                : 'Never'}
                             </TableCell>
                             <TableCell>
-                              {format(token.createdAt, "MMM d, yyyy")}
+                              {format(token.createdAt, 'MMM d, yyyy')}
                             </TableCell>
                             <TableCell className="flex justify-end">
                               <AlertDialog>
@@ -204,7 +204,7 @@ export function ScimForm({ scimConfig, scimTokens }: Props) {
                                           return toast.error(error)
                                         }
                                         toast.success(
-                                          "The token has been deleted."
+                                          'The token has been deleted.'
                                         )
                                       }}
                                     >
@@ -241,7 +241,7 @@ export function ScimForm({ scimConfig, scimTokens }: Props) {
 
                           setGeneratingToken(false)
                           toast.success(
-                            "The token has been created successfully."
+                            'The token has been created successfully.'
                           )
 
                           // @ts-ignore
@@ -251,10 +251,10 @@ export function ScimForm({ scimConfig, scimTokens }: Props) {
                       >
                         <UpdateIcon
                           className={cn(
-                            "mr-1 size-3",
-                            generatingToken && "animate-spin"
+                            'mr-1 size-3',
+                            generatingToken && 'animate-spin'
                           )}
-                        />{" "}
+                        />{' '}
                         Generate Token
                       </Button>
                     </div>
@@ -279,7 +279,7 @@ export function ScimForm({ scimConfig, scimTokens }: Props) {
                       type="button"
                       onClick={async () => {
                         await navigator.clipboard.writeText(SCIM_ENDPOINT_URL)
-                        toast.success("SCIM endpoint URL copied to clipboard.")
+                        toast.success('SCIM endpoint URL copied to clipboard.')
                       }}
                     >
                       <CopyIcon className="size-4" />
@@ -317,7 +317,7 @@ export function ScimForm({ scimConfig, scimTokens }: Props) {
               variant="outline"
               onClick={async () => {
                 await navigator.clipboard.writeText(token)
-                toast.success("SCIM token copied to clipboard.")
+                toast.success('SCIM token copied to clipboard.')
               }}
             >
               <span className="sr-only">Copy</span>

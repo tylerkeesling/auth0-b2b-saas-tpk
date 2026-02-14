@@ -1,29 +1,29 @@
-"use server"
+'use server'
 
-import { revalidatePath } from "next/cache"
-import { type SessionData } from "@auth0/nextjs-auth0/types"
+import { revalidatePath } from 'next/cache'
+import { type SessionData } from '@auth0/nextjs-auth0/types'
 
-import { managementClient } from "@/lib/auth0-manage"
-import { withServerActionAuth } from "@/lib/with-server-action-auth"
+import { managementClient } from '@/lib/auth0-manage'
+import { withServerActionAuth } from '@/lib/with-server-action-auth'
 
 export const updateOrganization = withServerActionAuth(
   async function updateOrganization(formData: FormData, session: SessionData) {
-    const displayName = formData.get("display_name")
-    const logoUrl = formData.get("logo_url")
+    const displayName = formData.get('display_name')
+    const logoUrl = formData.get('logo_url')
 
-    if (!displayName || typeof displayName !== "string") {
+    if (!displayName || typeof displayName !== 'string') {
       return {
-        error: "Display name is required.",
+        error: 'Display name is required.',
       }
     }
 
     // Validate logo URL if provided
-    if (logoUrl && typeof logoUrl === "string" && logoUrl.trim() !== "") {
+    if (logoUrl && typeof logoUrl === 'string' && logoUrl.trim() !== '') {
       try {
         new URL(logoUrl)
       } catch {
         return {
-          error: "Invalid logo URL format.",
+          error: 'Invalid logo URL format.',
         }
       }
     }
@@ -39,9 +39,9 @@ export const updateOrganization = withServerActionAuth(
       }
 
       // Only include branding if logo_url is provided
-      if (logoUrl && typeof logoUrl === "string") {
+      if (logoUrl && typeof logoUrl === 'string') {
         const trimmedUrl = logoUrl.trim()
-        if (trimmedUrl !== "") {
+        if (trimmedUrl !== '') {
           updateData.branding = {
             logo_url: trimmedUrl,
           }
@@ -61,17 +61,17 @@ export const updateOrganization = withServerActionAuth(
         updateData
       )
 
-      revalidatePath("/", "layout")
+      revalidatePath('/', 'layout')
     } catch (error) {
-      console.error("failed to update organization", error)
+      console.error('failed to update organization', error)
       return {
-        error: "Failed to update the organization.",
+        error: 'Failed to update the organization.',
       }
     }
 
     return {}
   },
   {
-    role: "admin",
+    role: 'admin',
   }
 )

@@ -1,8 +1,8 @@
-import { randomBytes } from "node:crypto"
-import { resolveTxt } from "node:dns/promises"
+import { randomBytes } from 'node:crypto'
+import { resolveTxt } from 'node:dns/promises'
 
-import { managementClient } from "./auth0-manage"
-import { DOMAIN_VERIFICATION_RECORD_IDENTIFIER } from "./constants"
+import { managementClient } from './auth0-manage'
+import { DOMAIN_VERIFICATION_RECORD_IDENTIFIER } from './constants'
 
 /**
  * getOrCreateDomainVerificationToken tries to fetch a domain verification token for an organization, if one exists.
@@ -19,7 +19,7 @@ export async function getOrCreateDomainVerificationToken(
     return organization.metadata.domainVerificationToken
   }
 
-  const domainVerificationToken = randomBytes(32).toString("hex")
+  const domainVerificationToken = randomBytes(32).toString('hex')
 
   await managementClient.organizations.update(
     {
@@ -37,7 +37,7 @@ export async function getOrCreateDomainVerificationToken(
 }
 
 export async function verifyDnsRecords(domain: string, organizationId: string) {
-  if (process.env.NODE_ENV === "development" && domain === "example.com") {
+  if (process.env.NODE_ENV === 'development' && domain === 'example.com') {
     return true
   }
 
@@ -48,12 +48,12 @@ export async function verifyDnsRecords(domain: string, organizationId: string) {
   const txtRecords = await resolveTxt(domain)
 
   for (const record of txtRecords) {
-    const joinedRecord = record.join("")
+    const joinedRecord = record.join('')
 
     if (joinedRecord.startsWith(`${DOMAIN_VERIFICATION_RECORD_IDENTIFIER}=`)) {
       const token = joinedRecord.replace(
         `${DOMAIN_VERIFICATION_RECORD_IDENTIFIER}=`,
-        ""
+        ''
       )
 
       if (token === organization.metadata.domainVerificationToken) {

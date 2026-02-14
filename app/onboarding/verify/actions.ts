@@ -1,15 +1,15 @@
-"use server"
+'use server'
 
-import { redirect } from "next/navigation"
+import { redirect } from 'next/navigation'
 
-import { onboardingClient } from "@/lib/auth0"
-import { managementClient } from "@/lib/auth0-manage"
+import { onboardingClient } from '@/lib/auth0'
+import { managementClient } from '@/lib/auth0-manage'
 
 export async function resendVerificationEmail() {
   const session = await onboardingClient.getSession()
 
   if (!session) {
-    return redirect("/onboarding/signup")
+    return redirect('/onboarding/signup')
   }
 
   try {
@@ -19,9 +19,9 @@ export async function resendVerificationEmail() {
 
     return {}
   } catch (error) {
-    console.error("failed to resend verification e-mail", error)
+    console.error('failed to resend verification e-mail', error)
     return {
-      error: "Failed to resend verification e-mail.",
+      error: 'Failed to resend verification e-mail.',
     }
   }
 }

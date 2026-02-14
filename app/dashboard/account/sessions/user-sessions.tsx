@@ -1,21 +1,21 @@
-"use client"
+'use client'
 
-import moment from "moment"
-import { toast } from "sonner"
-import { UAParser } from "ua-parser-js"
+import moment from 'moment'
+import { toast } from 'sonner'
+import { UAParser } from 'ua-parser-js'
 
-import { Badge } from "@/components/ui/badge"
+import { Badge } from '@/components/ui/badge'
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
-import { SubmitButton } from "@/components/submit-button"
+} from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
+import { SubmitButton } from '@/components/submit-button'
 
-import { deleteSession } from "./actions"
+import { deleteSession } from './actions'
 
 interface KeyValueMap {
   [key: string]: any
@@ -54,7 +54,7 @@ export default function UserSessions({ user, sessions }: UserSessionsProps) {
             .map((session, idx) => {
               const { id } = session
               const lastUA = new UAParser(
-                session.device?.last_user_agent || "unknown"
+                session.device?.last_user_agent || 'unknown'
               ).getResult()
 
               return (
@@ -81,14 +81,14 @@ export default function UserSessions({ user, sessions }: UserSessionsProps) {
                         )}
                       </div>
                       <p className="text-muted-foreground max-w-fit text-sm leading-snug font-normal">
-                        Last activity{" "}
+                        Last activity{' '}
                         <span
                           className="cursor-help underline decoration-dotted"
                           title={session.updated_at}
                         >
                           {moment(session.updated_at).fromNow()}
-                        </span>{" "}
-                        from location{" "}
+                        </span>{' '}
+                        from location{' '}
                         <span
                           className="cursor-help underline decoration-dotted"
                           title={session.device?.last_ip}
@@ -97,13 +97,13 @@ export default function UserSessions({ user, sessions }: UserSessionsProps) {
                         </span>
                         .
                         <br />
-                        First sign-in on{" "}
+                        First sign-in on{' '}
                         <span
                           className="cursor-help underline decoration-dotted"
                           title={session.created_at}
                         >
                           {moment(session.created_at).format(
-                            "MMMM DD, YYYY \\a\\t HH:MM:SS"
+                            'MMMM DD, YYYY \\a\\t HH:MM:SS'
                           )}
                         </span>
                         .
@@ -119,7 +119,7 @@ export default function UserSessions({ user, sessions }: UserSessionsProps) {
                             return
                           }
 
-                          toast.success("Session signed out successfully.")
+                          toast.success('Session signed out successfully.')
                         }}
                       >
                         <input

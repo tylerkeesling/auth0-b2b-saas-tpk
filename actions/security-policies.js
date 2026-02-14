@@ -8,7 +8,7 @@
  */
 exports.onExecutePostLogin = async (event, api) => {
   if (event.client.client_id !== event.secrets.DASHBOARD_CLIENT_ID) return
-  if (event?.transaction?.protocol === "oauth2-refresh-token") return
+  if (event?.transaction?.protocol === 'oauth2-refresh-token') return
 
   const mfaPolicy = parseMfaPolicy(event.organization?.metadata.mfaPolicy)
 
@@ -18,8 +18,8 @@ exports.onExecutePostLogin = async (event, api) => {
   let isUsingFederation = false
 
   for (const method of event?.authentication?.methods || []) {
-    if (method.name === "passkey") isUsingPasskey = true
-    if (method.name === "federated") isUsingFederation = true
+    if (method.name === 'passkey') isUsingPasskey = true
+    if (method.name === 'federated') isUsingFederation = true
   }
 
   if (mfaPolicy.skipForPasskey && isUsingPasskey) return
@@ -36,7 +36,7 @@ exports.onExecutePostLogin = async (event, api) => {
   if (mfaPolicy.skipForDomains.length > 0) {
     const domain = getEmailDomain(event.user.email)
     if (domain === null) {
-      return api.access.deny("Email is invalid")
+      return api.access.deny('Email is invalid')
     }
 
     const exemptDomains = mfaPolicy.skipForDomains.map((d) => d.toLowerCase())
@@ -54,13 +54,15 @@ exports.onExecutePostLogin = async (event, api) => {
  * @returns {{ enforce: boolean, providers: string[], skipForPasskey: boolean, skipForFederation: boolean, skipForDomains: string[] }}
  */
 function parseMfaPolicy(raw) {
-  const parsed = JSON.parse(raw || "{}")
+  const parsed = JSON.parse(raw || '{}')
   return {
     enforce: !!parsed.enforce,
     providers: Array.isArray(parsed.providers) ? parsed.providers : [],
     skipForPasskey: !!parsed.skipForPasskey,
     skipForFederation: !!parsed.skipForFederation,
-    skipForDomains: Array.isArray(parsed.skipForDomains) ? parsed.skipForDomains : [],
+    skipForDomains: Array.isArray(parsed.skipForDomains)
+      ? parsed.skipForDomains
+      : [],
   }
 }
 
@@ -88,7 +90,7 @@ function toFactors(providers) {
  * @returns {string | null} lowercased domain, or `null` if the email format is invalid
  */
 function getEmailDomain(email) {
-  const parts = (email || "").split("@")
+  const parts = (email || '').split('@')
   if (parts.length !== 2) return null
   return parts[1].toLowerCase()
 }

@@ -1,6 +1,6 @@
-import { NextRequest } from "next/server"
-import { ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { NextRequest } from 'next/server'
+import { ClassValue, clsx } from 'clsx'
+import { twMerge } from 'tailwind-merge'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -16,21 +16,21 @@ export function cn(...inputs: ClassValue[]) {
  */
 export const generateOrgAndFQDN = (
   request: NextRequest,
-  baseDomain: string = process.env.AUTH0_BASE_URL || "" // Single known base domain with protocol (e.g., "https://example.com")
+  baseDomain: string = process.env.AUTH0_BASE_URL || '' // Single known base domain with protocol (e.g., "https://example.com")
 ): { orgName: string | undefined; domain: string } => {
   let orgName: string | undefined
   let domain: string
 
-  const host = request.headers.get("host") || ""
-  const protocol = request.headers.get("x-forwarded-proto")
-  const orgQueryParam = request.nextUrl.searchParams.get("organization")
+  const host = request.headers.get('host') || ''
+  const protocol = request.headers.get('x-forwarded-proto')
+  const orgQueryParam = request.nextUrl.searchParams.get('organization')
 
   // Normalize baseDomain by removing protocol if present
-  const normalizedBaseDomain = baseDomain.replace(/https?:\/\//, "")
+  const normalizedBaseDomain = baseDomain.replace(/https?:\/\//, '')
 
   // Ensure the host matches the normalized base domain
   if (host.endsWith(normalizedBaseDomain)) {
-    const subdomain = host.replace(`.${normalizedBaseDomain}`, "") // Extract subdomain by removing the base domain
+    const subdomain = host.replace(`.${normalizedBaseDomain}`, '') // Extract subdomain by removing the base domain
 
     if (subdomain === host) {
       // No subdomain present

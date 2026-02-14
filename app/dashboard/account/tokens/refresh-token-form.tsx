@@ -1,17 +1,11 @@
-"use client"
+'use client'
 
-import { toast } from "sonner"
+import { toast } from 'sonner'
 
-import {
-  Card,
-  CardAction,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { SubmitButton } from "@/components/submit-button"
+import { Card, CardAction, CardHeader, CardTitle } from '@/components/ui/card'
+import { SubmitButton } from '@/components/submit-button'
 
-import { refreshTokens } from "./actions"
+import { refreshTokens } from './actions'
 
 export function RefreshTokenForm() {
   return (
@@ -26,7 +20,7 @@ export function RefreshTokenForm() {
               if (error) {
                 toast.error(error)
               } else {
-                toast.success("Your tokens have been refreshed.")
+                toast.success('Your tokens have been refreshed.')
               }
             }}
           >

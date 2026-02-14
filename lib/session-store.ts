@@ -1,8 +1,8 @@
 import {
   type SessionData,
   type SessionDataStore,
-} from "@auth0/nextjs-auth0/types"
-import { kv } from "@vercel/kv"
+} from '@auth0/nextjs-auth0/types'
+import { kv } from '@vercel/kv'
 
 // Helper function for SID indexing
 const getSidIndexKey = (sid: string) => `session:sid:${sid}`

@@ -1,12 +1,12 @@
-"use client"
+'use client'
 
-import { useState } from "react"
+import { useState } from 'react'
 
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
-import { SubmitButton } from "@/components/submit-button"
+import { Label } from '@/components/ui/label'
+import { Switch } from '@/components/ui/switch'
+import { SubmitButton } from '@/components/submit-button'
 
-import { toggleMfa } from "./actions"
+import { toggleMfa } from './actions'
 
 async function handleToggleMfa(formData: FormData) {
   await toggleMfa(formData)

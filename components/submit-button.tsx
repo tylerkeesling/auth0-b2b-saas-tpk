@@ -1,21 +1,21 @@
-"use client"
+'use client'
 
-import { useFormStatus } from "react-dom"
+import { useFormStatus } from 'react-dom'
 
-import { Button } from "@/components/ui/button"
-import { Spinner } from "@/components/spinner"
+import { Button } from '@/components/ui/button'
+import { Spinner } from '@/components/spinner'
 
 interface SubmitButtonProps {
   children: React.ReactNode
   disabled?: boolean
   variant?:
-    | "default"
-    | "destructive"
-    | "outline"
-    | "secondary"
-    | "ghost"
-    | "link"
-  size?: "default" | "sm" | "lg" | "icon"
+    | 'default'
+    | 'destructive'
+    | 'outline'
+    | 'secondary'
+    | 'ghost'
+    | 'link'
+  size?: 'default' | 'sm' | 'lg' | 'icon'
   className?: string
 }
 

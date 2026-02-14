@@ -1,16 +1,16 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import {
   CaretSortIcon,
   CheckIcon,
   PlusCircledIcon,
-} from "@radix-ui/react-icons"
+} from '@radix-ui/react-icons'
 
-import { cn } from "@/lib/utils"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
+import { cn } from '@/lib/utils'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import {
   Command,
   CommandEmpty,
@@ -19,12 +19,12 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "@/components/ui/command"
+} from '@/components/ui/command'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from '@/components/ui/popover'
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>
 
@@ -56,8 +56,8 @@ export function OrganizationSwitcher({
           aria-expanded={open}
           aria-label="Select an organization"
           className={cn(
-            "bg-field flex h-12 min-w-[240px] justify-between rounded-xl border p-2",
-            "hover:border-accent hover:bg-accent/15"
+            'bg-field flex h-12 min-w-[240px] justify-between rounded-xl border p-2',
+            'hover:border-accent hover:bg-accent/15'
           )}
         >
           <Avatar className="mr-2 size-8 rounded-sm">
@@ -101,10 +101,10 @@ export function OrganizationSwitcher({
                   <span className="truncate">{org.displayName}</span>
                   <CheckIcon
                     className={cn(
-                      "ml-auto h-4 w-4",
+                      'ml-auto h-4 w-4',
                       organization.slug === org.slug
-                        ? "opacity-100"
-                        : "opacity-0"
+                        ? 'opacity-100'
+                        : 'opacity-0'
                     )}
                   />
                 </CommandItem>
@@ -116,7 +116,7 @@ export function OrganizationSwitcher({
             <CommandGroup>
               <CommandItem
                 onSelect={() => {
-                  router.push("/onboarding/create")
+                  router.push('/onboarding/create')
                   setOpen(false)
                 }}
                 className="cursor-pointer"

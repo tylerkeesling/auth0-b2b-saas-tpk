@@ -1,62 +1,62 @@
-"use server"
+'use server'
 
-import crypto from "crypto"
-import { revalidatePath } from "next/cache"
-import { type SessionData } from "@auth0/nextjs-auth0/types"
-import slugify from "@sindresorhus/slugify"
+import crypto from 'crypto'
+import { revalidatePath } from 'next/cache'
+import { type SessionData } from '@auth0/nextjs-auth0/types'
+import slugify from '@sindresorhus/slugify'
 
-import { managementClient } from "@/lib/auth0-manage"
-import { verifyDnsRecords } from "@/lib/domain-verification"
-import { withServerActionAuth } from "@/lib/with-server-action-auth"
+import { managementClient } from '@/lib/auth0-manage'
+import { verifyDnsRecords } from '@/lib/domain-verification'
+import { withServerActionAuth } from '@/lib/with-server-action-auth'
 
 export const createConnection = withServerActionAuth(
   async function createConnection(formData: FormData, session: SessionData) {
-    const displayName = formData.get("display_name")
-    const signInUrl = formData.get("sign_in_url")
-    const signOutUrl = formData.get("sign_out_url") // optional
-    const certificate = formData.get("certificate")
-    const userIdAttribute = formData.get("user_id_attribute") // optional
-    const protocolBinding = formData.get("protocol_binding")
-    const domainAliases = formData.get("domains")
-    const signRequest = formData.get("sign_request") === "on"
-    const assignMembershipOnLogin = formData.get("assign_membership_on_login")
+    const displayName = formData.get('display_name')
+    const signInUrl = formData.get('sign_in_url')
+    const signOutUrl = formData.get('sign_out_url') // optional
+    const certificate = formData.get('certificate')
+    const userIdAttribute = formData.get('user_id_attribute') // optional
+    const protocolBinding = formData.get('protocol_binding')
+    const domainAliases = formData.get('domains')
+    const signRequest = formData.get('sign_request') === 'on'
+    const assignMembershipOnLogin = formData.get('assign_membership_on_login')
 
-    if (!displayName || typeof displayName !== "string") {
+    if (!displayName || typeof displayName !== 'string') {
       return {
-        error: "Connection name is required.",
+        error: 'Connection name is required.',
       }
     }
 
-    if (!signInUrl || typeof signInUrl !== "string") {
+    if (!signInUrl || typeof signInUrl !== 'string') {
       return {
-        error: "Sign-in URL is required.",
+        error: 'Sign-in URL is required.',
       }
     }
 
     if (!certificate || !(certificate instanceof File)) {
       return {
-        error: "Certificate is required.",
+        error: 'Certificate is required.',
       }
     }
 
-    if (!protocolBinding || typeof protocolBinding !== "string") {
+    if (!protocolBinding || typeof protocolBinding !== 'string') {
       return {
-        error: "Protocol binding is required.",
+        error: 'Protocol binding is required.',
       }
     }
 
     if (
       !assignMembershipOnLogin ||
-      typeof assignMembershipOnLogin !== "string"
+      typeof assignMembershipOnLogin !== 'string'
     ) {
       return {
-        error: "Auto-membership is required.",
+        error: 'Auto-membership is required.',
       }
     }
 
     const parsedDomains =
-      domainAliases && typeof domainAliases === "string"
-        ? domainAliases.split(",").map((d) => d.trim())
+      domainAliases && typeof domainAliases === 'string'
+        ? domainAliases.split(',').map((d) => d.trim())
         : []
 
     // ensure that the domains are verified
@@ -80,8 +80,8 @@ export const createConnection = withServerActionAuth(
         protocolBinding,
         domain_aliases: parsedDomains,
         signSAMLRequest: signRequest,
-        signatureAlgorithm: signRequest ? "rsa-sha256" : null,
-        digestAlgorithm: signRequest ? "sha256" : null,
+        signatureAlgorithm: signRequest ? 'rsa-sha256' : null,
+        digestAlgorithm: signRequest ? 'sha256' : null,
         signingCert: btoa(await certificate.text()),
       }
 
@@ -89,8 +89,8 @@ export const createConnection = withServerActionAuth(
         display_name: displayName,
         // we append a suffix to the connection identifier as they must be globally
         // unique and we want to avoid collisions when supplied by the user
-        name: `${slugify(displayName)}-${crypto.randomBytes(4).toString("hex")}`,
-        strategy: "samlp",
+        name: `${slugify(displayName)}-${crypto.randomBytes(4).toString('hex')}`,
+        strategy: 'samlp',
         enabled_clients: [process.env.AUTH0_CLIENT_ID],
         options: samlOptions,
       })
@@ -101,30 +101,30 @@ export const createConnection = withServerActionAuth(
         {
           connection_id: connection.id,
           assign_membership_on_login:
-            assignMembershipOnLogin === "enabled" ? true : false,
+            assignMembershipOnLogin === 'enabled' ? true : false,
         }
       )
 
-      revalidatePath("/dashboard/organization/sso")
+      revalidatePath('/dashboard/organization/sso')
     } catch (error) {
-      console.error("failed to create the SSO connection", error)
+      console.error('failed to create the SSO connection', error)
       return {
-        error: "Failed to create the SSO connection.",
+        error: 'Failed to create the SSO connection.',
       }
     }
 
     return {}
   },
   {
-    role: "admin",
+    role: 'admin',
   }
 )
 
 export const deleteConnection = withServerActionAuth(
   async function deleteConnection(connectionId: string, session: SessionData) {
-    if (!connectionId || typeof connectionId !== "string") {
+    if (!connectionId || typeof connectionId !== 'string') {
       return {
-        error: "Connection ID is required.",
+        error: 'Connection ID is required.',
       }
     }
 
@@ -139,7 +139,7 @@ export const deleteConnection = withServerActionAuth(
 
       if (!connection) {
         return {
-          error: "Connection not found.",
+          error: 'Connection not found.',
         }
       }
 
@@ -147,17 +147,17 @@ export const deleteConnection = withServerActionAuth(
         id: connectionId,
       })
 
-      revalidatePath("/dashboard/organization/sso")
+      revalidatePath('/dashboard/organization/sso')
 
       return {}
     } catch (error) {
-      console.error("failed to delete the SSO connection", error)
+      console.error('failed to delete the SSO connection', error)
       return {
-        error: "Failed to delete the SSO connection.",
+        error: 'Failed to delete the SSO connection.',
       }
     }
   },
   {
-    role: "admin",
+    role: 'admin',
   }
 )

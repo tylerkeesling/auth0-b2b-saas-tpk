@@ -1,10 +1,10 @@
-import { redirect } from "next/navigation"
+import { redirect } from 'next/navigation'
 
-import { appClient } from "@/lib/auth0"
-import { managementClient } from "@/lib/auth0-manage"
-import { getOrCreateDomainVerificationToken } from "@/lib/domain-verification"
+import { appClient } from '@/lib/auth0'
+import { managementClient } from '@/lib/auth0-manage'
+import { getOrCreateDomainVerificationToken } from '@/lib/domain-verification'
 
-import { UpdateOidcConnectionForm } from "./update-oidc-connection-form"
+import { UpdateOidcConnectionForm } from './update-oidc-connection-form'
 
 export default async function UpdateOidcConnection({
   params,
@@ -15,7 +15,7 @@ export default async function UpdateOidcConnection({
   const session = await appClient.getSession()
 
   if (!session) {
-    return redirect("/auth/login")
+    return redirect('/auth/login')
   }
 
   // ensure that the connection ID being fetched is owned by the organization
@@ -27,7 +27,7 @@ export default async function UpdateOidcConnection({
     })
 
   if (!enabledConnection) {
-    redirect("/dashboard/organization/sso")
+    redirect('/dashboard/organization/sso')
   }
 
   const [domainVerificationToken, { data: connection }] = await Promise.all([

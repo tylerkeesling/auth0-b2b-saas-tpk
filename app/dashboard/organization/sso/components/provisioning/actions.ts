@@ -1,16 +1,16 @@
-"use server"
+'use server'
 
-import { revalidatePath } from "next/cache"
-import { type SessionData } from "@auth0/nextjs-auth0/types"
+import { revalidatePath } from 'next/cache'
+import { type SessionData } from '@auth0/nextjs-auth0/types'
 
-import { managementClient } from "@/lib/auth0-manage"
-import { withServerActionAuth } from "@/lib/with-server-action-auth"
+import { managementClient } from '@/lib/auth0-manage'
+import { withServerActionAuth } from '@/lib/with-server-action-auth'
 
 const connStrategyToSlug: {
   [key: string]: string
 } = {
-  oidc: "oidc",
-  samlp: "saml",
+  oidc: 'oidc',
+  samlp: 'saml',
 }
 
 export const createScimConfig = withServerActionAuth(
@@ -25,7 +25,7 @@ export const createScimConfig = withServerActionAuth(
 
     if (!enabledConnection) {
       return {
-        error: "Connection not found.",
+        error: 'Connection not found.',
       }
     }
 
@@ -33,7 +33,7 @@ export const createScimConfig = withServerActionAuth(
       await managementClient.connections.createScimConfiguration(
         { id: connectionId },
         {
-          user_id_attribute: "externalId",
+          user_id_attribute: 'externalId',
         }
       )
 
@@ -41,16 +41,16 @@ export const createScimConfig = withServerActionAuth(
         `/dashboard/organization/sso/${connStrategyToSlug[enabledConnection.connection.strategy]}/edit/${connectionId}/provisioning`
       )
     } catch (error) {
-      console.error("failed to create a SCIM configuration", error)
+      console.error('failed to create a SCIM configuration', error)
       return {
-        error: "Failed to create a SCIM configuration.",
+        error: 'Failed to create a SCIM configuration.',
       }
     }
 
     return {}
   },
   {
-    role: "admin",
+    role: 'admin',
   }
 )
 
@@ -66,7 +66,7 @@ export const deleteScimConfig = withServerActionAuth(
 
     if (!enabledConnection) {
       return {
-        error: "Connection not found.",
+        error: 'Connection not found.',
       }
     }
 
@@ -79,16 +79,16 @@ export const deleteScimConfig = withServerActionAuth(
         `/dashboard/organization/sso/${connStrategyToSlug[enabledConnection.connection.strategy]}/edit/${connectionId}/provisioning`
       )
     } catch (error) {
-      console.error("failed to delete a SCIM configuration", error)
+      console.error('failed to delete a SCIM configuration', error)
       return {
-        error: "Failed to delete a SCIM configuration.",
+        error: 'Failed to delete a SCIM configuration.',
       }
     }
 
     return {}
   },
   {
-    role: "admin",
+    role: 'admin',
   }
 )
 
@@ -98,11 +98,11 @@ export const updateScimConfig = withServerActionAuth(
     formData: FormData,
     session: SessionData
   ) {
-    const userIdAttribute = formData.get("user_id_attribute") as string
+    const userIdAttribute = formData.get('user_id_attribute') as string
 
-    if (!userIdAttribute || typeof userIdAttribute !== "string") {
+    if (!userIdAttribute || typeof userIdAttribute !== 'string') {
       return {
-        error: "User ID attribute is required.",
+        error: 'User ID attribute is required.',
       }
     }
 
@@ -116,7 +116,7 @@ export const updateScimConfig = withServerActionAuth(
 
     if (!enabledConnection) {
       return {
-        error: "Connection not found.",
+        error: 'Connection not found.',
       }
     }
 
@@ -138,16 +138,16 @@ export const updateScimConfig = withServerActionAuth(
         `/dashboard/organization/sso/${connStrategyToSlug[enabledConnection.connection.strategy]}/edit/${connectionId}/provisioning`
       )
     } catch (error) {
-      console.error("failed to update SCIM configuration", error)
+      console.error('failed to update SCIM configuration', error)
       return {
-        error: "Failed to update SCIM configuration.",
+        error: 'Failed to update SCIM configuration.',
       }
     }
 
     return {}
   },
   {
-    role: "admin",
+    role: 'admin',
   }
 )
 
@@ -163,7 +163,7 @@ export const createScimToken = withServerActionAuth(
 
     if (!enabledConnection) {
       return {
-        error: "Connection not found.",
+        error: 'Connection not found.',
       }
     }
 
@@ -184,14 +184,14 @@ export const createScimToken = withServerActionAuth(
         token: token.token,
       }
     } catch (error) {
-      console.error("failed to create a SCIM token", error)
+      console.error('failed to create a SCIM token', error)
       return {
-        error: "Failed to create a SCIM token.",
+        error: 'Failed to create a SCIM token.',
       }
     }
   },
   {
-    role: "admin",
+    role: 'admin',
   }
 )
 
@@ -211,7 +211,7 @@ export const deleteScimToken = withServerActionAuth(
 
     if (!enabledConnection) {
       return {
-        error: "Connection not found.",
+        error: 'Connection not found.',
       }
     }
 
@@ -225,15 +225,15 @@ export const deleteScimToken = withServerActionAuth(
         `/dashboard/organization/sso/${connStrategyToSlug[enabledConnection.connection.strategy]}/edit/${connectionId}/provisioning`
       )
     } catch (error) {
-      console.error("failed to delete a SCIM token", error)
+      console.error('failed to delete a SCIM token', error)
       return {
-        error: "Failed to delete a SCIM token.",
+        error: 'Failed to delete a SCIM token.',
       }
     }
 
     return {}
   },
   {
-    role: "admin",
+    role: 'admin',
   }
 )

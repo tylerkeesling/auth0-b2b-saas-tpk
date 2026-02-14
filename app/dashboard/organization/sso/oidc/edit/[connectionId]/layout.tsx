@@ -1,9 +1,9 @@
-import Link from "next/link"
-import { ArrowLeftIcon } from "@radix-ui/react-icons"
+import Link from 'next/link'
+import { ArrowLeftIcon } from '@radix-ui/react-icons'
 
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button'
 
-import SsoNavLink from "../../../components/sso-nav-link"
+import SsoNavLink from '../../../components/sso-nav-link'
 
 interface EditOidcConnectionLayoutProps {
   children: React.ReactNode

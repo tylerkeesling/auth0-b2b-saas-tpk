@@ -1,26 +1,26 @@
-"use server"
+'use server'
 
-import { revalidatePath } from "next/cache"
-import { redirect } from "next/navigation"
+import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
 
-import { appClient } from "@/lib/auth0"
+import { appClient } from '@/lib/auth0'
 
 export async function refreshTokens() {
   const session = await appClient.getSession()
 
   if (!session) {
-    return redirect("/auth/login")
+    return redirect('/auth/login')
   }
 
   try {
     await appClient.getAccessToken({ refresh: true })
 
-    revalidatePath("/dashboard/account/tokens", "layout")
+    revalidatePath('/dashboard/account/tokens', 'layout')
   } catch (error) {
-    console.error("failed to refresh tokens", error)
+    console.error('failed to refresh tokens', error)
     return {
       error:
-        "Failed to refresh your tokens. Is the offline_access scope present?",
+        'Failed to refresh your tokens. Is the offline_access scope present?',
     }
   }
 

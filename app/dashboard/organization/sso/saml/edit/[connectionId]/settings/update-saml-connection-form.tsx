@@ -1,11 +1,11 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { CopyIcon, InfoCircledIcon, TrashIcon } from "@radix-ui/react-icons"
-import { toast } from "sonner"
+import { useState } from 'react'
+import { CopyIcon, InfoCircledIcon, TrashIcon } from '@radix-ui/react-icons'
+import { toast } from 'sonner'
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Button } from "@/components/ui/button"
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -13,24 +13,24 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Separator } from "@/components/ui/separator"
-import { Switch } from "@/components/ui/switch"
-import { Code } from "@/components/code"
-import { SubmitButton } from "@/components/submit-button"
+} from '@/components/ui/select'
+import { Separator } from '@/components/ui/separator'
+import { Switch } from '@/components/ui/switch'
+import { Code } from '@/components/code'
+import { SubmitButton } from '@/components/submit-button'
 
-import { AddDomainDialog } from "../../../../components/add-domain-dialog"
-import { updateConnection } from "./actions"
+import { AddDomainDialog } from '../../../../components/add-domain-dialog'
+import { updateConnection } from './actions'
 
 const CALLBACK_URL = `https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/login/callback`
 
@@ -44,8 +44,8 @@ export interface SamlConnection {
     signOutUrl?: string
     userIdAttribute?: string
     protocolBinding:
-      | "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-      | "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+      | 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
+      | 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST'
     domainAliases?: string[]
     signRequest: boolean
   }
@@ -73,7 +73,7 @@ export function UpdateSamlConnectionForm({
           if (error) {
             toast.error(error)
           } else {
-            toast.success("The connection has been updated.")
+            toast.success('The connection has been updated.')
           }
         }}
       >
@@ -168,7 +168,7 @@ export function UpdateSamlConnectionForm({
               name="domains"
               type="text"
               className="hidden"
-              value={domains.join(",")}
+              value={domains.join(',')}
               readOnly
             />
             {domains.length > 0 ? (
@@ -206,14 +206,14 @@ export function UpdateSamlConnectionForm({
             <div className="space-y-0.5">
               <Label htmlFor="sign_request">Sign Request</Label>
               <p className="text-muted-foreground text-sm">
-                The request will be signed with <Code>RSA-SHA256</Code>.{" "}
+                The request will be signed with <Code>RSA-SHA256</Code>.{' '}
                 <a
                   className="underline underline-offset-4"
                   href={`https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/pem?cert=connection`}
                   target="_blank"
                 >
                   Download the certificate
-                </a>{" "}
+                </a>{' '}
                 to configure your identity provider to validate the request
                 signature.
               </p>
@@ -239,7 +239,7 @@ export function UpdateSamlConnectionForm({
                   type="button"
                   onClick={async () => {
                     await navigator.clipboard.writeText(CALLBACK_URL)
-                    toast.success("Post-back URL copied to clipboard.")
+                    toast.success('Post-back URL copied to clipboard.')
                   }}
                 >
                   <CopyIcon className="size-4" />
@@ -256,7 +256,7 @@ export function UpdateSamlConnectionForm({
               id="assign_membership_on_login"
               name="assign_membership_on_login"
               defaultValue={
-                connection.assignMembershipOnLogin ? "enabled" : "disabled"
+                connection.assignMembershipOnLogin ? 'enabled' : 'disabled'
               }
               className="grid grid-cols-2 gap-2"
             >

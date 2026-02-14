@@ -1,33 +1,12 @@
-"use client"
+'use client'
 
-import { useEffect, useState } from "react"
-import dynamic from "next/dynamic"
-import { toast } from "sonner"
-import { Calendar } from "lucide-react"
+import { useEffect, useState } from 'react'
+import dynamic from 'next/dynamic'
+import { Calendar } from 'lucide-react'
+import { toast } from 'sonner'
 
-const JsonViewer = dynamic(() => import("./json-viewer"), { ssr: false })
-
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
 import {
   Dialog,
   DialogContent,
@@ -35,11 +14,28 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
+} from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Spinner } from '@/components/ui/spinner'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 
-import { Spinner } from "@/components/ui/spinner"
+import { getLogs, LogEntry } from './actions'
 
-import { getLogs, LogEntry } from "./actions"
+const JsonViewer = dynamic(() => import('./json-viewer'), { ssr: false })
 
 interface UserLogsProps {
   userId: string
@@ -47,36 +43,39 @@ interface UserLogsProps {
 
 // Common Auth0 log event types
 const LOG_TYPES = [
-  { value: "all", label: "All Types" },
-  { value: "s", label: "Success Login" },
-  { value: "f", label: "Failed Login" },
-  { value: "fp", label: "Failed Login (Incorrect Password)" },
-  { value: "fu", label: "Failed Login (Invalid Email/Username)" },
-  { value: "ss", label: "Success Signup" },
-  { value: "fs", label: "Failed Signup" },
-  { value: "slo", label: "Success Logout" },
-  { value: "flo", label: "Failed Logout" },
-  { value: "seacft", label: "Success Exchange" },
-  { value: "svr", label: "Success Verification Email" },
-  { value: "fvr", label: "Failed Verification Email" },
-  { value: "scpn", label: "Success Change Password" },
-  { value: "fcpn", label: "Failed Change Password" },
-  { value: "api", label: "API Operation" },
-  { value: "oidc_backchannel_logout_succeeded", label: "Successful OIDC Back-Channel Logout request" },
+  { value: 'all', label: 'All Types' },
+  { value: 's', label: 'Success Login' },
+  { value: 'f', label: 'Failed Login' },
+  { value: 'fp', label: 'Failed Login (Incorrect Password)' },
+  { value: 'fu', label: 'Failed Login (Invalid Email/Username)' },
+  { value: 'ss', label: 'Success Signup' },
+  { value: 'fs', label: 'Failed Signup' },
+  { value: 'slo', label: 'Success Logout' },
+  { value: 'flo', label: 'Failed Logout' },
+  { value: 'seacft', label: 'Success Exchange' },
+  { value: 'svr', label: 'Success Verification Email' },
+  { value: 'fvr', label: 'Failed Verification Email' },
+  { value: 'scpn', label: 'Success Change Password' },
+  { value: 'fcpn', label: 'Failed Change Password' },
+  { value: 'api', label: 'API Operation' },
+  {
+    value: 'oidc_backchannel_logout_succeeded',
+    label: 'Successful OIDC Back-Channel Logout request',
+  },
 ]
 
 const LOG_TYPE_LABELS = new Map(LOG_TYPES.map((t) => [t.value, t.label]))
 
-const dateFormatter = new Intl.DateTimeFormat("en-US", {
-  month: "short",
-  day: "2-digit",
-  year: "numeric",
+const dateFormatter = new Intl.DateTimeFormat('en-US', {
+  month: 'short',
+  day: '2-digit',
+  year: 'numeric',
 })
 
-const timeFormatter = new Intl.DateTimeFormat("en-US", {
-  hour: "2-digit",
-  minute: "2-digit",
-  second: "2-digit",
+const timeFormatter = new Intl.DateTimeFormat('en-US', {
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
   hour12: false,
 })
 
@@ -86,9 +85,9 @@ export default function UserLogs({ userId }: UserLogsProps) {
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(0)
   const [perPage] = useState(10)
-  const [selectedType, setSelectedType] = useState("all")
-  const [fromDate, setFromDate] = useState("")
-  const [toDate, setToDate] = useState("")
+  const [selectedType, setSelectedType] = useState('all')
+  const [fromDate, setFromDate] = useState('')
+  const [toDate, setToDate] = useState('')
   const [selectedLog, setSelectedLog] = useState<LogEntry | null>(null)
 
   const fetchLogs = async () => {
@@ -125,9 +124,9 @@ export default function UserLogs({ userId }: UserLogsProps) {
   }
 
   const handleClearFilters = () => {
-    setSelectedType("all")
-    setFromDate("")
-    setToDate("")
+    setSelectedType('all')
+    setFromDate('')
+    setToDate('')
     setPage(0)
     // Trigger fetch with cleared filters
     setTimeout(() => fetchLogs(), 0)
@@ -173,7 +172,7 @@ export default function UserLogs({ userId }: UserLogsProps) {
                 onChange={(e) => setFromDate(e.target.value)}
                 className="w-full"
               />
-              <Calendar className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 opacity-50" />
+              <Calendar className="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 opacity-50" />
             </div>
           </div>
 
@@ -186,7 +185,7 @@ export default function UserLogs({ userId }: UserLogsProps) {
                 onChange={(e) => setToDate(e.target.value)}
                 className="w-full"
               />
-              <Calendar className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 opacity-50" />
+              <Calendar className="pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 opacity-50" />
             </div>
           </div>
 
@@ -220,7 +219,9 @@ export default function UserLogs({ userId }: UserLogsProps) {
         {/* Logs Table */}
         {logs.length > 0 && (
           <>
-            <div className={`rounded-md border transition-opacity ${loading ? "opacity-50 pointer-events-none" : ""}`}>
+            <div
+              className={`rounded-md border transition-opacity ${loading ? 'pointer-events-none opacity-50' : ''}`}
+            >
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -238,14 +239,16 @@ export default function UserLogs({ userId }: UserLogsProps) {
                     >
                       <TableCell className="font-mono text-xs">
                         <div className="flex flex-col">
-                          <span>{dateFormatter.format(new Date(log.date))}</span>
+                          <span>
+                            {dateFormatter.format(new Date(log.date))}
+                          </span>
                           <span className="text-muted-foreground">
                             {timeFormatter.format(new Date(log.date))}
                           </span>
                         </div>
                       </TableCell>
                       <TableCell>
-                        {LOG_TYPE_LABELS.get(log.type) ?? "Unknown"}
+                        {LOG_TYPE_LABELS.get(log.type) ?? 'Unknown'}
                       </TableCell>
                       <TableCell>
                         <div className="flex flex-col gap-1">
@@ -270,7 +273,7 @@ export default function UserLogs({ userId }: UserLogsProps) {
               open={selectedLog !== null}
               onOpenChange={(open) => !open && setSelectedLog(null)}
             >
-              <DialogContent className="max-h-[80vh] sm:max-w-2xl overflow-y-auto">
+              <DialogContent className="max-h-[80vh] overflow-y-auto sm:max-w-2xl">
                 <DialogHeader>
                   <DialogTitle>Log Details</DialogTitle>
                   <DialogDescription>
@@ -288,7 +291,7 @@ export default function UserLogs({ userId }: UserLogsProps) {
                         navigator.clipboard.writeText(
                           JSON.stringify(selectedLog, null, 2)
                         )
-                        toast.success("Log details copied to clipboard")
+                        toast.success('Log details copied to clipboard')
                       }
                     }}
                   >
@@ -302,8 +305,8 @@ export default function UserLogs({ userId }: UserLogsProps) {
             <div className="flex items-center justify-between">
               <p className="text-muted-foreground text-sm">
                 Page {page + 1} - Showing {logs.length} log
-                {logs.length !== 1 ? "s" : ""}
-                {hasMore && " (more available)"}
+                {logs.length !== 1 ? 's' : ''}
+                {hasMore && ' (more available)'}
               </p>
               <div className="flex gap-2">
                 <Button

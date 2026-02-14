@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import Link from "next/link"
-import { Building2, UserCircle, Radio } from "lucide-react"
+import Link from 'next/link'
+import { Building2, Radio, UserCircle } from 'lucide-react'
 
 import {
   Sidebar,
@@ -11,13 +11,13 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuItem,
   SidebarMenuButton,
+  SidebarMenuItem,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import { NavMain } from "@/components/nav-main"
-import { NavUser } from "@/components/nav-user"
-import { OrgSidebarSwitcher } from "@/components/org-sidebar-switcher"
+} from '@/components/ui/sidebar'
+import { NavMain } from '@/components/nav-main'
+import { NavUser } from '@/components/nav-user'
+import { OrgSidebarSwitcher } from '@/components/org-sidebar-switcher'
 
 interface Organization {
   id: string
@@ -34,25 +34,25 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 }
 
 const orgItems = [
-  { title: "General Settings", href: "/dashboard/organization/general" },
-  { title: "Members", href: "/dashboard/organization/members" },
-  { title: "SSO", href: "/dashboard/organization/sso" },
+  { title: 'General Settings', href: '/dashboard/organization/general' },
+  { title: 'Members', href: '/dashboard/organization/members' },
+  { title: 'SSO', href: '/dashboard/organization/sso' },
   {
-    title: "Security Policies",
-    href: "/dashboard/organization/security-policies",
+    title: 'Security Policies',
+    href: '/dashboard/organization/security-policies',
   },
 ]
 
 const accountItems = [
-  { title: "Tokens", href: "/dashboard/account/tokens" },
-  { title: "Profile", href: "/dashboard/account/profile" },
+  { title: 'Tokens', href: '/dashboard/account/tokens' },
+  { title: 'Profile', href: '/dashboard/account/profile' },
   {
-    title: "Multifactor Authentication",
-    href: "/dashboard/account/security",
+    title: 'Multifactor Authentication',
+    href: '/dashboard/account/security',
   },
-  { title: "Passkeys", href: "/dashboard/account/passkeys" },
-  { title: "Sessions", href: "/dashboard/account/sessions" },
-  { title: "Logs", href: "/dashboard/account/logs" },
+  { title: 'Passkeys', href: '/dashboard/account/passkeys' },
+  { title: 'Sessions', href: '/dashboard/account/sessions' },
+  { title: 'Logs', href: '/dashboard/account/logs' },
 ]
 
 export function AppSidebar({
@@ -76,7 +76,7 @@ export function AppSidebar({
           title="My Organization"
           icon={Building2}
           items={orgItems}
-          disabled={userRole !== "admin"}
+          disabled={userRole !== 'admin'}
         />
         <SidebarGroup>
           <SidebarGroupLabel>Other</SidebarGroupLabel>

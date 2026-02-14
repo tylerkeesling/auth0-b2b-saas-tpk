@@ -1,13 +1,11 @@
-import Link from "next/link"
+import { appClient } from '@/lib/auth0'
+import { cn } from '@/lib/utils'
+import { buttonVariants } from '@/components/ui/button'
+import { Auth0Logo } from '@/components/auth0-logo'
+import { SubmitButton } from '@/components/submit-button'
 
-import { appClient } from "@/lib/auth0"
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
-import { Auth0Logo } from "@/components/auth0-logo"
-import { SubmitButton } from "@/components/submit-button"
-
-import { SignUpForm } from "./signup-form"
-import { WelcomeBackCard } from "./welcome-back-card"
+import { SignUpForm } from './signup-form'
+import { WelcomeBackCard } from './welcome-back-card'
 
 export default async function Home() {
   const session = await appClient.getSession()
@@ -18,15 +16,15 @@ export default async function Home() {
         <a
           href="/auth/logout"
           className={cn(
-            buttonVariants({ variant: "ghost" }),
-            "absolute top-4 right-4 md:top-8 md:right-8"
+            buttonVariants({ variant: 'ghost' }),
+            'absolute top-4 right-4 md:top-8 md:right-8'
           )}
         >
           <SubmitButton>Logout</SubmitButton>
         </a>
       ) : (
         <div className="absolute top-4 right-4 md:top-8 md:right-8">
-          <span className="text-sm">Already joined?</span>{" "}
+          <span className="text-sm">Already joined?</span>{' '}
           <a
             className="text-sm underline"
             href="/auth/login?returnTo=/dashboard/account/tokens"

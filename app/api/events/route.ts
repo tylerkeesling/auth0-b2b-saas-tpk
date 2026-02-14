@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server"
-import { sql } from "@vercel/postgres"
-import { z } from "zod"
+import { NextRequest, NextResponse } from 'next/server'
+import { sql } from '@vercel/postgres'
+import { z } from 'zod'
 
 // Define Zod schema matching EventTable
 const eventSchema = z.object({
@@ -15,15 +15,15 @@ const eventSchema = z.object({
 })
 
 export async function POST(req: NextRequest) {
-  const authHeader = req.headers.get("authorization")
+  const authHeader = req.headers.get('authorization')
   const expectedToken = process.env.EVENT_STREAM_API_TOKEN
 
   if (
     !authHeader ||
-    !authHeader.startsWith("Bearer ") ||
+    !authHeader.startsWith('Bearer ') ||
     authHeader.slice(7) !== expectedToken
   ) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
   try {
@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true }, { status: 200 })
   } catch (error) {
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Unknown error" },
+      { error: error instanceof Error ? error.message : 'Unknown error' },
       { status: 400 }
     )
   }

@@ -1,9 +1,9 @@
-"use client"
+'use client'
 
-import { useRouter } from "next/navigation"
-import { toast } from "sonner"
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
-import { Badge } from "@/components/ui/badge"
+import { Badge } from '@/components/ui/badge'
 import {
   Card,
   CardAction,
@@ -11,13 +11,12 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import { Separator } from "@/components/ui/separator"
-import { SubmitButton } from "@/components/submit-button"
+} from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
+import { SubmitButton } from '@/components/submit-button'
 
-import { createEnrollment, deleteEnrollment } from "./actions"
-import { ToggleMfaForm } from "./toggle-mfa-form"
+import { createEnrollment, deleteEnrollment } from './actions'
+import { ToggleMfaForm } from './toggle-mfa-form'
 
 type MfaEnrollment = { name: string; enabled: boolean; enrollmentId?: string }
 
@@ -32,41 +31,41 @@ interface IPopupWindow {
 
 const factorsMeta: { [key: string]: any } = {
   sms: {
-    title: "Phone Message",
-    description: "Users will receive a phone message with a verification code",
+    title: 'Phone Message',
+    description: 'Users will receive a phone message with a verification code',
   },
-  "push-notification": {
-    title: "Push Notification using Auth0 Guardian",
-    description: "Provide a push notification using Auth0 Guardian.",
+  'push-notification': {
+    title: 'Push Notification using Auth0 Guardian',
+    description: 'Provide a push notification using Auth0 Guardian.',
   },
   otp: {
-    title: "One-time Password",
+    title: 'One-time Password',
     description:
-      "Provide a one-time password using Google Authenticator or similar.",
+      'Provide a one-time password using Google Authenticator or similar.',
   },
   email: {
-    title: "Email",
+    title: 'Email',
     description:
-      "Users will receive an email message containing a verification code.",
+      'Users will receive an email message containing a verification code.',
   },
   duo: {
-    title: "Duo Security",
-    description: "Use your DUO account for Multi-factor Authentication.",
+    title: 'Duo Security',
+    description: 'Use your DUO account for Multi-factor Authentication.',
   },
-  "webauthn-roaming": {
-    title: "WebAuthn with FIDO Security Keys",
+  'webauthn-roaming': {
+    title: 'WebAuthn with FIDO Security Keys',
     description:
-      "Depending on your browser, you can use WebAuthn-compliant security keys (like FIDO2) as a second factor of authentication.",
+      'Depending on your browser, you can use WebAuthn-compliant security keys (like FIDO2) as a second factor of authentication.',
   },
-  "webauthn-platform": {
-    title: "WebAuthn with FIDO Device Biometrics",
+  'webauthn-platform': {
+    title: 'WebAuthn with FIDO Device Biometrics',
     description:
-      "Depending on your browser, you can use WebAuthn-compliant device biometrics as a second factor of authentication",
+      'Depending on your browser, you can use WebAuthn-compliant device biometrics as a second factor of authentication',
   },
-  "recovery-code": {
-    title: "Recovery Code",
+  'recovery-code': {
+    title: 'Recovery Code',
     description:
-      "Provide a unique code that allows users to regain access to their account.",
+      'Provide a unique code that allows users to regain access to their account.',
   },
 }
 
@@ -93,7 +92,7 @@ function openPopupWindow(popupOptions: IPopupWindow): Window | null {
   const newWindow = window.open(
     popupOptions.url,
     popupOptions.title,
-    `scrollbars=${popupOptions.scrollbars ? "yes" : "no"},
+    `scrollbars=${popupOptions.scrollbars ? 'yes' : 'no'},
      width=${popupWidth / systemZoom},
      height=${popupHeight / systemZoom},
      top=${top},
@@ -170,7 +169,7 @@ export function MFAEnrollmentForm({ factors, enforceMfa }: MFAEnrollmentProps) {
                             return
                           }
 
-                          toast.success("Enrollment removed successfully.")
+                          toast.success('Enrollment removed successfully.')
                         }}
                       >
                         <input
@@ -198,7 +197,7 @@ export function MFAEnrollmentForm({ factors, enforceMfa }: MFAEnrollmentProps) {
 
                           const enrollmentPopupWindow = openPopupWindow({
                             url: ticketUrl!,
-                            title: "MFA Enrollment",
+                            title: 'MFA Enrollment',
                             width: 420,
                             height: 680,
                             scrollbars: true,

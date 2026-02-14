@@ -1,16 +1,16 @@
-import { redirect } from "next/navigation"
+import { redirect } from 'next/navigation'
 
-import { appClient } from "@/lib/auth0"
-import { managementClient } from "@/lib/auth0-manage"
-import { PageHeader } from "@/components/page-header"
+import { appClient } from '@/lib/auth0'
+import { managementClient } from '@/lib/auth0-manage'
+import { PageHeader } from '@/components/page-header'
 
-import { PasskeyForm } from "./passkey-form"
+import { PasskeyForm } from './passkey-form'
 
 export default async function Profile() {
   const session = await appClient.getSession()
 
   if (!session) {
-    return redirect("/auth/login?returnTo=/dashboard/account/passkeys")
+    return redirect('/auth/login?returnTo=/dashboard/account/passkeys')
   }
 
   const userId = session?.user.sub
@@ -19,7 +19,7 @@ export default async function Profile() {
     await managementClient.users.getAuthenticationMethods({ id: userId })
 
   const passkeys: any[] = enrollments.filter((enrollment: any) => {
-    return enrollment.type.includes("passkey")
+    return enrollment.type.includes('passkey')
   })
 
   return (

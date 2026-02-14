@@ -1,9 +1,9 @@
-import Link from "next/link"
-import { redirect } from "next/navigation"
+import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { SubmitButton } from "@/components/submit-button"
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { SubmitButton } from '@/components/submit-button'
 
 export function SignUpForm() {
   return (
@@ -19,10 +19,10 @@ export function SignUpForm() {
       </div>
       <form
         action={async (formData: FormData) => {
-          "use server"
+          'use server'
 
-          const email = formData.get("email")
-          if (!email || typeof email !== "string") return
+          const email = formData.get('email')
+          if (!email || typeof email !== 'string') return
 
           const searchParams = new URLSearchParams({
             login_hint: email,
@@ -46,14 +46,14 @@ export function SignUpForm() {
         </div>
       </form>
       <p className="text-muted-foreground px-8 text-center text-sm">
-        By continuing, you agree to our{" "}
+        By continuing, you agree to our{' '}
         <Link
           href="/terms"
           className="hover:text-primary underline underline-offset-4"
         >
           Terms of Service
-        </Link>{" "}
-        and{" "}
+        </Link>{' '}
+        and{' '}
         <Link
           href="/privacy"
           className="hover:text-primary underline underline-offset-4"

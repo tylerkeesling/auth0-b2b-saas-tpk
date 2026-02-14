@@ -1,16 +1,16 @@
-import { redirect } from "next/navigation"
+import { redirect } from 'next/navigation'
 
-import { appClient } from "@/lib/auth0"
-import { managementClient } from "@/lib/auth0-manage"
-import { PageHeader } from "@/components/page-header"
+import { appClient } from '@/lib/auth0'
+import { managementClient } from '@/lib/auth0-manage'
+import { PageHeader } from '@/components/page-header'
 
-import UserSessions from "./user-sessions"
+import UserSessions from './user-sessions'
 
 export default async function Profile() {
   const session = await appClient.getSession()
 
   if (!session) {
-    return redirect("/auth/login?returnTo=/dashboard/account/sessions")
+    return redirect('/auth/login?returnTo=/dashboard/account/sessions')
   }
 
   const userId = session?.user.sub

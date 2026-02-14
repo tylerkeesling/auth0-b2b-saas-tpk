@@ -32,10 +32,10 @@ export const DEFAULT_SESSION_POLICY: SessionPolicy = {
 }
 
 export const SUPPORTED_PROVIDERS = [
-  "sms",
-  "email",
-  "otp",
-  "push-notification",
-  "webauthn-roaming",
-  "webauthn-platform",
+  'sms',
+  'email',
+  'otp',
+  'push-notification',
+  'webauthn-roaming',
+  'webauthn-platform',
 ]

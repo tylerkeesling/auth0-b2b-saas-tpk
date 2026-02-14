@@ -1,15 +1,15 @@
-"use client"
+'use client'
 
-import Link from "next/link"
-import { useRouter } from "next/navigation"
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import {
   DotsVerticalIcon,
   GearIcon,
   PersonIcon,
   PlusIcon,
   TrashIcon,
-} from "@radix-ui/react-icons"
-import { toast } from "sonner"
+} from '@radix-ui/react-icons'
+import { toast } from 'sonner'
 
 import {
   AlertDialog,
@@ -21,9 +21,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+} from '@/components/ui/alert-dialog'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -31,13 +31,13 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from '@/components/ui/card'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from '@/components/ui/dropdown-menu'
 import {
   Table,
   TableBody,
@@ -46,11 +46,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { SubmitButton } from "@/components/submit-button"
+} from '@/components/ui/table'
+import { SubmitButton } from '@/components/submit-button'
 
-import { createSSOEnrollemnt } from "./actions"
-import { deleteConnection } from "./oidc/new/actions"
+import { createSSOEnrollemnt } from './actions'
+import { deleteConnection } from './oidc/new/actions'
 
 interface Props {
   connections: {
@@ -95,7 +95,7 @@ function openPopupWindow(popupOptions: IPopupWindow): Window | null {
     const newWindow = window.open(
       popupOptions.url,
       popupOptions.title,
-      `scrollbars=${popupOptions.scrollbars ? "yes" : "no"},
+      `scrollbars=${popupOptions.scrollbars ? 'yes' : 'no'},
       width=${popupOptions.width / systemZoom},
       height=${popupOptions.height / systemZoom},
       top=${top},
@@ -157,7 +157,7 @@ export function ConnectionsList({ connections }: Props) {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="w-[160px]">
-                        {c.strategy === "oidc" && (
+                        {c.strategy === 'oidc' && (
                           <>
                             <DropdownMenuItem asChild>
                               <Link
@@ -179,7 +179,7 @@ export function ConnectionsList({ connections }: Props) {
                           </>
                         )}
 
-                        {c.strategy === "samlp" && (
+                        {c.strategy === 'samlp' && (
                           <>
                             <DropdownMenuItem asChild>
                               <Link
@@ -227,7 +227,7 @@ export function ConnectionsList({ connections }: Props) {
                             if (error) {
                               return toast.error(error)
                             }
-                            toast.success("The connection has been deleted.")
+                            toast.success('The connection has been deleted.')
                           }}
                         >
                           Continue
@@ -254,7 +254,7 @@ export function ConnectionsList({ connections }: Props) {
 
             const enrollmentPopupWindow = openPopupWindow({
               url: ticketUrl!,
-              title: "SSO Enrollment",
+              title: 'SSO Enrollment',
               width: 1080,
               height: 768,
               scrollbars: true,

@@ -1,31 +1,31 @@
-"use server"
+'use server'
 
-import { revalidatePath } from "next/cache"
-import { redirect } from "next/navigation"
+import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
 
-import { appClient } from "@/lib/auth0"
-import { managementClient } from "@/lib/auth0-manage"
+import { appClient } from '@/lib/auth0'
+import { managementClient } from '@/lib/auth0-manage'
 
 export async function createEnrollment(formData: FormData) {
   const session = await appClient.getSession()
 
   if (!session) {
-    return redirect("/auth/login")
+    return redirect('/auth/login')
   }
 
-  let factorName = formData.get("factor_name")
+  let factorName = formData.get('factor_name')
 
-  if (!factorName || typeof factorName !== "string") {
+  if (!factorName || typeof factorName !== 'string') {
     return {
-      error: "Factor name is required.",
+      error: 'Factor name is required.',
     }
   }
 
   try {
     const userId = session?.user.sub
 
-    if (factorName === "sms" || factorName === "voice") {
-      factorName = "phone"
+    if (factorName === 'sms' || factorName === 'voice') {
+      factorName = 'phone'
     }
 
     const { data: enrollmentTicket } =
@@ -36,15 +36,15 @@ export async function createEnrollment(formData: FormData) {
         allow_multiple_enrollments: true,
       })
 
-    revalidatePath("/dashboard/account/security", "layout")
+    revalidatePath('/dashboard/account/security', 'layout')
 
     return {
       ticketUrl: enrollmentTicket.ticket_url,
     }
   } catch (error) {
-    console.error("failed to create enrollment ticket", error)
+    console.error('failed to create enrollment ticket', error)
     return {
-      error: "Failed to create an enrollment ticket.",
+      error: 'Failed to create an enrollment ticket.',
     }
   }
 }
@@ -53,14 +53,14 @@ export async function deleteEnrollment(formData: FormData) {
   const session = await appClient.getSession()
 
   if (!session) {
-    return redirect("/auth/login")
+    return redirect('/auth/login')
   }
 
-  let enrollmentId = formData.get("enrollment_id")
+  let enrollmentId = formData.get('enrollment_id')
 
-  if (!enrollmentId || typeof enrollmentId !== "string") {
+  if (!enrollmentId || typeof enrollmentId !== 'string') {
     return {
-      error: "Enrollment ID is required.",
+      error: 'Enrollment ID is required.',
     }
   }
 
@@ -72,13 +72,13 @@ export async function deleteEnrollment(formData: FormData) {
       authentication_method_id: enrollmentId,
     })
 
-    revalidatePath("/dashboard/account/security", "layout")
+    revalidatePath('/dashboard/account/security', 'layout')
 
     return {}
   } catch (error) {
-    console.error("failed to delete enrollment", error)
+    console.error('failed to delete enrollment', error)
     return {
-      error: "Failed to delete enrollment.",
+      error: 'Failed to delete enrollment.',
     }
   }
 }
@@ -87,12 +87,12 @@ export async function toggleMfa(formData: FormData) {
   const session = await appClient.getSession()
 
   if (!session) {
-    return redirect("/auth/login")
+    return redirect('/auth/login')
   }
 
   const userId = session.user.sub
 
-  let enforceMfa = formData.get("toggle-mfa") === "true"
+  let enforceMfa = formData.get('toggle-mfa') === 'true'
 
   const data = {
     user_metadata: {
@@ -102,12 +102,12 @@ export async function toggleMfa(formData: FormData) {
   try {
     await managementClient.users.update({ id: userId }, data)
 
-    revalidatePath("/dashboard/account/security", "layout")
+    revalidatePath('/dashboard/account/security', 'layout')
 
     return {}
   } catch (error) {
     return {
-      error: "Failed to toggle MFA.",
+      error: 'Failed to toggle MFA.',
     }
   }
 }

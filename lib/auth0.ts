@@ -1,7 +1,7 @@
 // import { initAuth0 } from "@auth0/nextjs-auth0"
-import { Auth0Client } from "@auth0/nextjs-auth0/server"
+import { Auth0Client } from '@auth0/nextjs-auth0/server'
 
-import sessionStore from "./session-store"
+import sessionStore from './session-store'
 
 export const appClient = new Auth0Client({
   authorizationParameters: {
@@ -38,8 +38,8 @@ export const onboardingClient = new Auth0Client({
     // scope: process.env.AUTH0_SCOPE,
   },
   routes: {
-    callback: "/onboarding/callback",
-    logout: "/",
+    callback: '/onboarding/callback',
+    logout: '/',
   },
 })
 
