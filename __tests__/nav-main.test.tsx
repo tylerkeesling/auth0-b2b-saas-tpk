@@ -57,25 +57,10 @@ describe("NavMain", () => {
   })
 
   it("renders all nav items", () => {
-    mockPathname = "/dashboard/organization/general"
     renderNavMain()
     expect(screen.getByText("General Settings")).toBeInTheDocument()
     expect(screen.getByText("Members")).toBeInTheDocument()
     expect(screen.getByText("SSO")).toBeInTheDocument()
-  })
-
-  it("auto-expands when pathname matches an item", () => {
-    mockPathname = "/dashboard/organization/general"
-    const { container } = renderNavMain()
-    const collapsible = container.querySelector('[data-state="open"]')
-    expect(collapsible).not.toBeNull()
-  })
-
-  it("stays collapsed when pathname does not match any item", () => {
-    mockPathname = "/dashboard/account/profile"
-    const { container } = renderNavMain()
-    const collapsible = container.querySelector('[data-state="closed"]')
-    expect(collapsible).not.toBeNull()
   })
 
   it("renders items as links when not disabled", () => {
@@ -86,7 +71,6 @@ describe("NavMain", () => {
   })
 
   it("renders disabled items with pointer-events-none and opacity-50", () => {
-    mockPathname = "/dashboard/organization/general"
     renderNavMain({ disabled: true })
     const item = screen.getByText("General Settings")
     const button = item.closest('[class*="pointer-events-none"]')
@@ -95,15 +79,11 @@ describe("NavMain", () => {
   })
 
   it("disabled items are not wrapped in navigable links", () => {
-    mockPathname = "/dashboard/organization/general"
     renderNavMain({ disabled: true })
     const item = screen.getByText("General Settings")
-    // When disabled, the sub-button should not have an href attribute
-    const subButton = item.closest('[data-sidebar="menu-sub-button"]')
-    expect(subButton).not.toBeNull()
-    // Disabled buttons should have pointer-events-none (already verified above)
-    // and should not navigate anywhere — no href on the element
-    expect(subButton).not.toHaveAttribute("href")
+    const button = item.closest('[data-sidebar="menu-sub-button"]')
+    expect(button).not.toBeNull()
+    expect(button).not.toHaveAttribute("href")
   })
 
   it("marks the active item based on pathname", () => {

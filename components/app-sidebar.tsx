@@ -71,13 +71,13 @@ export function AppSidebar({
         />
       </SidebarHeader>
       <SidebarContent>
+        <NavMain title="My Account" icon={UserCircle} items={accountItems} />
         <NavMain
           title="My Organization"
           icon={Building2}
           items={orgItems}
           disabled={userRole !== "admin"}
         />
-        <NavMain title="My Account" icon={UserCircle} items={accountItems} />
         <SidebarGroup>
           <SidebarGroupLabel>Other</SidebarGroupLabel>
           <SidebarMenu>

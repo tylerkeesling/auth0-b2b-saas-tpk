@@ -86,19 +86,15 @@ describe("AppSidebar", () => {
   })
 
   it("disables My Organization items when user is not admin", () => {
-    // Set pathname to org route so the collapsible auto-opens
-    mockPathname = "/dashboard/organization/general"
     renderSidebar({ userRole: "member" })
     const generalSettings = screen.getByText("General Settings")
     const button = generalSettings.closest(
       '[class*="pointer-events-none"]'
     )
     expect(button).not.toBeNull()
-    mockPathname = "/dashboard/account/profile"
   })
 
   it("enables My Organization items when user is admin", () => {
-    mockPathname = "/dashboard/organization/general"
     renderSidebar({ userRole: "admin" })
     const generalSettings = screen.getByText("General Settings")
     const link = generalSettings.closest("a")
@@ -106,7 +102,6 @@ describe("AppSidebar", () => {
       "href",
       "/dashboard/organization/general"
     )
-    mockPathname = "/dashboard/account/profile"
   })
 
   it("always enables My Account items regardless of role", () => {
