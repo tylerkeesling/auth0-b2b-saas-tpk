@@ -6,6 +6,7 @@ import { ChevronDown, ChevronRight } from 'lucide-react'
 import { EventsTable } from '@/lib/definitions'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
+import JsonViewer from '@/components/json-viewer'
 
 export default function EventStreamList({
   initialData,
@@ -86,9 +87,7 @@ export default function EventStreamList({
 
         {isExpanded && (
           <div className="border-border bg-muted border-t p-4">
-            <pre className="bg-card text-card-foreground overflow-x-auto rounded-md border p-4 text-xs">
-              <code>{JSON.stringify(event.data, null, 2)}</code>
-            </pre>
+            <JsonViewer data={event.data} />
           </div>
         )}
       </div>

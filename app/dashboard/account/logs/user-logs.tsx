@@ -23,7 +23,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Spinner } from '@/components/ui/spinner'
 import {
   Table,
   TableBody,
@@ -32,10 +31,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { UserLogsSkeleton } from '@/components/user-logs-skeleton'
 
 import { getLogs, LogEntry } from './actions'
 
-const JsonViewer = dynamic(() => import('./json-viewer'), { ssr: false })
+const JsonViewer = dynamic(() => import('@/components/json-viewer'), {
+  ssr: false,
+})
 
 interface UserLogsProps {
   userId: string
@@ -200,11 +202,7 @@ export default function UserLogs({ userId }: UserLogsProps) {
         </div>
 
         {/* Loading State (only on initial load with no data) */}
-        {loading && logs.length === 0 && (
-          <div className="flex items-center justify-center py-8">
-            <Spinner className="size-8" />
-          </div>
-        )}
+        {loading && logs.length === 0 && <UserLogsSkeleton />}
 
         {/* Empty State */}
         {!loading && logs.length === 0 && (

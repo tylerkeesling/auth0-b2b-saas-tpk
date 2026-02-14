@@ -1,59 +1,11 @@
 import { redirect } from 'next/navigation'
-import { Code } from 'bright'
-import { jwtDecode } from 'jwt-decode'
 
 import { appClient } from '@/lib/auth0'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { decodeToken } from '@/lib/token-utils'
 import { PageHeader } from '@/components/page-header'
 
 import { RefreshTokenForm } from './refresh-token-form'
-
-function decodeToken(token: string) {
-  try {
-    const jwtPayloadJson = jwtDecode(token)
-    const stringifiedJson = JSON.stringify(jwtPayloadJson, null, 2)
-    return stringifiedJson
-  } catch (error) {
-    console.error(error)
-    return 'The token is opaque or malformed. Please refer to https://community.auth0.com/t/why-is-my-access-token-not-a-jwt-opaque-token/31028'
-  }
-}
-
-function TokenCard({
-  title,
-  description,
-  token,
-}: {
-  title: string
-  description: React.ReactNode
-  token: string | undefined
-}) {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="grid w-full items-center gap-1.5">
-          <Code
-            theme="material-darker"
-            className="m-0! rounded-xl! text-sm"
-            lang="json"
-          >
-            {token}
-          </Code>
-        </div>
-      </CardContent>
-    </Card>
-  )
-}
+import { TokenCard } from './token-card'
 
 export default async function Profile() {
   const session = await appClient.getSession()
@@ -62,10 +14,13 @@ export default async function Profile() {
     return redirect('/auth/login?returnTo=/dashboard/account/tokens')
   }
 
-  const idToken =
-    session?.tokenSet.idToken && decodeToken(session.tokenSet.idToken)
-  const accessToken =
-    session?.tokenSet.accessToken && decodeToken(session.tokenSet.accessToken)
+  const idTokenResult = session.tokenSet.idToken
+    ? decodeToken(session.tokenSet.idToken)
+    : { success: false as const, error: 'No ID token available' }
+
+  const accessTokenResult = session.tokenSet.accessToken
+    ? decodeToken(session.tokenSet.accessToken)
+    : { success: false as const, error: 'No access token available' }
 
   return (
     <div className="space-y-2">
@@ -81,7 +36,7 @@ export default async function Profile() {
             <span className="font-bold">the user has been authenticated.</span>
           </>
         }
-        token={idToken}
+        result={idTokenResult}
       />
       <TokenCard
         title="Access Token"
@@ -93,7 +48,7 @@ export default async function Profile() {
             </span>
           </>
         }
-        token={accessToken}
+        result={accessTokenResult}
       />
       <RefreshTokenForm />
     </div>
