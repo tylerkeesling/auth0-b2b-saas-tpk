@@ -15,10 +15,8 @@ export default async function Profile() {
 
   const userId = session?.user.sub
 
-  const sessionsResponse = await managementClient.users.getSessions({
-    user_id: userId,
-  })
-  const sessions = sessionsResponse.data.sessions
+  const sessionsResponse = await managementClient.users.sessions.list(userId)
+  const sessions = sessionsResponse.data
 
   return (
     <div className="space-y-2">

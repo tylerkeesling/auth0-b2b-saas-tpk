@@ -19,22 +19,20 @@ export default async function UpdateSamlConnection({
   }
 
   // ensure that the connection ID being fetched is owned by the organization
-  const { data: enabledConnection } =
-    await managementClient.organizations.getEnabledConnection({
-      //@ts-ignore
-      id: session.user.org_id,
-      connectionId,
-    })
+  const enabledConnection =
+    (await managementClient.organizations.enabledConnections.get(
+      session.user.org_id!,
+      connectionId
+    )) as any
 
   if (!enabledConnection) {
     redirect('/dashboard/organization/sso')
   }
 
-  const [domainVerificationToken, { data: connection }] = await Promise.all([
-    //@ts-ignore
-    getOrCreateDomainVerificationToken(session!.user.org_id),
-    managementClient.connections.get({ id: connectionId }),
-  ])
+  const [domainVerificationToken, connection] = (await Promise.all([
+    getOrCreateDomainVerificationToken(session!.user.org_id!),
+    managementClient.connections.get(connectionId),
+  ])) as any[]
 
   return (
     <div>

@@ -22,14 +22,9 @@ export async function updateProfile(formData: FormData) {
   }
 
   try {
-    await managementClient.users.update(
-      {
-        id: session.user.sub,
-      },
-      {
-        name,
-      }
-    )
+    await managementClient.users.update(session.user.sub, {
+      name,
+    })
 
     // update the cached local session to reflect the new profile across the app
     await appClient.updateSession({
@@ -58,9 +53,7 @@ export async function deleteAccount() {
   }
 
   try {
-    await managementClient.users.delete({
-      id: session.user.sub,
-    })
+    await managementClient.users.delete(session.user.sub)
 
     return {}
   } catch (error) {

@@ -26,29 +26,22 @@ export const updateMfaPolicy = withServerActionAuth(
         : []
 
     try {
-      const { data: org } = await managementClient.organizations.get({
-        //@ts-ignore
-        id: session!.user.org_id,
-      })
-
-      await managementClient.organizations.update(
-        {
-          //@ts-ignore
-          id: session.user.org_id,
-        },
-        {
-          metadata: {
-            ...org.metadata,
-            mfaPolicy: JSON.stringify({
-              ...DEFAULT_MFA_POLICY,
-              enforce,
-              skipForPasskey,
-              skipForDomains: parsedSkipForDomains,
-              providers,
-            }),
-          },
-        }
+      const org = await managementClient.organizations.get(
+        session!.user.org_id!
       )
+
+      await managementClient.organizations.update(session.user.org_id!, {
+        metadata: {
+          ...org.metadata,
+          mfaPolicy: JSON.stringify({
+            ...DEFAULT_MFA_POLICY,
+            enforce,
+            skipForPasskey,
+            skipForDomains: parsedSkipForDomains,
+            providers,
+          }),
+        },
+      })
 
       revalidatePath('/dashboard/organization/security-policies')
     } catch (error) {
@@ -71,31 +64,24 @@ export const updateSessionPolicy = withServerActionAuth(
     const idleTimeoutMs = formData.get('idle_timeout_ms')
 
     try {
-      const { data: org } = await managementClient.organizations.get({
-        //@ts-ignore
-        id: session!.user.org_id,
-      })
-
-      await managementClient.organizations.update(
-        {
-          //@ts-ignore
-          id: session.user.org_id,
-        },
-        {
-          metadata: {
-            ...org.metadata,
-            sessionPolicy: JSON.stringify({
-              ...DEFAULT_SESSION_POLICY,
-              sessionLifetimeMs: sessionLifetimeMs
-                ? Number(sessionLifetimeMs)
-                : DEFAULT_SESSION_POLICY.sessionLifetimeMs,
-              idleTimeoutMs: idleTimeoutMs
-                ? Number(idleTimeoutMs)
-                : DEFAULT_SESSION_POLICY.idleTimeoutMs,
-            }),
-          },
-        }
+      const org = await managementClient.organizations.get(
+        session!.user.org_id!
       )
+
+      await managementClient.organizations.update(session.user.org_id!, {
+        metadata: {
+          ...org.metadata,
+          sessionPolicy: JSON.stringify({
+            ...DEFAULT_SESSION_POLICY,
+            sessionLifetimeMs: sessionLifetimeMs
+              ? Number(sessionLifetimeMs)
+              : DEFAULT_SESSION_POLICY.sessionLifetimeMs,
+            idleTimeoutMs: idleTimeoutMs
+              ? Number(idleTimeoutMs)
+              : DEFAULT_SESSION_POLICY.idleTimeoutMs,
+          }),
+        },
+      })
 
       const metadata = {
         sessionPolicy: JSON.stringify({

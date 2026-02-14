@@ -15,8 +15,9 @@ export default async function Profile() {
 
   const userId = session?.user.sub
 
-  const { data: enrollments } =
-    await managementClient.users.getAuthenticationMethods({ id: userId })
+  const enrollmentsResponse =
+    await managementClient.users.authenticationMethods.list(userId)
+  const enrollments = enrollmentsResponse.data
 
   const passkeys: any[] = enrollments.filter((enrollment: any) => {
     return enrollment.type.includes('passkey')

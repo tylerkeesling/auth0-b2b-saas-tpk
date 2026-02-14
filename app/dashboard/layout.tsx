@@ -24,9 +24,10 @@ export default async function DashboardLayout({
     redirect('/auth/login')
   }
 
-  const { data: orgs } = await managementClient.users.getUserOrganizations({
-    id: session.user.sub,
-  })
+  const orgsResponse = await managementClient.users.organizations.list(
+    session.user.sub
+  )
+  const orgs = orgsResponse.data as any[]
 
   // if the user does not belong to any organizations, redirect to onboarding
   if (!orgs.length) {

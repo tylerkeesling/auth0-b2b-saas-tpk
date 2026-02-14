@@ -42,11 +42,9 @@ export const createSSOEnrollemnt = withServerActionAuth(
     try {
       const orgId = session?.user.org_id
 
-      const { data: enrollmentTicket } =
-        await managementClient.selfServiceProfiles.createSsoTicket(
-          {
-            id: 'ssp_1JYaFD4Zq9wno7HaEdfmr6',
-          },
+      const enrollmentTicket =
+        await managementClient.selfServiceProfiles.ssoTicket.create(
+          'ssp_1JYaFD4Zq9wno7HaEdfmr6',
           {
             enabled_organizations: [
               //@ts-ignore
@@ -65,7 +63,7 @@ export const createSSOEnrollemnt = withServerActionAuth(
       revalidatePath('/dashboard/organization/sso', 'layout')
 
       return {
-        ticketUrl: enrollmentTicket.ticket,
+        ticketUrl: enrollmentTicket.ticket!,
       }
     } catch (error) {
       return {

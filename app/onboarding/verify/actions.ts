@@ -13,7 +13,7 @@ export async function resendVerificationEmail() {
   }
 
   try {
-    await managementClient.jobs.verifyEmail({
+    await managementClient.jobs.verificationEmail.create({
       user_id: session.user.sub,
     })
 

@@ -21,7 +21,7 @@ export async function deleteSession(formData: FormData) {
     }
   }
   try {
-    await managementClient.sessions.delete({ id: sessionId })
+    await managementClient.sessions.delete(sessionId)
 
     revalidatePath('/dashboard/account/sessions', 'layout')
 

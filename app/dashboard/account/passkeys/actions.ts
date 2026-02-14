@@ -22,10 +22,10 @@ export async function revokePasskey(formData: FormData) {
   }
 
   try {
-    await managementClient.users.deleteAuthenticationMethod({
-      id: session.user.sub,
-      authentication_method_id: authenticationMethodId,
-    })
+    await managementClient.users.authenticationMethods.delete(
+      session.user.sub,
+      authenticationMethodId
+    )
     revalidatePath('/', 'layout')
     return {}
   } catch (error) {

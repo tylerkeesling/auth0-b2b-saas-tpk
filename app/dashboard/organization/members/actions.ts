@@ -32,17 +32,14 @@ export const createInvitation = withServerActionAuth(
     try {
       const roleId = roles[role]
 
-      await managementClient.organizations.createInvitation(
-        {
-          //@ts-ignore
-          id: session.user.org_id,
-        },
+      await managementClient.organizations.invitations.create(
+        session.user.org_id!,
         {
           invitee: {
             email,
           },
           inviter: {
-            name: session.user.name,
+            name: session.user.name!,
           },
           client_id: process.env.AUTH0_CLIENT_ID,
           // if the roleId exists, then assign it. Regular members do not have a role assigned,
@@ -69,11 +66,10 @@ export const createInvitation = withServerActionAuth(
 export const revokeInvitation = withServerActionAuth(
   async function revokeInvitation(invitationId: string, session: SessionData) {
     try {
-      await managementClient.organizations.deleteInvitation({
-        //@ts-ignore
-        id: session.user.org_id,
-        invitation_id: invitationId,
-      })
+      await managementClient.organizations.invitations.delete(
+        session.user.org_id!,
+        invitationId
+      )
 
       revalidatePath('/dashboard/organization/members')
     } catch (error) {
@@ -99,11 +95,8 @@ export const removeMember = withServerActionAuth(
     }
 
     try {
-      await managementClient.organizations.deleteMembers(
-        {
-          //@ts-ignore
-          id: session.user.org_id,
-        },
+      await managementClient.organizations.members.delete(
+        session.user.org_id!,
         {
           members: [userId],
         }
@@ -145,35 +138,29 @@ export const updateRole = withServerActionAuth(
     const roleId = roles[role]
 
     try {
-      const { data: currentRoles } =
-        await managementClient.organizations.getMemberRoles({
-          //@ts-ignore
-          id: session.user.org_id,
-          user_id: userId,
-        })
+      const currentRolesResponse =
+        await managementClient.organizations.members.roles.list(
+          session.user.org_id!,
+          userId
+        )
+      const currentRoles = currentRolesResponse.data
 
       // if the user has any existing roles, remove them
       if (currentRoles.length) {
-        await managementClient.organizations.deleteMemberRoles(
+        await managementClient.organizations.members.roles.delete(
+          session.user.org_id!,
+          userId,
           {
-            //@ts-ignore
-            id: session.user.org_id,
-            user_id: userId,
-          },
-          {
-            roles: currentRoles.map((r) => r.id),
+            roles: currentRoles.map((r: any) => r.id),
           }
         )
       }
 
       // if the user is being assigned a non-member role (non-null), set the new role
       if (roleId) {
-        await managementClient.organizations.addMemberRoles(
-          {
-            //@ts-ignore
-            id: session.user.org_id,
-            user_id: userId,
-          },
+        await managementClient.organizations.members.roles.assign(
+          session.user.org_id!,
+          userId,
           {
             roles: [roleId],
           }

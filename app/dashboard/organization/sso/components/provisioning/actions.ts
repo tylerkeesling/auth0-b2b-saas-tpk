@@ -16,12 +16,11 @@ const connStrategyToSlug: {
 export const createScimConfig = withServerActionAuth(
   async function createScimConfig(connectionId: string, session: SessionData) {
     // ensure that the connection ID being updated is owned by the organization
-    const { data: enabledConnection } =
-      await managementClient.organizations.getEnabledConnection({
-        //@ts-ignore
-        id: session.user.org_id,
-        connectionId: connectionId,
-      })
+    const enabledConnection =
+      await managementClient.organizations.enabledConnections.get(
+        session.user.org_id!,
+        connectionId
+      )
 
     if (!enabledConnection) {
       return {
@@ -30,15 +29,15 @@ export const createScimConfig = withServerActionAuth(
     }
 
     try {
-      await managementClient.connections.createScimConfiguration(
-        { id: connectionId },
+      await managementClient.connections.scimConfiguration.create(
+        connectionId,
         {
           user_id_attribute: 'externalId',
         }
       )
 
       revalidatePath(
-        `/dashboard/organization/sso/${connStrategyToSlug[enabledConnection.connection.strategy]}/edit/${connectionId}/provisioning`
+        `/dashboard/organization/sso/${connStrategyToSlug[enabledConnection.connection!.strategy!]}/edit/${connectionId}/provisioning`
       )
     } catch (error) {
       console.error('failed to create a SCIM configuration', error)
@@ -57,12 +56,11 @@ export const createScimConfig = withServerActionAuth(
 export const deleteScimConfig = withServerActionAuth(
   async function deleteScimConfig(connectionId: string, session: SessionData) {
     // ensure that the connection ID being updated is owned by the organization
-    const { data: enabledConnection } =
-      await managementClient.organizations.getEnabledConnection({
-        //@ts-ignore
-        id: session.user.org_id,
-        connectionId: connectionId,
-      })
+    const enabledConnection =
+      await managementClient.organizations.enabledConnections.get(
+        session.user.org_id!,
+        connectionId
+      )
 
     if (!enabledConnection) {
       return {
@@ -71,12 +69,10 @@ export const deleteScimConfig = withServerActionAuth(
     }
 
     try {
-      await managementClient.connections.deleteScimConfiguration({
-        id: connectionId,
-      })
+      await managementClient.connections.scimConfiguration.delete(connectionId)
 
       revalidatePath(
-        `/dashboard/organization/sso/${connStrategyToSlug[enabledConnection.connection.strategy]}/edit/${connectionId}/provisioning`
+        `/dashboard/organization/sso/${connStrategyToSlug[enabledConnection.connection!.strategy!]}/edit/${connectionId}/provisioning`
       )
     } catch (error) {
       console.error('failed to delete a SCIM configuration', error)
@@ -107,12 +103,11 @@ export const updateScimConfig = withServerActionAuth(
     }
 
     // ensure that the connection ID being updated is owned by the organization
-    const { data: enabledConnection } =
-      await managementClient.organizations.getEnabledConnection({
-        //@ts-ignore
-        id: session.user.org_id,
-        connectionId: connectionId,
-      })
+    const enabledConnection =
+      await managementClient.organizations.enabledConnections.get(
+        session.user.org_id!,
+        connectionId
+      )
 
     if (!enabledConnection) {
       return {
@@ -121,21 +116,19 @@ export const updateScimConfig = withServerActionAuth(
     }
 
     try {
-      const { data: scimConfig } =
-        await managementClient.connections.getScimConfiguration({
-          id: connectionId,
-        })
+      const scimConfig =
+        await managementClient.connections.scimConfiguration.get(connectionId)
 
-      await managementClient.connections.updateScimConfiguration(
-        { id: connectionId },
+      await managementClient.connections.scimConfiguration.update(
+        connectionId,
         {
           user_id_attribute: userIdAttribute,
-          mapping: scimConfig.mapping,
+          mapping: scimConfig.mapping!,
         }
       )
 
       revalidatePath(
-        `/dashboard/organization/sso/${connStrategyToSlug[enabledConnection.connection.strategy]}/edit/${connectionId}/provisioning`
+        `/dashboard/organization/sso/${connStrategyToSlug[enabledConnection.connection!.strategy!]}/edit/${connectionId}/provisioning`
       )
     } catch (error) {
       console.error('failed to update SCIM configuration', error)
@@ -154,12 +147,11 @@ export const updateScimConfig = withServerActionAuth(
 export const createScimToken = withServerActionAuth(
   async function createScimToken(connectionId: string, session: SessionData) {
     // ensure that the connection ID being updated is owned by the organization
-    const { data: enabledConnection } =
-      await managementClient.organizations.getEnabledConnection({
-        //@ts-ignore
-        id: session.user.org_id,
-        connectionId: connectionId,
-      })
+    const enabledConnection =
+      await managementClient.organizations.enabledConnections.get(
+        session.user.org_id!,
+        connectionId
+      )
 
     if (!enabledConnection) {
       return {
@@ -168,16 +160,13 @@ export const createScimToken = withServerActionAuth(
     }
 
     try {
-      const { data: token } =
-        await managementClient.connections.createScimToken(
-          {
-            id: connectionId,
-          },
-          {}
+      const token =
+        await managementClient.connections.scimConfiguration.tokens.create(
+          connectionId
         )
 
       revalidatePath(
-        `/dashboard/organization/sso/${connStrategyToSlug[enabledConnection.connection.strategy]}/edit/${connectionId}/provisioning`
+        `/dashboard/organization/sso/${connStrategyToSlug[enabledConnection.connection!.strategy!]}/edit/${connectionId}/provisioning`
       )
 
       return {
@@ -202,12 +191,11 @@ export const deleteScimToken = withServerActionAuth(
     session: SessionData
   ) {
     // ensure that the connection ID being updated is owned by the organization
-    const { data: enabledConnection } =
-      await managementClient.organizations.getEnabledConnection({
-        //@ts-ignore
-        id: session.user.org_id,
-        connectionId: connectionId,
-      })
+    const enabledConnection =
+      await managementClient.organizations.enabledConnections.get(
+        session.user.org_id!,
+        connectionId
+      )
 
     if (!enabledConnection) {
       return {
@@ -216,13 +204,13 @@ export const deleteScimToken = withServerActionAuth(
     }
 
     try {
-      await managementClient.connections.deleteScimToken({
-        id: connectionId,
-        tokenId,
-      })
+      await managementClient.connections.scimConfiguration.tokens.delete(
+        connectionId,
+        tokenId
+      )
 
       revalidatePath(
-        `/dashboard/organization/sso/${connStrategyToSlug[enabledConnection.connection.strategy]}/edit/${connectionId}/provisioning`
+        `/dashboard/organization/sso/${connStrategyToSlug[enabledConnection.connection!.strategy!]}/edit/${connectionId}/provisioning`
       )
     } catch (error) {
       console.error('failed to delete a SCIM token', error)

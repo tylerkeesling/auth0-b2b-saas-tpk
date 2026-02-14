@@ -18,14 +18,14 @@ export default async function Profile() {
 
   const [factorsResponse, enrollmentsResponse, userMetadataResponse] =
     await Promise.all([
-      managementClient.guardian.getFactors(),
-      managementClient.users.getAuthenticationMethods({ id: userId }),
-      managementClient.users.get({ id: userId, fields: 'user_metadata' }),
+      managementClient.guardian.factors.list(),
+      managementClient.users.authenticationMethods.list(userId),
+      managementClient.users.get(userId, { fields: 'user_metadata' }),
     ])
 
-  const factors = factorsResponse.data
+  const factors = factorsResponse as any[]
   const enrollments = enrollmentsResponse.data
-  const enforceMfa = userMetadataResponse.data.user_metadata?.enforce_mfa
+  const enforceMfa = (userMetadataResponse as any).user_metadata?.enforce_mfa
 
   const filteredFactors = factors
     .filter((factor: any) => {

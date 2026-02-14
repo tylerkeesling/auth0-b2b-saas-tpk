@@ -13,10 +13,9 @@ export default async function GeneralSettings() {
     redirect('/auth/login')
   }
 
-  const { data: org } = await managementClient.organizations.get({
-    // @ts-ignore
-    id: session.user.org_id,
-  })
+  const org = (await managementClient.organizations.get(
+    session.user.org_id!
+  )) as any
 
   return (
     <div className="space-y-2">

@@ -54,10 +54,7 @@ export const updateOrganization = withServerActionAuth(
       }
 
       await managementClient.organizations.update(
-        {
-          //@ts-ignore
-          id: session.user.org_id,
-        },
+        session.user.org_id!,
         updateData
       )
 

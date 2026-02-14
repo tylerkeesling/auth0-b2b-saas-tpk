@@ -10,15 +10,17 @@ import { MembersList } from './members-list'
 export default async function Members() {
   const session = await getOrganizationSession()
 
-  const { data: members } = await managementClient.organizations.getMembers({
-    id: session.user.org_id,
-    fields: ['user_id', 'name', 'email', 'picture', 'roles'].join(','),
-    include_fields: true,
-  })
-  const { data: invitations } =
-    await managementClient.organizations.getInvitations({
-      id: session.user.org_id,
-    })
+  const membersResponse = await managementClient.organizations.members.list(
+    session.user.org_id!,
+    {
+      fields: ['user_id', 'name', 'email', 'picture', 'roles'].join(','),
+      include_fields: true,
+    }
+  )
+  const members = membersResponse.data as any[]
+  const invitationsResponse =
+    await managementClient.organizations.invitations.list(session.user.org_id!)
+  const invitations = invitationsResponse.data as any[]
 
   return (
     <div className="space-y-2">

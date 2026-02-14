@@ -1,7 +1,5 @@
 'use server'
 
-import { GetLogsRequest } from 'auth0'
-
 import { appClient } from '@/lib/auth0'
 import { managementClient } from '@/lib/auth0-manage'
 
@@ -103,14 +101,14 @@ export async function getLogs({
     // Use search-based pagination (page/per_page) which respects query filters
     // Note: Limited to 1,000 results total, but this is fine for user logs
     // Request one extra to detect if there are more pages
-    const params: GetLogsRequest = {
+    const params = {
       q: query,
       sort: 'date:-1',
       page,
       per_page: perPage + 1,
     }
 
-    const response = await managementClient.logs.getAll(params)
+    const response = await managementClient.logs.list(params)
 
     const allLogs = response.data
 

@@ -6,11 +6,11 @@ import { ConnectionsList } from './connections-list'
 
 export default async function SSO() {
   const session = await appClient.getSession()
-  const { data: connections } =
-    await managementClient.organizations.getEnabledConnections({
-      //@ts-ignore
-      id: session!.user.org_id,
-    })
+  const connectionsResponse =
+    await managementClient.organizations.enabledConnections.list(
+      session!.user.org_id!
+    )
+  const connections = connectionsResponse.data as any[]
 
   return (
     <div className="space-y-2">

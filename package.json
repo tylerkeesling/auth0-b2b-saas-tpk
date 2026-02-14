@@ -37,7 +37,7 @@
     "@sindresorhus/slugify": "^2.2.1",
     "@vercel/kv": "^2.0.0",
     "@vercel/postgres": "^0.10.0",
-    "auth0": "^4.28.0",
+    "auth0": "^5.3.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",

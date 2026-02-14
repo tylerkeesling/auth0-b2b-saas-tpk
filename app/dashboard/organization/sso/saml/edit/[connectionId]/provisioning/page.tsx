@@ -18,12 +18,11 @@ export default async function Provisioning({
   }
 
   // ensure that the connection ID being fetched is owned by the organization
-  const { data: enabledConnection } =
-    await managementClient.organizations.getEnabledConnection({
-      //@ts-ignore
-      id: session.user.org_id,
-      connectionId,
-    })
+  const enabledConnection =
+    await managementClient.organizations.enabledConnections.get(
+      session.user.org_id!,
+      connectionId
+    )
 
   if (!enabledConnection) {
     redirect('/dashboard/organization/sso')
@@ -32,13 +31,9 @@ export default async function Provisioning({
   let scimConfig
   let scimTokens
   try {
-    ;[{ data: scimConfig }, { data: scimTokens }] = await Promise.all([
-      managementClient.connections.getScimConfiguration({
-        id: connectionId,
-      }),
-      managementClient.connections.getScimTokens({
-        id: connectionId,
-      }),
+    ;[scimConfig, scimTokens] = await Promise.all([
+      managementClient.connections.scimConfiguration.get(connectionId),
+      managementClient.connections.scimConfiguration.tokens.get(connectionId),
     ])
   } catch (e: any) {
     // Throw if error is not 404 (SCIM is not enabled for this connection)
@@ -53,11 +48,11 @@ export default async function Provisioning({
         scimConfig={
           scimConfig
             ? {
-                userIdAttribute: scimConfig.user_id_attribute,
+                userIdAttribute: scimConfig.user_id_attribute!,
               }
             : null
         }
-        scimTokens={(scimTokens || []).map((tkn) => ({
+        scimTokens={(scimTokens || []).map((tkn: any) => ({
           id: tkn.token_id,
           lastUsedAt: tkn.last_used_at,
           createdAt: tkn.created_at,
