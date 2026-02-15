@@ -2,7 +2,12 @@ import {
   type SessionData,
   type SessionDataStore,
 } from '@auth0/nextjs-auth0/types'
-import { kv } from '@vercel/kv'
+import { Redis } from '@upstash/redis'
+
+const kv = new Redis({
+  url: process.env.KV_REST_API_URL!,
+  token: process.env.KV_REST_API_TOKEN!,
+})
 
 // Helper function for SID indexing
 const getSidIndexKey = (sid: string) => `session:sid:${sid}`
