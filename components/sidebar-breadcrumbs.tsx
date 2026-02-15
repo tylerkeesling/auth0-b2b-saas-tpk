@@ -36,6 +36,10 @@ const routeMap: Record<string, { label: string; group?: string }> = {
     group: 'My Account',
   },
   '/dashboard/account/passkeys': { label: 'Passkeys', group: 'My Account' },
+  '/dashboard/account/security-settings/sign-in-methods': {
+    label: 'Sign-in Methods',
+    group: 'My Account',
+  },
   '/dashboard/account/sessions': { label: 'Sessions', group: 'My Account' },
   '/dashboard/account/logs': { label: 'Logs', group: 'My Account' },
   // Event Stream
