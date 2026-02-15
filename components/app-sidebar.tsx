@@ -51,7 +51,6 @@ const accountItems = [
     title: 'Multifactor Authentication',
     href: '/dashboard/account/mfa',
   },
-  { title: 'Passkeys', href: '/dashboard/account/passkeys' },
   { title: 'Sessions', href: '/dashboard/account/sessions' },
   { title: 'Logs', href: '/dashboard/account/logs' },
 ]

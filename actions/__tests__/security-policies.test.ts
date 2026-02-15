@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 // We need to import the CJS module
-const { onExecutePostLogin } = require('../actions/security-policies')
+const { onExecutePostLogin } = require('../security-policies')
 
 function createEvent(overrides: Record<string, any> = {}) {
   return {

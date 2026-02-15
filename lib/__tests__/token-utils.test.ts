@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { decodeToken } from '@/lib/token-utils'
 
@@ -10,6 +10,14 @@ function createJwt(payload: Record<string, unknown>): string {
 }
 
 describe('decodeToken', () => {
+  beforeEach(() => {
+    vi.spyOn(console, 'error').mockImplementation(() => {})
+  })
+
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
   it('returns success with decoded payload for a valid JWT', () => {
     const payload = { sub: '1234567890', name: 'John Doe', iat: 1516239022 }
     const token = createJwt(payload)

@@ -17,7 +17,7 @@ export async function deleteSession(formData: FormData) {
 
   if (!sessionId || typeof sessionId !== 'string') {
     return {
-      error: 'Enrollment ID is required.',
+      error: 'Session ID is required.',
     }
   }
   try {

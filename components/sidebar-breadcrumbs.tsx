@@ -35,7 +35,6 @@ const routeMap: Record<string, { label: string; group?: string }> = {
     label: 'Multifactor Authentication',
     group: 'My Account',
   },
-  '/dashboard/account/passkeys': { label: 'Passkeys', group: 'My Account' },
   '/dashboard/account/sign-in-methods': {
     label: 'Sign-in Methods',
     group: 'My Account',
