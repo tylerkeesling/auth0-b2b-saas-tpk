@@ -10,7 +10,7 @@ exports.onExecutePostLogin = async (event, api) => {
   if (event.client.client_id !== event.secrets.DASHBOARD_CLIENT_ID) return
   if (event?.transaction?.protocol === 'oauth2-refresh-token') return
 
-  const mfaPolicy = parseMfaPolicy(event.organization?.metadata.mfaPolicy)
+  const mfaPolicy = parseMfaPolicy(event.organization?.metadata?.mfaPolicy)
 
   if (!mfaPolicy.enforce) return
 
@@ -43,7 +43,20 @@ exports.onExecutePostLogin = async (event, api) => {
     if (exemptDomains.includes(domain)) return
   }
 
-  api.authentication.challengeWithAny(factors)
+  // Use the user's preferred MFA method as the default factor if set
+  const preferred = event.user.user_metadata?.preferred_mfa_method
+  const preferredFactor = preferred ? toFactor(preferred) : null
+
+  if (preferredFactor && factors.some((f) => f.type === preferredFactor.type)) {
+    const additionalFactors = factors.filter(
+      (f) => f.type !== preferredFactor.type
+    )
+    api.authentication.challengeWith(preferredFactor, {
+      additionalFactors,
+    })
+  } else {
+    api.authentication.challengeWithAny(factors)
+  }
 }
 
 /**
@@ -54,33 +67,55 @@ exports.onExecutePostLogin = async (event, api) => {
  * @returns {{ enforce: boolean, providers: string[], skipForPasskey: boolean, skipForFederation: boolean, skipForDomains: string[] }}
  */
 function parseMfaPolicy(raw) {
-  const parsed = JSON.parse(raw || '{}')
-  return {
-    enforce: !!parsed.enforce,
-    providers: Array.isArray(parsed.providers) ? parsed.providers : [],
-    skipForPasskey: !!parsed.skipForPasskey,
-    skipForFederation: !!parsed.skipForFederation,
-    skipForDomains: Array.isArray(parsed.skipForDomains)
-      ? parsed.skipForDomains
-      : [],
+  try {
+    const parsed = JSON.parse(raw || '{}')
+    return {
+      enforce: !!parsed.enforce,
+      providers: Array.isArray(parsed.providers) ? parsed.providers : [],
+      skipForPasskey: !!parsed.skipForPasskey,
+      skipForFederation: !!parsed.skipForFederation,
+      skipForDomains: Array.isArray(parsed.skipForDomains)
+        ? parsed.skipForDomains
+        : [],
+    }
+  } catch {
+    return {
+      enforce: false,
+      providers: [],
+      skipForPasskey: false,
+      skipForFederation: false,
+      skipForDomains: [],
+    }
   }
 }
 
 /**
  * Convert an array of provider name strings into the factor objects
- * expected by `enrollWithAny` and `challengeWithAny`.
+ * expected by `enrollWithAny`, `challengeWith`, and `challengeWithAny`.
  *
- * NOTE: The Auth0 v3 PostLogin API expects `"phone"` (not `"sms"`) for
- * enroll/challenge, and `"email"` is only valid for challenge (not enroll).
- * The dashboard form already maps sms→phone via its checkbox values, so
- * the values arriving here should already be correct. SUPPORTED_PROVIDERS
- * in the form lists `"sms"` and `"email"` for display purposes only.
+ * Handles the sms→phone mapping since the dashboard form stores "sms"
+ * but the Actions API expects "phone".
  *
  * @param {string[]} providers
  * @returns {{ type: string }[]}
  */
 function toFactors(providers) {
-  return providers.map((p) => ({ type: p }))
+  return providers.map((p) => toFactor(p))
+}
+
+/**
+ * Convert a single provider name into a factor object.
+ * Handles the sms→phone mapping since the guardian factor name is "sms"
+ * but the Actions API expects "phone".
+ *
+ * @param {string} provider
+ * @returns {{ type: string }}
+ */
+function toFactor(provider) {
+  if (provider === 'sms') {
+    return { type: 'phone' }
+  }
+  return { type: provider }
 }
 
 /**

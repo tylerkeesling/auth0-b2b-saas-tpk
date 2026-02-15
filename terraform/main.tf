@@ -13,6 +13,14 @@ provider "auth0" {
   client_secret = var.auth0_client_secret
 }
 
+resource "auth0_tenant" "tenant" {
+  customize_mfa_in_postlogin_action = true
+
+  flags {
+    mfa_show_factor_list_on_enrollment = true
+  }
+}
+
 resource "auth0_action" "security_policies" {
   name    = "Security Policies"
   runtime = "node22"

@@ -1,7 +1,14 @@
 'use client'
 
 import React, { useState } from 'react'
-import { KeyIcon, KeySquareIcon } from 'lucide-react'
+import {
+  Bell,
+  Fingerprint,
+  Key,
+  KeyRound,
+  Mail,
+  Smartphone,
+} from 'lucide-react'
 import { toast } from 'sonner'
 
 import { MfaPolicy } from '@/lib/mfa-policy'
@@ -133,7 +140,7 @@ export function MfaPolicyForm({ organization }: Props) {
               <div className="border-muted bg-popover hover:bg-accent/5 hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary flex justify-between space-x-1 rounded-md border-2 p-4">
                 <Label className="flex items-center space-x-4" htmlFor="otp">
                   <div className="bg-secondary rounded-md border p-3">
-                    <KeyIcon className="size-5" />
+                    <KeyRound className="size-5" />
                   </div>
                   <div className="space-y-1.5">
                     <div>One-time Password</div>
@@ -155,17 +162,93 @@ export function MfaPolicyForm({ organization }: Props) {
               </div>
 
               <div className="border-muted bg-popover hover:bg-accent/5 hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary flex justify-between space-x-1 rounded-md border-2 p-4">
+                <Label className="flex items-center space-x-4" htmlFor="sms">
+                  <div className="bg-secondary rounded-md border p-3">
+                    <Smartphone className="size-5" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <div>Phone Message</div>
+                    <div className="text-muted-foreground">
+                      Receive a verification code via SMS.
+                    </div>
+                  </div>
+                </Label>
+
+                <Checkbox
+                  defaultChecked={
+                    organization.mfaPolicy.providers.includes('sms') ||
+                    organization.mfaPolicy.providers.includes('phone')
+                  }
+                  value="sms"
+                  id="sms"
+                  className="peer"
+                  name="sms"
+                />
+              </div>
+
+              <div className="border-muted bg-popover hover:bg-accent/5 hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary flex justify-between space-x-1 rounded-md border-2 p-4">
+                <Label className="flex items-center space-x-4" htmlFor="email">
+                  <div className="bg-secondary rounded-md border p-3">
+                    <Mail className="size-5" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <div>Email</div>
+                    <div className="text-muted-foreground">
+                      Receive a verification code via email.
+                    </div>
+                  </div>
+                </Label>
+
+                <Checkbox
+                  defaultChecked={organization.mfaPolicy.providers.includes(
+                    'email'
+                  )}
+                  value="email"
+                  id="email"
+                  className="peer"
+                  name="email"
+                />
+              </div>
+
+              <div className="border-muted bg-popover hover:bg-accent/5 hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary flex justify-between space-x-1 rounded-md border-2 p-4">
+                <Label
+                  className="flex items-center space-x-4"
+                  htmlFor="push-notification"
+                >
+                  <div className="bg-secondary rounded-md border p-3">
+                    <Bell className="size-5" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <div>Push Notification</div>
+                    <div className="text-muted-foreground">
+                      Verify via Auth0 Guardian push notification.
+                    </div>
+                  </div>
+                </Label>
+
+                <Checkbox
+                  defaultChecked={organization.mfaPolicy.providers.includes(
+                    'push-notification'
+                  )}
+                  value="push-notification"
+                  id="push-notification"
+                  className="peer"
+                  name="push-notification"
+                />
+              </div>
+
+              <div className="border-muted bg-popover hover:bg-accent/5 hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary flex justify-between space-x-1 rounded-md border-2 p-4">
                 <Label
                   className="flex items-center space-x-4"
                   htmlFor="webauthn-roaming"
                 >
                   <div className="bg-secondary rounded-md border p-3">
-                    <KeySquareIcon className="size-5" />
+                    <Key className="size-5" />
                   </div>
                   <div className="space-y-1.5">
                     <div>Security Keys</div>
                     <div className="text-muted-foreground">
-                      WebAuthn-compliant security keys (like FIDO2).
+                      FIDO2-compliant security keys.
                     </div>
                   </div>
                 </Label>
@@ -182,27 +265,29 @@ export function MfaPolicyForm({ organization }: Props) {
               </div>
 
               <div className="border-muted bg-popover hover:bg-accent/5 hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary flex justify-between space-x-1 rounded-md border-2 p-4">
-                <Label className="flex items-center space-x-4" htmlFor="sms">
+                <Label
+                  className="flex items-center space-x-4"
+                  htmlFor="webauthn-platform"
+                >
                   <div className="bg-secondary rounded-md border p-3">
-                    <KeySquareIcon className="size-5" />
+                    <Fingerprint className="size-5" />
                   </div>
                   <div className="space-y-1.5">
-                    <div>SMS</div>
+                    <div>Device Biometrics</div>
                     <div className="text-muted-foreground">
-                      Users will receive a phone message with a verification
-                      code.
+                      Built-in device biometrics (Touch ID, Face ID, etc).
                     </div>
                   </div>
                 </Label>
 
                 <Checkbox
                   defaultChecked={organization.mfaPolicy.providers.includes(
-                    'phone'
+                    'webauthn-platform'
                   )}
-                  value="phone"
-                  id="sms"
+                  value="webauthn-platform"
+                  id="webauthn-platform"
                   className="peer"
-                  name="sms"
+                  name="webauthn-platform"
                 />
               </div>
             </div>

@@ -15,11 +15,21 @@ import {
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar'
 
+export interface NavItem {
+  title: string
+  href: string
+  children?: { title: string; href: string }[]
+}
+
 interface NavMainProps {
   title: string
   icon: LucideIcon
-  items: { title: string; href: string }[]
+  items: NavItem[]
   disabled?: boolean
+}
+
+function isRouteActive(pathname: string, href: string) {
+  return pathname === href || pathname.startsWith(href + '/')
 }
 
 export function NavMain({ title, icon: Icon, items, disabled }: NavMainProps) {
@@ -41,10 +51,30 @@ export function NavMain({ title, icon: Icon, items, disabled }: NavMainProps) {
                   <SidebarMenuSubButton className="pointer-events-none opacity-50">
                     <span>{item.title}</span>
                   </SidebarMenuSubButton>
+                ) : item.children ? (
+                  <>
+                    <span className="text-muted-foreground px-2 py-1 text-xs font-medium">
+                      {item.title}
+                    </span>
+                    <SidebarMenuSub>
+                      {item.children.map((child) => (
+                        <SidebarMenuSubItem key={child.href}>
+                          <SidebarMenuSubButton
+                            asChild
+                            isActive={isRouteActive(pathname, child.href)}
+                          >
+                            <Link href={child.href}>
+                              <span>{child.title}</span>
+                            </Link>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      ))}
+                    </SidebarMenuSub>
+                  </>
                 ) : (
                   <SidebarMenuSubButton
                     asChild
-                    isActive={pathname.startsWith(item.href)}
+                    isActive={isRouteActive(pathname, item.href)}
                   >
                     <Link href={item.href}>
                       <span>{item.title}</span>

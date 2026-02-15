@@ -36,8 +36,8 @@ describe('resolveBreadcrumbs', () => {
     ])
   })
 
-  it('resolves /dashboard/account/security', () => {
-    expect(resolveBreadcrumbs('/dashboard/account/security')).toEqual([
+  it('resolves /dashboard/account/mfa', () => {
+    expect(resolveBreadcrumbs('/dashboard/account/mfa')).toEqual([
       { label: 'My Account' },
       { label: 'Multifactor Authentication' },
     ])
