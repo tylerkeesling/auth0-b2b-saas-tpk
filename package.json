@@ -15,7 +15,7 @@
     "*.{js,mjs,ts,tsx,mdx}": "prettier --write"
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "^4.9.0",
+    "@auth0/nextjs-auth0": "^4.15.0",
     "@radix-ui/react-alert-dialog": "^1.1.14",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-checkbox": "^1.3.2",
