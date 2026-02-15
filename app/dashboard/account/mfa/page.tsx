@@ -12,9 +12,7 @@ export default async function MfaSettingsPage() {
   const session = await appClient.getSession()
 
   if (!session) {
-    return redirect(
-      '/auth/login?returnTo=/dashboard/account/security-settings/mfa'
-    )
+    return redirect('/auth/login?returnTo=/dashboard/account/mfa')
   }
 
   const userId = session.user.sub

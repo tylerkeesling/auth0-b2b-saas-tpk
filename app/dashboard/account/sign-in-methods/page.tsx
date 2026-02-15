@@ -11,9 +11,7 @@ export default async function SecuritySettingsSignInMethods() {
   const session = await appClient.getSession()
 
   if (!session) {
-    return redirect(
-      '/auth/login?returnTo=/dashboard/account/security-settings/sign-in-methods'
-    )
+    return redirect('/auth/login?returnTo=/dashboard/account/sign-in-methods')
   }
 
   const userId = session.user.sub

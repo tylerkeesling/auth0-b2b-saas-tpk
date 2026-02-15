@@ -35,7 +35,7 @@ export async function createEnrollment(formData: FormData) {
         allow_multiple_enrollments: true,
       })
 
-    revalidatePath('/dashboard/account/security-settings/mfa', 'layout')
+    revalidatePath('/dashboard/account/mfa', 'layout')
 
     return {
       ticketUrl: enrollmentTicket.ticket_url,
@@ -87,7 +87,7 @@ export async function deleteEnrollment(formData: FormData) {
       }
     }
 
-    revalidatePath('/dashboard/account/security-settings/mfa', 'layout')
+    revalidatePath('/dashboard/account/mfa', 'layout')
 
     return {}
   } catch (error) {
@@ -118,7 +118,7 @@ export async function setPreferredMethod(formData: FormData) {
       user_metadata: { preferred_mfa_method: factorName },
     })
 
-    revalidatePath('/dashboard/account/security-settings/mfa', 'layout')
+    revalidatePath('/dashboard/account/mfa', 'layout')
 
     return {}
   } catch (error) {

@@ -1,16 +1,13 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { PasskeySection } from '@/app/dashboard/account/security-settings/sign-in-methods/passkey-section'
-import type { Passkey } from '@/app/dashboard/account/security-settings/sign-in-methods/sign-in-methods-page'
+import { PasskeySection } from '@/app/dashboard/account/sign-in-methods/passkey-section'
+import type { Passkey } from '@/app/dashboard/account/sign-in-methods/sign-in-methods-page'
 
 // Mock server actions
-vi.mock(
-  '@/app/dashboard/account/security-settings/sign-in-methods/actions',
-  () => ({
-    revokePasskey: vi.fn().mockResolvedValue({}),
-  })
-)
+vi.mock('@/app/dashboard/account/sign-in-methods/actions', () => ({
+  revokePasskey: vi.fn().mockResolvedValue({}),
+}))
 
 // Mock sonner toast
 vi.mock('sonner', () => ({

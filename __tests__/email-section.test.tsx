@@ -2,16 +2,13 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
-import { EmailSection } from '@/app/dashboard/account/security-settings/sign-in-methods/email-section'
+import { EmailSection } from '@/app/dashboard/account/sign-in-methods/email-section'
 
 // Mock server actions
-vi.mock(
-  '@/app/dashboard/account/security-settings/sign-in-methods/actions',
-  () => ({
-    updateEmail: vi.fn().mockResolvedValue({}),
-    sendVerificationEmail: vi.fn().mockResolvedValue({}),
-  })
-)
+vi.mock('@/app/dashboard/account/sign-in-methods/actions', () => ({
+  updateEmail: vi.fn().mockResolvedValue({}),
+  sendVerificationEmail: vi.fn().mockResolvedValue({}),
+}))
 
 // Mock sonner toast
 vi.mock('sonner', () => ({

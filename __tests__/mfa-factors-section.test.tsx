@@ -5,10 +5,10 @@ import { describe, expect, it, vi } from 'vitest'
 import {
   MfaFactorsSection,
   type MfaFactor,
-} from '@/app/dashboard/account/security-settings/mfa/mfa-factors-section'
+} from '@/app/dashboard/account/mfa/mfa-factors-section'
 
 // Mock server actions
-vi.mock('@/app/dashboard/account/security-settings/mfa/actions', () => ({
+vi.mock('@/app/dashboard/account/mfa/actions', () => ({
   createEnrollment: vi
     .fn()
     .mockResolvedValue({ ticketUrl: 'https://example.com/enroll' }),

@@ -46,19 +46,10 @@ const orgItems = [
 const accountItems = [
   { title: 'Tokens', href: '/dashboard/account/tokens' },
   { title: 'Profile', href: '/dashboard/account/profile' },
+  { title: 'Sign-in Methods', href: '/dashboard/account/sign-in-methods' },
   {
-    title: 'Security Settings',
-    href: '/dashboard/account/security-settings/sign-in-methods',
-    children: [
-      {
-        title: 'Sign-in Methods',
-        href: '/dashboard/account/security-settings/sign-in-methods',
-      },
-      {
-        title: 'Multifactor Authentication',
-        href: '/dashboard/account/security-settings/mfa',
-      },
-    ],
+    title: 'Multifactor Authentication',
+    href: '/dashboard/account/mfa',
   },
   { title: 'Passkeys', href: '/dashboard/account/passkeys' },
   { title: 'Sessions', href: '/dashboard/account/sessions' },
