@@ -54,11 +54,11 @@ const accountItems = [
         title: 'Sign-in Methods',
         href: '/dashboard/account/security-settings/sign-in-methods',
       },
+      {
+        title: 'Multifactor Authentication',
+        href: '/dashboard/account/security-settings/mfa',
+      },
     ],
-  },
-  {
-    title: 'Multifactor Authentication',
-    href: '/dashboard/account/security',
   },
   { title: 'Passkeys', href: '/dashboard/account/passkeys' },
   { title: 'Sessions', href: '/dashboard/account/sessions' },

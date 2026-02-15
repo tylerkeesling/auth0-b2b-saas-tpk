@@ -27,7 +27,7 @@ export function PasswordSection({
   const [mismatch, setMismatch] = useState(false)
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] lg:gap-10">
+    <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] lg:items-start lg:gap-10">
       <div className="mb-4 lg:mb-0">
         <div className="mb-1.5 flex items-center gap-2.5">
           <Lock className="text-muted-foreground h-4 w-4" />

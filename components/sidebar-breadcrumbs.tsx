@@ -31,7 +31,7 @@ const routeMap: Record<string, { label: string; group?: string }> = {
   // Account
   '/dashboard/account/tokens': { label: 'Tokens', group: 'My Account' },
   '/dashboard/account/profile': { label: 'Profile', group: 'My Account' },
-  '/dashboard/account/security': {
+  '/dashboard/account/security-settings/mfa': {
     label: 'Multifactor Authentication',
     group: 'My Account',
   },

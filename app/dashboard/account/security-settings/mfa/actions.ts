@@ -35,7 +35,7 @@ export async function createEnrollment(formData: FormData) {
         allow_multiple_enrollments: true,
       })
 
-    revalidatePath('/dashboard/account/security', 'layout')
+    revalidatePath('/dashboard/account/security-settings/mfa', 'layout')
 
     return {
       ticketUrl: enrollmentTicket.ticket_url,
@@ -55,7 +55,8 @@ export async function deleteEnrollment(formData: FormData) {
     return redirect('/auth/login')
   }
 
-  let enrollmentId = formData.get('enrollment_id')
+  const enrollmentId = formData.get('enrollment_id')
+  const factorName = formData.get('factor_name')
 
   if (!enrollmentId || typeof enrollmentId !== 'string') {
     return {
@@ -71,7 +72,22 @@ export async function deleteEnrollment(formData: FormData) {
       enrollmentId
     )
 
-    revalidatePath('/dashboard/account/security', 'layout')
+    // If the deleted enrollment was the preferred method, clear the preference
+    if (factorName && typeof factorName === 'string') {
+      const userResponse = await managementClient.users.get(userId, {
+        fields: 'user_metadata',
+      })
+      const preferredMethod = (userResponse as any).user_metadata
+        ?.preferred_mfa_method
+
+      if (preferredMethod === factorName) {
+        await managementClient.users.update(userId, {
+          user_metadata: { preferred_mfa_method: null },
+        })
+      }
+    }
+
+    revalidatePath('/dashboard/account/security-settings/mfa', 'layout')
 
     return {}
   } catch (error) {
@@ -82,31 +98,33 @@ export async function deleteEnrollment(formData: FormData) {
   }
 }
 
-export async function toggleMfa(formData: FormData) {
+export async function setPreferredMethod(formData: FormData) {
   const session = await appClient.getSession()
 
   if (!session) {
     return redirect('/auth/login')
   }
 
-  const userId = session.user.sub
+  const factorName = formData.get('factor_name')
 
-  let enforceMfa = formData.get('toggle-mfa') === 'true'
-
-  const data = {
-    user_metadata: {
-      enforce_mfa: enforceMfa,
-    },
+  if (!factorName || typeof factorName !== 'string') {
+    return {
+      error: 'Factor name is required.',
+    }
   }
-  try {
-    await managementClient.users.update(userId, data)
 
-    revalidatePath('/dashboard/account/security', 'layout')
+  try {
+    await managementClient.users.update(session.user.sub, {
+      user_metadata: { preferred_mfa_method: factorName },
+    })
+
+    revalidatePath('/dashboard/account/security-settings/mfa', 'layout')
 
     return {}
   } catch (error) {
+    console.error('failed to set preferred MFA method', error)
     return {
-      error: 'Failed to toggle MFA.',
+      error: 'Failed to set preferred MFA method.',
     }
   }
 }

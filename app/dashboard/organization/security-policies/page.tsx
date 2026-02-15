@@ -29,6 +29,7 @@ export default async function SecurityPolicies() {
         </TabsList>
         <TabsContent value="mfa">
           <MfaPolicyForm
+            key={org.metadata?.mfaPolicy ?? 'default'}
             organization={{
               id: org.id,
               slug: org.name,
@@ -41,6 +42,7 @@ export default async function SecurityPolicies() {
         </TabsContent>
         <TabsContent value="session">
           <SessionSettings
+            key={org.metadata?.sessionPolicy ?? 'default'}
             sessionPolicy={
               org.metadata?.sessionPolicy
                 ? JSON.parse(org.metadata.sessionPolicy)
