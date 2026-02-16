@@ -69,6 +69,10 @@ See `.env.example` for required vars. Key ones:
 - `AUTH0_ADMIN_ROLE_ID` / `AUTH0_MEMBER_ROLE_ID`
 - `CUSTOM_CLAIMS_NAMESPACE`
 
+## Dev Bar
+
+`components/dev-bar.tsx` — a collapsible bar fixed to the bottom of the dashboard for demo/dev toggles. Pages render `<DevBar>{controls}</DevBar>` from their client components; the DevBar uses a React portal to render into `#dev-bar-portal` (a direct child of `SidebarInset` in `app/dashboard/layout.tsx`), so it spans the content area without overlapping the sidebar.
+
 ## Gotchas
 
 - Dev server **must** use `--hostname saas.localho.st` (Auth0 callback URLs expect this)
