@@ -144,27 +144,25 @@ export default function UserSessions({ user, sessions }: UserSessionsProps) {
               return (
                 <div key={`session-${idx}-${id}`}>
                   {idx > 0 && <Separator />}
-                  <div className="grid grid-cols-[auto_1fr] items-center gap-x-3 gap-y-1 p-4 md:grid-cols-[auto_1fr_1fr_1fr_auto] md:items-center md:gap-x-6">
+                  <div className="grid grid-cols-[auto_1fr] items-center gap-x-3 gap-y-1 p-4 md:grid-cols-[36px_1fr_1fr_1fr_88px] md:items-center md:gap-x-6">
                     <div className="bg-muted row-span-2 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg md:row-span-1">
                       <DeviceIcon className="text-muted-foreground h-4 w-4" />
                     </div>
 
                     <div className="col-span-1 min-w-0 md:col-span-1">
-                      <div className="flex items-center gap-2">
-                        <p className="truncate text-sm font-medium">
-                          {lastUA.browser.name ?? 'Unknown browser'} on{' '}
-                          {lastUA.os.name ?? 'Unknown OS'}
-                        </p>
+                      <p className="truncate text-sm font-medium">
+                        {lastUA.browser.name ?? 'Unknown browser'} on{' '}
+                        {lastUA.os.name ?? 'Unknown OS'}
                         {isCurrent && (
                           <Badge
                             variant="outline"
-                            className="shrink-0 border-emerald-500/20 bg-emerald-500/10 text-emerald-600"
+                            className="ml-2 inline-flex shrink-0 border-emerald-500/20 bg-emerald-500/10 text-emerald-600"
                           >
                             <CheckCircle2 className="mr-1 h-3 w-3" />
                             Current
                           </Badge>
                         )}
-                      </div>
+                      </p>
                       <p className="text-muted-foreground text-xs md:hidden">
                         Last active{' '}
                         {timeAgo(
@@ -257,7 +255,7 @@ export default function UserSessions({ user, sessions }: UserSessionsProps) {
                           </AlertDialogContent>
                         </AlertDialog>
                       ) : (
-                        <div className="md:min-w-[88px]" />
+                        <div />
                       )}
                     </div>
                   </div>
