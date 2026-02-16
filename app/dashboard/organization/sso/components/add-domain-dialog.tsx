@@ -1,12 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import {
-  CheckIcon,
-  CopyIcon,
-  PlusIcon,
-  SymbolIcon,
-} from '@radix-ui/react-icons'
+import { Check, Copy, Plus, RefreshCw } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { DOMAIN_VERIFICATION_RECORD_IDENTIFIER } from '@/lib/constants'
@@ -64,7 +59,7 @@ export function AddDomainDialog({
     >
       <DialogTrigger asChild>
         <Button type="button" variant="outline" size="sm">
-          <PlusIcon className="mr-1 size-3" /> Add Domain
+          <Plus className="mr-1 size-3" /> Add Domain
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px]">
@@ -119,7 +114,7 @@ export function AddDomainDialog({
                         toast.success('TXT record name copied to clipboard.')
                       }}
                     >
-                      <CopyIcon className="size-4" />
+                      <Copy className="size-4" />
                     </Button>
                   </div>
                 </div>
@@ -143,7 +138,7 @@ export function AddDomainDialog({
                         toast.success('TXT record value copied to clipboard.')
                       }}
                     >
-                      <CopyIcon className="size-4" />
+                      <Copy className="size-4" />
                     </Button>
                   </div>
                 </div>
@@ -169,11 +164,11 @@ export function AddDomainDialog({
               >
                 {domainVerified ? (
                   <>
-                    <CheckIcon className="mr-2 size-4" /> Verified
+                    <Check className="mr-2 size-4" /> Verified
                   </>
                 ) : (
                   <>
-                    <SymbolIcon
+                    <RefreshCw
                       className={cn(
                         'mr-2 size-4',
                         checkingVerificationStatus ? 'animate-spin' : ''

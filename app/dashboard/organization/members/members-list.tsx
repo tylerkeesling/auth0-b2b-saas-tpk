@@ -1,6 +1,6 @@
 'use client'
 
-import { DotsVerticalIcon, TrashIcon } from '@radix-ui/react-icons'
+import { EllipsisVertical, Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { Role } from '@/lib/roles'
@@ -112,7 +112,7 @@ export function MembersList({ members }: Props) {
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button size="icon" variant="outline">
-                        <DotsVerticalIcon className="size-4" />
+                        <EllipsisVertical className="size-4" />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
@@ -127,7 +127,7 @@ export function MembersList({ members }: Props) {
                           toast.success(`Removed member: ${member.email}`)
                         }}
                       >
-                        <TrashIcon className="mr-1 size-4" />
+                        <Trash2 className="mr-1 size-4" />
                         Delete
                       </DropdownMenuItem>
                     </DropdownMenuContent>

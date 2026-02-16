@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRightIcon } from '@radix-ui/react-icons'
+import { ArrowRight } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -24,7 +24,7 @@ export default function NotFound() {
         <CardFooter>
           <Link href="/" className="w-full">
             <Button className="w-full">
-              Go to Homepage <ArrowRightIcon className="ml-2 size-4" />
+              Go to Homepage <ArrowRight className="ml-2 size-4" />
             </Button>
           </Link>
         </CardFooter>

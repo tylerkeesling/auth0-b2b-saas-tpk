@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { CopyIcon, InfoCircledIcon, TrashIcon } from '@radix-ui/react-icons'
+import { Copy, Info, Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
@@ -212,7 +212,7 @@ export function UpdateOidcConnectionForm({
                         setDomains(domains.filter((d) => d !== domain))
                       }}
                     >
-                      <TrashIcon className="size-4" />
+                      <Trash2 className="size-4" />
                     </Button>
                   </div>
                 </div>
@@ -232,7 +232,7 @@ export function UpdateOidcConnectionForm({
           </div>
 
           <Alert className="bg-background">
-            <InfoCircledIcon className="size-4" />
+            <Info className="size-4" />
             <AlertTitle>Callback URL</AlertTitle>
             <AlertDescription>
               You may need to configure the OIDC issuer with the following
@@ -248,7 +248,7 @@ export function UpdateOidcConnectionForm({
                     toast.success('Callback URL copied to clipboard.')
                   }}
                 >
-                  <CopyIcon className="size-4" />
+                  <Copy className="size-4" />
                 </Button>
               </div>
             </AlertDescription>

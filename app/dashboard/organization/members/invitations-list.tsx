@@ -1,6 +1,6 @@
 'use client'
 
-import { CopyIcon, DotsVerticalIcon, TrashIcon } from '@radix-ui/react-icons'
+import { Copy, EllipsisVertical, Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { Role } from '@/lib/roles'
@@ -77,7 +77,7 @@ export function InvitationsList({ invitations }: Props) {
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button size="icon" variant="outline">
-                        <DotsVerticalIcon className="size-4" />
+                        <EllipsisVertical className="size-4" />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
@@ -87,7 +87,7 @@ export function InvitationsList({ invitations }: Props) {
                           toast.success('Invitation link copied to clipboard.')
                         }}
                       >
-                        <CopyIcon className="mr-1 size-4" />
+                        <Copy className="mr-1 size-4" />
                         Copy invitation link
                       </DropdownMenuItem>
                       <DropdownMenuItem
@@ -105,7 +105,7 @@ export function InvitationsList({ invitations }: Props) {
                           )
                         }}
                       >
-                        <TrashIcon className="mr-1 size-4" />
+                        <Trash2 className="mr-1 size-4" />
                         Delete
                       </DropdownMenuItem>
                     </DropdownMenuContent>

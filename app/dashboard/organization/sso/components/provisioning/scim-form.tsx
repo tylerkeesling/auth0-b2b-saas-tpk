@@ -2,13 +2,8 @@
 
 import { useState } from 'react'
 import { useParams } from 'next/navigation'
-import {
-  CopyIcon,
-  InfoCircledIcon,
-  TrashIcon,
-  UpdateIcon,
-} from '@radix-ui/react-icons'
 import { format, formatDistance } from 'date-fns'
+import { Copy, Info, RefreshCw, Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { cn } from '@/lib/utils'
@@ -177,7 +172,7 @@ export function ScimForm({ scimConfig, scimTokens }: Props) {
                                     variant="outline"
                                     size="icon"
                                   >
-                                    <TrashIcon className="size-4" />
+                                    <Trash2 className="size-4" />
                                   </Button>
                                 </AlertDialogTrigger>
                                 <AlertDialogContent>
@@ -249,7 +244,7 @@ export function ScimForm({ scimConfig, scimTokens }: Props) {
                           setShowTokenDialog(true)
                         }}
                       >
-                        <UpdateIcon
+                        <RefreshCw
                           className={cn(
                             'mr-1 size-3',
                             generatingToken && 'animate-spin'
@@ -262,7 +257,7 @@ export function ScimForm({ scimConfig, scimTokens }: Props) {
                 )}
               </div>
               <Alert className="bg-background">
-                <InfoCircledIcon className="size-4" />
+                <Info className="size-4" />
                 <AlertTitle>SCIM Endpoint URL</AlertTitle>
                 <AlertDescription>
                   Copy this URL and provide it to your identity provider or
@@ -282,7 +277,7 @@ export function ScimForm({ scimConfig, scimTokens }: Props) {
                         toast.success('SCIM endpoint URL copied to clipboard.')
                       }}
                     >
-                      <CopyIcon className="size-4" />
+                      <Copy className="size-4" />
                     </Button>
                   </div>
                 </AlertDescription>
@@ -321,7 +316,7 @@ export function ScimForm({ scimConfig, scimTokens }: Props) {
               }}
             >
               <span className="sr-only">Copy</span>
-              <CopyIcon className="h-4 w-4" />
+              <Copy className="h-4 w-4" />
             </Button>
           </div>
           <DialogFooter className="sm:justify-start">

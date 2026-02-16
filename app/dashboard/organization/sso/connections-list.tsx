@@ -2,13 +2,7 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import {
-  DotsVerticalIcon,
-  GearIcon,
-  PersonIcon,
-  PlusIcon,
-  TrashIcon,
-} from '@radix-ui/react-icons'
+import { EllipsisVertical, Plus, Settings, Trash2, User } from 'lucide-react'
 import { toast } from 'sonner'
 
 import {
@@ -153,7 +147,7 @@ export function ConnectionsList({ connections }: Props) {
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button size="icon" variant="outline">
-                          <DotsVerticalIcon className="size-4" />
+                          <EllipsisVertical className="size-4" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="w-[160px]">
@@ -163,7 +157,7 @@ export function ConnectionsList({ connections }: Props) {
                               <Link
                                 href={`/dashboard/organization/sso/oidc/edit/${c.id}/settings`}
                               >
-                                <GearIcon className="mr-1 size-4" />
+                                <Settings className="mr-1 size-4" />
                                 Settings
                               </Link>
                             </DropdownMenuItem>
@@ -172,7 +166,7 @@ export function ConnectionsList({ connections }: Props) {
                               <Link
                                 href={`/dashboard/organization/sso/oidc/edit/${c.id}/provisioning`}
                               >
-                                <PersonIcon className="mr-1 size-4" />
+                                <User className="mr-1 size-4" />
                                 Provisioning
                               </Link>
                             </DropdownMenuItem>
@@ -185,7 +179,7 @@ export function ConnectionsList({ connections }: Props) {
                               <Link
                                 href={`/dashboard/organization/sso/saml/edit/${c.id}/settings`}
                               >
-                                <GearIcon className="mr-1 size-4" />
+                                <Settings className="mr-1 size-4" />
                                 Settings
                               </Link>
                             </DropdownMenuItem>
@@ -194,7 +188,7 @@ export function ConnectionsList({ connections }: Props) {
                               <Link
                                 href={`/dashboard/organization/sso/saml/edit/${c.id}/provisioning`}
                               >
-                                <PersonIcon className="mr-1 size-4" />
+                                <User className="mr-1 size-4" />
                                 Provisioning
                               </Link>
                             </DropdownMenuItem>
@@ -202,7 +196,7 @@ export function ConnectionsList({ connections }: Props) {
                         )}
                         <AlertDialogTrigger asChild>
                           <DropdownMenuItem className="text-destructive">
-                            <TrashIcon className="mr-1 size-4" />
+                            <Trash2 className="mr-1 size-4" />
                             Delete
                           </DropdownMenuItem>
                         </AlertDialogTrigger>
@@ -271,7 +265,7 @@ export function ConnectionsList({ connections }: Props) {
           className="ml-auto space-y-8"
         >
           <SubmitButton variant="outline" className="ml-auto flex gap-2">
-            <PlusIcon className="mr-1 size-4" />
+            <Plus className="mr-1 size-4" />
             Auth0 Self-Service SSO
           </SubmitButton>
         </form>
@@ -279,7 +273,7 @@ export function ConnectionsList({ connections }: Props) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button>
-              <PlusIcon className="mr-1 size-4" />
+              <Plus className="mr-1 size-4" />
               Or Build Your Own UI
             </Button>
           </DropdownMenuTrigger>

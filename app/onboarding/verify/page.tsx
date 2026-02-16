@@ -1,6 +1,6 @@
 'use client'
 
-import { EnvelopeClosedIcon } from '@radix-ui/react-icons'
+import { Mail } from 'lucide-react'
 import { toast } from 'sonner'
 
 import {
@@ -19,7 +19,7 @@ export default function Verify() {
     <Card className="mx-auto max-w-sm">
       <CardHeader>
         <CardTitle className="grid gap-2">
-          <EnvelopeClosedIcon className="size-5" />
+          <Mail className="size-5" />
           <span>Verify your e-mail</span>
         </CardTitle>
         <CardDescription>

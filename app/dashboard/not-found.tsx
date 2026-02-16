@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowLeftIcon } from '@radix-ui/react-icons'
+import { ArrowLeft } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -24,7 +24,7 @@ export default function DashboardNotFound() {
         <CardFooter>
           <Link href="/dashboard" className="w-full">
             <Button className="w-full">
-              <ArrowLeftIcon className="mr-2 h-4 w-4" /> Back to Dashboard
+              <ArrowLeft className="mr-2 h-4 w-4" /> Back to Dashboard
             </Button>
           </Link>
         </CardFooter>

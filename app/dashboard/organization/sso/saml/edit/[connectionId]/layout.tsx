@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowLeftIcon } from '@radix-ui/react-icons'
+import { ArrowLeft } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 
@@ -21,7 +21,7 @@ export default async function EditOidcConnectionLayout({
             href="/dashboard/organization/sso"
             className="text-muted-foreground hover:text-accent-foreground flex items-center text-sm"
           >
-            <ArrowLeftIcon className="mr-1.5 size-4" />
+            <ArrowLeft className="mr-1.5 size-4" />
             Back to connections
           </Link>
         </Button>

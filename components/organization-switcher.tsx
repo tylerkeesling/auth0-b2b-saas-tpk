@@ -2,11 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import {
-  CaretSortIcon,
-  CheckIcon,
-  PlusCircledIcon,
-} from '@radix-ui/react-icons'
+import { Check, ChevronsUpDown, CirclePlus } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -72,7 +68,7 @@ export function OrganizationSwitcher({
           <span className="min-w-16 truncate text-left">
             {organization.displayName}
           </span>
-          <CaretSortIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" />
+          <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[240px] rounded-xl p-0">
@@ -99,7 +95,7 @@ export function OrganizationSwitcher({
                     </AvatarFallback>
                   </Avatar>
                   <span className="truncate">{org.displayName}</span>
-                  <CheckIcon
+                  <Check
                     className={cn(
                       'ml-auto h-4 w-4',
                       organization.slug === org.slug
@@ -121,7 +117,7 @@ export function OrganizationSwitcher({
                 }}
                 className="cursor-pointer"
               >
-                <PlusCircledIcon className="mr-2 size-4" />
+                <CirclePlus className="mr-2 size-4" />
                 Create Organization
               </CommandItem>
             </CommandGroup>

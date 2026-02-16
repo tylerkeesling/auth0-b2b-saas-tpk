@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { ArrowLeftIcon } from '@radix-ui/react-icons'
+import { ArrowLeft } from 'lucide-react'
 
 import { appClient } from '@/lib/auth0'
 import { getRole } from '@/lib/roles'
@@ -47,7 +47,7 @@ export default async function OrganizationLayout({
           <CardFooter>
             <Link href="/dashboard/account/profile" className="w-full">
               <Button className="w-full">
-                <ArrowLeftIcon className="mr-2 h-4 w-4" /> Go Back
+                <ArrowLeft className="mr-2 h-4 w-4" /> Go Back
               </Button>
             </Link>
           </CardFooter>
