@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { Building2 } from 'lucide-react'
+import { Lock, Settings, Users } from 'lucide-react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { SidebarProvider } from '@/components/ui/sidebar'
@@ -28,20 +28,23 @@ vi.mock('next/link', () => ({
 }))
 
 const testItems = [
-  { title: 'General Settings', href: '/dashboard/organization/general' },
-  { title: 'Members', href: '/dashboard/organization/members' },
-  { title: 'SSO', href: '/dashboard/organization/sso' },
+  {
+    title: 'General Settings',
+    href: '/dashboard/organization/general',
+    icon: Settings,
+  },
+  {
+    title: 'Members',
+    href: '/dashboard/organization/members',
+    icon: Users,
+  },
+  { title: 'SSO', href: '/dashboard/organization/sso', icon: Lock },
 ]
 
 function renderNavMain(props = {}) {
   return render(
     <SidebarProvider>
-      <NavMain
-        title="My Organization"
-        icon={Building2}
-        items={testItems}
-        {...props}
-      />
+      <NavMain title="My Organization" items={testItems} {...props} />
     </SidebarProvider>
   )
 }
@@ -81,7 +84,7 @@ describe('NavMain', () => {
   it('disabled items are not wrapped in navigable links', () => {
     renderNavMain({ disabled: true })
     const item = screen.getByText('General Settings')
-    const button = item.closest('[data-sidebar="menu-sub-button"]')
+    const button = item.closest('[data-sidebar="menu-button"]')
     expect(button).not.toBeNull()
     expect(button).not.toHaveAttribute('href')
   })

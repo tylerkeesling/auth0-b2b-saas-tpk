@@ -40,6 +40,7 @@ export default async function DashboardLayout({
     <Auth0Provider user={session.user}>
       <SidebarProvider>
         <AppSidebar
+          variant="inset"
           organizations={orgs.map((o) => ({
             id: o.id,
             slug: o.name,

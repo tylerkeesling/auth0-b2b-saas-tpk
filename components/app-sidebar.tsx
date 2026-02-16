@@ -1,7 +1,19 @@
 'use client'
 
 import Link from 'next/link'
-import { Building2, Radio, UserCircle } from 'lucide-react'
+import {
+  KeyRound,
+  Link as LinkIcon,
+  Lock,
+  LogIn,
+  Monitor,
+  Radio,
+  ScrollText,
+  Settings,
+  ShieldCheck,
+  UserCircle,
+  Users,
+} from 'lucide-react'
 
 import {
   Sidebar,
@@ -33,26 +45,40 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   userRole: string
 }
 
-const orgItems = [
-  { title: 'General Settings', href: '/dashboard/organization/general' },
-  { title: 'Members', href: '/dashboard/organization/members' },
-  { title: 'SSO', href: '/dashboard/organization/sso' },
-  {
-    title: 'Security Policies',
-    href: '/dashboard/organization/security-policies',
-  },
-]
-
 const accountItems = [
-  { title: 'Tokens', href: '/dashboard/account/tokens' },
-  { title: 'Profile', href: '/dashboard/account/profile' },
-  { title: 'Sign-in Methods', href: '/dashboard/account/sign-in-methods' },
+  { title: 'Tokens', href: '/dashboard/account/tokens', icon: KeyRound },
+  { title: 'Profile', href: '/dashboard/account/profile', icon: UserCircle },
+  {
+    title: 'Sign-in Methods',
+    href: '/dashboard/account/sign-in-methods',
+    icon: LogIn,
+  },
   {
     title: 'Multifactor Authentication',
     href: '/dashboard/account/mfa',
+    icon: ShieldCheck,
   },
-  { title: 'Sessions', href: '/dashboard/account/sessions' },
-  { title: 'Logs', href: '/dashboard/account/logs' },
+  { title: 'Sessions', href: '/dashboard/account/sessions', icon: Monitor },
+  { title: 'Logs', href: '/dashboard/account/logs', icon: ScrollText },
+]
+
+const orgItems = [
+  {
+    title: 'General Settings',
+    href: '/dashboard/organization/general',
+    icon: Settings,
+  },
+  {
+    title: 'Members',
+    href: '/dashboard/organization/members',
+    icon: Users,
+  },
+  { title: 'SSO', href: '/dashboard/organization/sso', icon: LinkIcon },
+  {
+    title: 'Security Policies',
+    href: '/dashboard/organization/security-policies',
+    icon: Lock,
+  },
 ]
 
 export function AppSidebar({
@@ -71,10 +97,9 @@ export function AppSidebar({
         />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain title="My Account" icon={UserCircle} items={accountItems} />
+        <NavMain title="My Account" items={accountItems} />
         <NavMain
           title="My Organization"
-          icon={Building2}
           items={orgItems}
           disabled={userRole !== 'admin'}
         />
