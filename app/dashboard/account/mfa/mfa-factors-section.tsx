@@ -103,23 +103,21 @@ function openPopupWindow(popupOptions: IPopupWindow): Window | null {
   const height =
     window.innerHeight || document.documentElement.clientHeight || screen.height
 
-  const systemZoom = window.devicePixelRatio || 1
-
   const defaultWidth = 600
   const defaultHeight = 400
 
   const popupWidth = Math.min(popupOptions.width || defaultWidth, width)
   const popupHeight = Math.min(popupOptions.height || defaultHeight, height)
 
-  const left = (width - popupWidth) / 2 / systemZoom + dualScreenLeft
-  const top = (height - popupHeight) / 2 / systemZoom + dualScreenTop
+  const left = (width - popupWidth) / 2 + dualScreenLeft
+  const top = (height - popupHeight) / 2 + dualScreenTop
 
   const newWindow = window.open(
     popupOptions.url,
     popupOptions.title,
     `scrollbars=${popupOptions.scrollbars ? 'yes' : 'no'},
-     width=${popupWidth / systemZoom},
-     height=${popupHeight / systemZoom},
+     width=${popupWidth},
+     height=${popupHeight},
      top=${top},
      left=${left}`
   )
