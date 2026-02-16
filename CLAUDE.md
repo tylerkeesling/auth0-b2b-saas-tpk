@@ -12,7 +12,7 @@ npm run format       # Prettier (write mode)
 
 ## Architecture
 
-Next.js 16 App Router with React 19. Tailwind CSS v4, shadcn/ui (Radix primitives).
+Next.js 16 App Router with React 19. Tailwind CSS v4, shadcn/ui (Radix primitives), lucide-react icons.
 
 ```
 app/
@@ -39,7 +39,7 @@ proxy.ts                # Middleware — routes to app vs onboarding client
 ## Auth0 Setup
 
 - **Two clients:** `appClient` (main app, org-scoped) and `onboardingClient` (org creation)
-- **Session storage:** Vercel KV with backchannel logout support
+- **Session storage:** Upstash Redis with backchannel logout support
 - **Server actions** use `withServerActionAuth()` wrapper for auth + optional role check
 - **Management API:** `managementClient` in `lib/auth0-manage.ts`
 - **Roles:** Single role per user via custom claims (`CUSTOM_CLAIMS_NAMESPACE/roles`)
