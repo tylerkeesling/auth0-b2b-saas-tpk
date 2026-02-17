@@ -42,3 +42,25 @@ resource "auth0_trigger_action" "post_login_security_policies" {
   trigger   = "post-login"
   action_id = auth0_action.security_policies.id
 }
+
+resource "auth0_action" "continuous_session_protection" {
+  name    = "Continuous Session Protection"
+  runtime = "node22"
+  deploy  = true
+  code    = file("../actions/continuous-session-protection.js")
+
+  supported_triggers {
+    id      = "post-login"
+    version = "v3"
+  }
+
+  secrets {
+    name  = "DASHBOARD_CLIENT_ID"
+    value = var.dashboard_client_id
+  }
+}
+
+resource "auth0_trigger_action" "post_login_continuous_session_protection" {
+  trigger   = "post-login"
+  action_id = auth0_action.continuous_session_protection.id
+}
