@@ -1,4 +1,3 @@
-// import { initAuth0 } from "@auth0/nextjs-auth0"
 import { Auth0Client } from '@auth0/nextjs-auth0/server'
 
 import sessionStore from './session-store'
@@ -6,10 +5,14 @@ import sessionStore from './session-store'
 export const appClient = new Auth0Client({
   authorizationParameters: {
     audience: process.env.AUTH0_AUDIENCE,
-    // scope: process.env.AUTH0_SCOPE,
+    scope: {
+      ['demonstration']: 'openid email profile offline_access',
+      // [`https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/me/`]:
+      //   "openid email profile offline_access read:me:authentication_methods remove:me:authentication_methods create:me:authentication_methods",
+    },
   },
   sessionStore,
-  async beforeSessionSaved(session, idToken) {
+  async beforeSessionSaved(session) {
     return {
       ...session,
       user: {
@@ -18,18 +21,6 @@ export const appClient = new Auth0Client({
     }
   },
 })
-
-// export const onboardingClient = initAuth0({
-//   clientID: process.env.AUTH0_MANAGEMENT_CLIENT_ID,
-//   clientSecret: process.env.AUTH0_MANAGEMENT_CLIENT_SECRET,
-//   // baseURL: process.env.APP_BASE_URL,
-//   issuerBaseURL: `https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}`,
-//   secret: process.env.SESSION_ENCRYPTION_SECRET,
-//   routes: {
-//     callback: "/onboarding/callback",
-//     postLogoutRedirect: "/",
-//   },
-// })
 
 export const onboardingClient = new Auth0Client({
   clientId: process.env.AUTH0_MANAGEMENT_CLIENT_ID,
@@ -42,14 +33,3 @@ export const onboardingClient = new Auth0Client({
     logout: '/',
   },
 })
-
-// export const appClient = initAuth0({
-//   clientID: process.env.AUTH0_CLIENT_ID,
-//   clientSecret: process.env.AUTH0_CLIENT_SECRET,
-//   // baseURL: process.env.APP_BASE_URL,
-//   issuerBaseURL: `https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}`,
-//   secret: process.env.SESSION_ENCRYPTION_SECRET,
-//   backchannelLogout: {
-//     store: new Store(),
-//   },
-// })
