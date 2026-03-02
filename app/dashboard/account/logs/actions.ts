@@ -3,6 +3,8 @@
 import { appClient } from '@/lib/auth0'
 import { managementClient } from '@/lib/auth0-manage'
 
+import { type RiskAssessment } from './components/risk-assessment-types'
+
 export interface LogEntry {
   log_id: string
   date: string
@@ -20,7 +22,10 @@ export interface LogEntry {
     latitude?: string
     longitude?: string
   }
-  details?: Record<string, unknown>
+  details?: {
+    riskAssessment?: RiskAssessment
+    [key: string]: unknown
+  }
 }
 
 export interface GetLogsParams {

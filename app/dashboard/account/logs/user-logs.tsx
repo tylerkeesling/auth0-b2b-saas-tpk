@@ -1,20 +1,11 @@
 'use client'
 
 import { useEffect, useState, useTransition } from 'react'
-import dynamic from 'next/dynamic'
 import { Calendar } from 'lucide-react'
 import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import {
   Select,
@@ -34,11 +25,8 @@ import {
 import { UserLogsSkeleton } from '@/components/user-logs-skeleton'
 
 import { getLogs, LogEntry } from './actions'
+import { LogDetailDialog } from './log-detail-dialog'
 import { LOG_TYPE_LABELS, LOG_TYPES } from './log-types'
-
-const JsonViewer = dynamic(() => import('@/components/json-viewer'), {
-  ssr: false,
-})
 
 interface UserLogsProps {
   userId: string
@@ -263,37 +251,10 @@ export default function UserLogs({ userId }: UserLogsProps) {
             </div>
 
             {/* Log Details Dialog */}
-            <Dialog
-              open={selectedLog !== null}
-              onOpenChange={(open) => !open && setSelectedLog(null)}
-            >
-              <DialogContent className="max-h-[80vh] overflow-y-auto sm:max-w-2xl">
-                <DialogHeader>
-                  <DialogTitle>Log Details</DialogTitle>
-                  <DialogDescription>
-                    Full log entry information
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="space-y-4">
-                  <JsonViewer data={selectedLog} />
-                </div>
-                <DialogFooter>
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      if (selectedLog) {
-                        navigator.clipboard.writeText(
-                          JSON.stringify(selectedLog, null, 2)
-                        )
-                        toast.success('Log details copied to clipboard')
-                      }
-                    }}
-                  >
-                    Copy JSON
-                  </Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
+            <LogDetailDialog
+              log={selectedLog}
+              onClose={() => setSelectedLog(null)}
+            />
 
             {/* Pagination */}
             <div className="flex items-center justify-between">
