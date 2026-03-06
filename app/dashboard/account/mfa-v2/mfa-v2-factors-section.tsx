@@ -148,7 +148,7 @@ export function MfaV2FactorsSection({
                     <div key={factor.type}>
                       {idx > 0 && <Separator />}
                       <div
-                        className={`flex items-center justify-between gap-4 p-4${isGreyedOut ? 'opacity-50' : ''}`}
+                        className={`flex items-center justify-between gap-4 p-4 ${isGreyedOut ? 'opacity-50' : ''}`}
                       >
                         <div className="flex min-w-0 items-center gap-3">
                           <div className="bg-muted flex h-9 w-9 shrink-0 items-center justify-center rounded-lg">
