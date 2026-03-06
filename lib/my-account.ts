@@ -1,23 +1,61 @@
 // --- Factors ---
 
+export type FactorUsage = 'primary' | 'secondary'
+
 export interface Factor {
-  name: string
-  enabled: boolean
+  type: string
+  usage: FactorUsage[]
 }
 
 export interface ListFactorsResponse {
   factors: Factor[]
 }
 
+export interface ListAuthenticationMethodsResponse {
+  authentication_methods: AuthenticationMethod[]
+}
+
 // --- Authentication Methods ---
+
+export type AuthenticationMethodType =
+  | 'passkey'
+  | 'password'
+  | 'email'
+  | 'totp'
+  | 'push-notification'
+  | 'recovery-code'
+  | 'phone'
+  | 'webauthn-roaming'
+  | 'webauthn-platform'
 
 export interface AuthenticationMethod {
   id: string
-  type: string
-  name?: string
-  enabled?: boolean
+  type: AuthenticationMethodType
   created_at: string
-  [key: string]: unknown
+  identity_user_id: string
+  usage: FactorUsage[]
+
+  // common optional
+  confirmed?: boolean
+  last_auth_at?: string
+  name?: string
+
+  // passkey
+  credential_backed_up?: boolean
+  credential_device_type?: string
+  key_id?: string
+  public_key?: string
+  user_handle?: string
+  transports?: string[]
+  user_agent?: string
+  relying_party_id?: string
+
+  // email
+  email?: string
+
+  // phone
+  phone_number?: string
+  preferred_authentication_method?: 'sms' | 'voice'
 }
 
 export interface CreateAuthenticationMethodRequest {
@@ -154,7 +192,7 @@ export const myAccount = {
 
   authenticationMethods: {
     list: () =>
-      request<AuthenticationMethod[]>(
+      request<ListAuthenticationMethodsResponse>(
         '/me/v1/authentication-methods',
         'read:me:authentication_methods'
       ),
@@ -175,7 +213,7 @@ export const myAccount = {
     delete: (id: string) =>
       request<void>(
         `/me/v1/authentication-methods/${id}`,
-        'remove:me:authentication_methods',
+        'delete:me:authentication_methods',
         { method: 'DELETE' }
       ),
 

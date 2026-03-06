@@ -7,8 +7,8 @@ export const appClient = new Auth0Client({
     audience: process.env.AUTH0_AUDIENCE,
     scope: {
       ['demonstration']: 'openid email profile offline_access',
-      // [`https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/me/`]:
-      //   "openid email profile offline_access read:me:authentication_methods remove:me:authentication_methods create:me:authentication_methods",
+      [`https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/me/`]:
+        'openid email profile offline_access read:me:factors read:me:authentication_methods delete:me:authentication_methods create:me:authentication_methods',
     },
   },
   sessionStore,

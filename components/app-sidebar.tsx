@@ -58,6 +58,11 @@ const accountItems = [
     href: '/dashboard/account/mfa',
     icon: ShieldCheck,
   },
+  {
+    title: 'MFA (My Account)',
+    href: '/dashboard/account/mfa-v2',
+    icon: ShieldCheck,
+  },
   { title: 'Sessions', href: '/dashboard/account/sessions', icon: Monitor },
   { title: 'Logs', href: '/dashboard/account/logs', icon: ScrollText },
 ]
