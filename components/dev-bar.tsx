@@ -1,10 +1,14 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState, useSyncExternalStore } from 'react'
 import { ChevronDown, ChevronUp, Code } from 'lucide-react'
 import { createPortal } from 'react-dom'
 
 import { Button } from '@/components/ui/button'
+
+const subscribe = () => () => {}
+const getPortalTarget = () => document.getElementById('dev-bar-portal')
+const getServerSnapshot = () => null
 
 interface DevBarProps {
   children: React.ReactNode
@@ -12,11 +16,11 @@ interface DevBarProps {
 
 export function DevBar({ children }: DevBarProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null)
-
-  useEffect(() => {
-    setPortalTarget(document.getElementById('dev-bar-portal'))
-  }, [])
+  const portalTarget = useSyncExternalStore(
+    subscribe,
+    getPortalTarget,
+    getServerSnapshot
+  )
 
   const content = (
     <div className="sticky bottom-0 z-50">
