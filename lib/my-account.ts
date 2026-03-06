@@ -58,22 +58,104 @@ export interface AuthenticationMethod {
   preferred_authentication_method?: 'sms' | 'voice'
 }
 
-export interface CreateAuthenticationMethodRequest {
-  type: string
-  [key: string]: unknown
+// --- Create request — discriminated union by type ---
+
+type CreateOtpRequest = { type: 'totp' }
+type CreatePhoneRequest = {
+  type: 'phone'
+  phone_number: string
+  preferred_authentication_method: 'sms' | 'voice'
+}
+type CreateEmailRequest = { type: 'email' }
+type CreatePushRequest = { type: 'push-notification' }
+type CreateWebAuthnRoamingRequest = { type: 'webauthn-roaming' }
+type CreateWebAuthnPlatformRequest = { type: 'webauthn-platform' }
+
+export type CreateAuthenticationMethodRequest =
+  | CreateOtpRequest
+  | CreatePhoneRequest
+  | CreateEmailRequest
+  | CreatePushRequest
+  | CreateWebAuthnRoamingRequest
+  | CreateWebAuthnPlatformRequest
+
+// --- WebAuthn types (W3C spec, JSON-serialized form) ---
+
+export interface WebAuthnCreationOptions {
+  rp: { id: string; name: string }
+  user: { id: string; name: string; displayName: string }
+  challenge: string // base64url-encoded
+  pubKeyCredParams: Array<{ type: 'public-key'; alg: number }>
+  timeout?: number
+  excludeCredentials?: Array<{
+    type: 'public-key'
+    id: string // base64url-encoded
+    transports?: ('usb' | 'nfc' | 'ble' | 'internal' | 'hybrid')[]
+  }>
+  authenticatorSelection?: {
+    authenticatorAttachment?: 'platform' | 'cross-platform'
+    requireResidentKey?: boolean
+    residentKey?: 'discouraged' | 'preferred' | 'required'
+    userVerification?: 'discouraged' | 'preferred' | 'required'
+  }
+  attestation?: 'none' | 'indirect' | 'direct' | 'enterprise'
 }
 
-export interface CreateAuthenticationMethodResponse {
+// --- Create response — discriminated union by type ---
+
+interface EnrollmentBase {
   id: string
   type: string
-  totp_uri?: string
-  barcode_uri?: string
-  auth_session?: string
-  [key: string]: unknown
 }
 
+export interface OtpEnrollment extends EnrollmentBase {
+  type: 'totp'
+  totp_uri: string
+  barcode_uri: string
+}
+
+export interface PhoneEnrollment extends EnrollmentBase {
+  type: 'phone'
+  auth_session: string
+}
+
+export interface EmailEnrollment extends EnrollmentBase {
+  type: 'email'
+  auth_session: string
+}
+
+export interface PushEnrollment extends EnrollmentBase {
+  type: 'push-notification'
+  barcode_uri: string
+}
+
+export interface WebAuthnEnrollment extends EnrollmentBase {
+  type: 'webauthn-roaming' | 'webauthn-platform'
+  authn_params_public_key: WebAuthnCreationOptions
+}
+
+export type CreateAuthenticationMethodResponse =
+  | OtpEnrollment
+  | PhoneEnrollment
+  | EmailEnrollment
+  | PushEnrollment
+  | WebAuthnEnrollment
+
+// --- Enrollment UI state ---
+
+export type EnrollmentState =
+  | { step: 'idle' }
+  | { step: 'input'; factorType: string }
+  | {
+      step: 'verifying'
+      factorType: string
+      enrollmentId: string
+      data: CreateAuthenticationMethodResponse
+    }
+  | { step: 'submitting' }
+
 export interface VerifyAuthenticationMethodRequest {
-  otp?: string
+  otp_code?: string
   auth_session?: string
   authn_response?: {
     id: string

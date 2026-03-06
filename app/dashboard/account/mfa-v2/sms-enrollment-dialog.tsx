@@ -7,9 +7,10 @@ import { getMyAccountError } from '@/lib/mfa-utils'
 import {
   myAccount,
   MyAccountApiError,
-  type CreateAuthenticationMethodResponse,
+  type PhoneEnrollment,
 } from '@/lib/my-account'
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
   Dialog,
   DialogContent,
@@ -25,6 +26,13 @@ import {
   InputOTPSlot,
 } from '@/components/ui/input-otp'
 import { Label } from '@/components/ui/label'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 interface SmsEnrollmentDialogProps {
   open: boolean
@@ -39,17 +47,22 @@ export function SmsEnrollmentDialog({
 }: SmsEnrollmentDialogProps) {
   const [step, setStep] = useState<'phone' | 'verify'>('phone')
   const [phoneNumber, setPhoneNumber] = useState('')
-  const [challengeData, setChallengeData] =
-    useState<CreateAuthenticationMethodResponse | null>(null)
+  const [agreed, setAgreed] = useState(false)
+  const [challengeData, setChallengeData] = useState<PhoneEnrollment | null>(
+    null
+  )
   const [sending, setSending] = useState(false)
   const [verifying, setVerifying] = useState(false)
   const [otp, setOtp] = useState('')
   const [error, setError] = useState<string | null>(null)
 
+  const fullNumber = `+1${phoneNumber.replace(/\D/g, '')}`
+
   useEffect(() => {
     if (open) {
       setStep('phone')
       setPhoneNumber('')
+      setAgreed(false)
       setChallengeData(null)
       setOtp('')
       setError(null)
@@ -57,15 +70,8 @@ export function SmsEnrollmentDialog({
   }, [open])
 
   const handleSendCode = async () => {
-    if (!phoneNumber.trim()) return
-
-    // Basic validation: must start with + and have digits
-    if (!/^\+\d[\d\s()-]*\d$/.test(phoneNumber.trim())) {
-      setError(
-        'Please enter a valid phone number starting with a country code (e.g. +1).'
-      )
-      return
-    }
+    const digits = phoneNumber.replace(/\D/g, '')
+    if (!digits) return
 
     setSending(true)
     setError(null)
@@ -73,9 +79,10 @@ export function SmsEnrollmentDialog({
     try {
       const { data } = await myAccount.authenticationMethods.create({
         type: 'phone',
-        phone_number: phoneNumber.trim(),
+        phone_number: fullNumber,
+        preferred_authentication_method: 'sms',
       })
-      setChallengeData(data)
+      setChallengeData(data as PhoneEnrollment)
       setStep('verify')
     } catch (err) {
       if (err instanceof MyAccountApiError) {
@@ -97,7 +104,7 @@ export function SmsEnrollmentDialog({
     try {
       await myAccount.authenticationMethods.verify(challengeData.id, {
         auth_session: challengeData.auth_session,
-        otp,
+        otp_code: otp,
       })
       onSuccess()
     } catch (err) {
@@ -120,9 +127,10 @@ export function SmsEnrollmentDialog({
     try {
       const { data } = await myAccount.authenticationMethods.create({
         type: 'phone',
-        phone_number: phoneNumber.trim(),
+        phone_number: fullNumber,
+        preferred_authentication_method: 'sms',
       })
-      setChallengeData(data)
+      setChallengeData(data as PhoneEnrollment)
     } catch (err) {
       if (err instanceof MyAccountApiError) {
         setError(getMyAccountError(err))
@@ -140,26 +148,54 @@ export function SmsEnrollmentDialog({
         {step === 'phone' ? (
           <>
             <DialogHeader>
-              <DialogTitle>Set up phone message</DialogTitle>
+              <DialogTitle>Add your mobile phone number</DialogTitle>
               <DialogDescription>
-                Enter your phone number to receive a verification code via SMS.
+                We&apos;ll send you a secure, one-time verification code.
               </DialogDescription>
             </DialogHeader>
 
-            <div className="space-y-3 py-4">
+            <div className="space-y-4 py-4">
               <div className="space-y-2">
-                <Label htmlFor="phone-number">Phone number</Label>
-                <Input
-                  id="phone-number"
-                  type="tel"
-                  placeholder="+1 (555) 123-4567"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') handleSendCode()
-                  }}
-                />
+                <Label>Phone number</Label>
+                <div className="flex gap-2">
+                  <Select defaultValue="+1">
+                    <SelectTrigger className="w-[80px] shrink-0">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="+1">+1</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Input
+                    type="tel"
+                    placeholder="(555) 123-4567"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && agreed) handleSendCode()
+                    }}
+                  />
+                </div>
               </div>
+
+              <div className="flex items-start gap-2">
+                <Checkbox
+                  id="sms-agree"
+                  checked={agreed}
+                  onCheckedChange={(v) => setAgreed(v === true)}
+                  className="mt-0.5"
+                />
+                <Label
+                  htmlFor="sms-agree"
+                  className="text-muted-foreground text-xs leading-normal font-normal"
+                >
+                  I agree to receive account verification texts at this number.
+                </Label>
+              </div>
+
+              <p className="text-muted-foreground text-[11px] leading-relaxed">
+                Msg &amp; data rates may apply.
+              </p>
 
               {error && <p className="text-destructive text-sm">{error}</p>}
             </div>
@@ -170,10 +206,10 @@ export function SmsEnrollmentDialog({
               </Button>
               <Button
                 onClick={handleSendCode}
-                disabled={!phoneNumber.trim() || sending}
+                disabled={!phoneNumber.replace(/\D/g, '') || !agreed || sending}
               >
                 {sending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Send code
+                Send Code
               </Button>
             </DialogFooter>
           </>
@@ -182,7 +218,7 @@ export function SmsEnrollmentDialog({
             <DialogHeader>
               <DialogTitle>Verify your phone</DialogTitle>
               <DialogDescription>
-                Enter the 6-digit code sent to {phoneNumber}.
+                Enter the 6-digit code sent to {fullNumber}.
               </DialogDescription>
             </DialogHeader>
 

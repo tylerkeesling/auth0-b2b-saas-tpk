@@ -1,20 +1,41 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
-import { CheckCircle2, ShieldCheck } from 'lucide-react'
+import { CheckCircle2, Plus, ShieldCheck, Trash2 } from 'lucide-react'
+import { toast } from 'sonner'
 
-import { factorIcons, factorsMeta, getProviderName } from '@/lib/mfa-utils'
+import {
+  factorIcons,
+  factorsMeta,
+  getMyAccountError,
+  getProviderName,
+} from '@/lib/mfa-utils'
 import {
   myAccount,
+  MyAccountApiError,
   type AuthenticationMethod,
+  type AuthenticationMethodType,
   type Factor,
 } from '@/lib/my-account'
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
 import { DevBar } from '@/components/dev-bar'
+
+import { SmsEnrollmentDialog } from './sms-enrollment-dialog'
+import { TotpEnrollmentDialog } from './totp-enrollment-dialog'
 
 interface MfaV2FactorsSectionProps {
   orgEnabledProviders: string[]
@@ -27,6 +48,36 @@ export function MfaV2FactorsSection({
   const [methods, setMethods] = useState<AuthenticationMethod[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [deleting, setDeleting] = useState<string | null>(null)
+  const [enrolling, setEnrolling] = useState<AuthenticationMethodType | null>(
+    null
+  )
+
+  const refreshMethods = useCallback(async () => {
+    try {
+      const res = await myAccount.authenticationMethods.list()
+      setMethods(res.data.authentication_methods)
+    } catch (err) {
+      console.error('Failed to refresh methods', err)
+    }
+  }, [])
+
+  async function handleDelete(enrollmentId: string) {
+    setDeleting(enrollmentId)
+    try {
+      await myAccount.authenticationMethods.delete(enrollmentId)
+      setMethods((prev) => prev.filter((m) => m.id !== enrollmentId))
+      toast.success('Enrollment removed successfully.')
+    } catch (err) {
+      const message =
+        err instanceof MyAccountApiError
+          ? getMyAccountError(err)
+          : 'Something went wrong. Please try again.'
+      toast.error(message)
+    } finally {
+      setDeleting(null)
+    }
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -176,6 +227,61 @@ export function MfaV2FactorsSection({
                             </p>
                           </div>
                         </div>
+
+                        {enrollment ? (
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="text-muted-foreground hover:text-destructive"
+                              >
+                                <Trash2 className="mr-1.5 h-4 w-4" />
+                                Remove
+                              </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                  Remove MFA enrollment
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  This will permanently remove your{' '}
+                                  {meta?.title ?? factor.type} enrollment. You
+                                  will no longer be able to use it for
+                                  multifactor authentication.
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <Button
+                                  variant="destructive"
+                                  disabled={deleting === enrollment.id}
+                                  onClick={() => handleDelete(enrollment.id)}
+                                >
+                                  {deleting === enrollment.id
+                                    ? 'Removing…'
+                                    : 'Remove'}
+                                </Button>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        ) : (
+                          orgEnabled && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() =>
+                                setEnrolling(
+                                  factor.type as AuthenticationMethodType
+                                )
+                              }
+                            >
+                              <Plus className="mr-1.5 h-4 w-4" />
+                              Enroll
+                            </Button>
+                          )
+                        )}
                       </div>
                     </div>
                   )
@@ -184,6 +290,26 @@ export function MfaV2FactorsSection({
           )}
         </div>
       </div>
+
+      <SmsEnrollmentDialog
+        open={enrolling === 'phone'}
+        onOpenChange={(open) => !open && setEnrolling(null)}
+        onSuccess={() => {
+          setEnrolling(null)
+          refreshMethods()
+          toast.success('Phone enrollment added successfully.')
+        }}
+      />
+
+      <TotpEnrollmentDialog
+        open={enrolling === 'totp'}
+        onOpenChange={(open) => !open && setEnrolling(null)}
+        onSuccess={() => {
+          setEnrolling(null)
+          refreshMethods()
+          toast.success('Authenticator app enrolled successfully.')
+        }}
+      />
 
       <DevBar>
         <Button variant="outline" size="sm" asChild>

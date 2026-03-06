@@ -8,7 +8,7 @@ import { getMyAccountError } from '@/lib/mfa-utils'
 import {
   myAccount,
   MyAccountApiError,
-  type CreateAuthenticationMethodResponse,
+  type OtpEnrollment,
 } from '@/lib/my-account'
 import { Button } from '@/components/ui/button'
 import {
@@ -46,8 +46,7 @@ export function TotpEnrollmentDialog({
   onSuccess,
 }: TotpEnrollmentDialogProps) {
   const [step, setStep] = useState<'setup' | 'verify'>('setup')
-  const [challengeData, setChallengeData] =
-    useState<CreateAuthenticationMethodResponse | null>(null)
+  const [challengeData, setChallengeData] = useState<OtpEnrollment | null>(null)
   const [creating, setCreating] = useState(false)
   const [verifying, setVerifying] = useState(false)
   const [otp, setOtp] = useState('')
@@ -62,7 +61,7 @@ export function TotpEnrollmentDialog({
       const { data } = await myAccount.authenticationMethods.create({
         type: 'totp',
       })
-      setChallengeData(data)
+      setChallengeData(data as OtpEnrollment)
       setStep('setup')
     } catch (err) {
       if (err instanceof MyAccountApiError) {
@@ -94,8 +93,7 @@ export function TotpEnrollmentDialog({
 
     try {
       await myAccount.authenticationMethods.verify(challengeData.id, {
-        auth_session: challengeData.auth_session,
-        otp,
+        otp_code: otp,
       })
       onSuccess()
     } catch (err) {
