@@ -258,7 +258,8 @@ async function request<T>(
     throw new MyAccountApiError(res.status, body, log)
   }
 
-  const responseBody = res.status === 204 ? null : await res.json()
+  const text = await res.text()
+  const responseBody = text ? JSON.parse(text) : null
   const log: RequestLog = {
     method,
     path,

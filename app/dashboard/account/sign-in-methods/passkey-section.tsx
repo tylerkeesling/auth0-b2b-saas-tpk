@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { type MyAccount } from '@auth0/myaccount-js'
 import {
   Fingerprint,
   Globe,
@@ -13,7 +14,7 @@ import {
 } from 'lucide-react'
 import { toast } from 'sonner'
 
-import { myAccount, type PasskeyEnrollment } from '@/lib/my-account'
+import { myAccountClient } from '@/lib/my-account-client'
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -120,16 +121,20 @@ export function PasskeySection({ passkeys, userId }: PasskeySectionProps) {
 
     try {
       // Step 1: Start enrollment via My Account API
-      const { data: enrollment } = await myAccount.authenticationMethods.create(
-        {
-          type: 'passkey',
-          connection: 'SaaStart-Shared-Database',
-          identity_user_id: userId.split('|').pop()!,
-        }
-      )
+      const enrollment = (await myAccountClient.authenticationMethods.create({
+        type: 'passkey',
+        connection: 'SaaStart-Shared-Database',
+        identity_user_id: userId.split('|').pop()!,
+      })) as MyAccount.PasskeyCreationResponse
 
-      const { auth_session, authn_params_public_key: options } =
-        enrollment as PasskeyEnrollment
+      if (!enrollment?.authn_params_public_key) {
+        console.error('Unexpected create response:', enrollment)
+        throw new Error(
+          'Passkey enrollment failed — no creation options returned.'
+        )
+      }
+
+      const { auth_session, authn_params_public_key: options } = enrollment
 
       // Step 2: Browser WebAuthn ceremony
       if (!navigator.credentials) {
@@ -146,10 +151,6 @@ export function PasskeySection({ passkeys, userId }: PasskeySectionProps) {
             ...options.user,
             id: base64UrlToBuffer(options.user.id),
           },
-          excludeCredentials: options.excludeCredentials?.map((c) => ({
-            ...c,
-            id: base64UrlToBuffer(c.id),
-          })),
         },
       })) as PublicKeyCredential | null
 
@@ -161,7 +162,7 @@ export function PasskeySection({ passkeys, userId }: PasskeySectionProps) {
         credential.response as AuthenticatorAttestationResponse
 
       // Step 3: Verify enrollment via My Account API
-      await myAccount.authenticationMethods.verify(credential.id, {
+      await myAccountClient.authenticationMethods.verify(credential.id, {
         auth_session,
         authn_response: {
           id: credential.id,

@@ -19,9 +19,9 @@ vi.mock('next/navigation', () => ({
   useRouter: () => ({ refresh: vi.fn() }),
 }))
 
-// Mock my-account
-vi.mock('@/lib/my-account', () => ({
-  myAccount: {
+// Mock my-account-client
+vi.mock('@/lib/my-account-client', () => ({
+  myAccountClient: {
     authenticationMethods: {
       create: vi.fn(),
       verify: vi.fn(),
