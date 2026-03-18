@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { type MyAccount } from '@auth0/myaccount-js'
 import {
   Fingerprint,
   Globe,
@@ -14,7 +13,7 @@ import {
 } from 'lucide-react'
 import { toast } from 'sonner'
 
-import { myAccountClient } from '@/lib/my-account-client'
+import { myAccount, type PasskeyEnrollment } from '@/lib/my-account'
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -121,13 +120,16 @@ export function PasskeySection({ passkeys, userId }: PasskeySectionProps) {
 
     try {
       // Step 1: Start enrollment via My Account API
-      const enrollment = (await myAccountClient.authenticationMethods.create({
-        type: 'passkey',
-        connection: 'SaaStart-Shared-Database',
-        identity_user_id: userId.split('|').pop()!,
-      })) as MyAccount.PasskeyCreationResponse
+      const { data: enrollment } = await myAccount.authenticationMethods.create(
+        {
+          type: 'passkey',
+          connection: 'SaaStart-Shared-Database',
+          identity_user_id: userId.split('|').pop()!,
+        }
+      )
 
-      const options = enrollment.authn_params_public_key
+      const { auth_session, authn_params_public_key: options } =
+        enrollment as PasskeyEnrollment
 
       // Step 2: Browser WebAuthn ceremony
       if (!navigator.credentials) {
@@ -144,6 +146,10 @@ export function PasskeySection({ passkeys, userId }: PasskeySectionProps) {
             ...options.user,
             id: base64UrlToBuffer(options.user.id),
           },
+          excludeCredentials: options.excludeCredentials?.map((c) => ({
+            ...c,
+            id: base64UrlToBuffer(c.id),
+          })),
         },
       })) as PublicKeyCredential | null
 
@@ -151,17 +157,18 @@ export function PasskeySection({ passkeys, userId }: PasskeySectionProps) {
         throw new DOMException('No credential returned.', 'NotAllowedError')
       }
 
-      const response = credential.response as AuthenticatorAttestationResponse
+      const attestation =
+        credential.response as AuthenticatorAttestationResponse
 
       // Step 3: Verify enrollment via My Account API
-      await myAccountClient.authenticationMethods.verify(credential.id, {
-        auth_session: enrollment.auth_session,
+      await myAccount.authenticationMethods.verify(credential.id, {
+        auth_session,
         authn_response: {
           id: credential.id,
           rawId: bufferToBase64Url(credential.rawId),
           response: {
-            attestationObject: bufferToBase64Url(response.attestationObject),
-            clientDataJSON: bufferToBase64Url(response.clientDataJSON),
+            attestationObject: bufferToBase64Url(attestation.attestationObject),
+            clientDataJSON: bufferToBase64Url(attestation.clientDataJSON),
           },
           type: 'public-key',
         },

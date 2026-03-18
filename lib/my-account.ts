@@ -70,6 +70,11 @@ type CreateEmailRequest = { type: 'email' }
 type CreatePushRequest = { type: 'push-notification' }
 type CreateWebAuthnRoamingRequest = { type: 'webauthn-roaming' }
 type CreateWebAuthnPlatformRequest = { type: 'webauthn-platform' }
+type CreatePasskeyRequest = {
+  type: 'passkey'
+  connection: string
+  identity_user_id: string
+}
 
 export type CreateAuthenticationMethodRequest =
   | CreateOtpRequest
@@ -78,6 +83,7 @@ export type CreateAuthenticationMethodRequest =
   | CreatePushRequest
   | CreateWebAuthnRoamingRequest
   | CreateWebAuthnPlatformRequest
+  | CreatePasskeyRequest
 
 // --- WebAuthn types (W3C spec, JSON-serialized form) ---
 
@@ -134,12 +140,18 @@ export interface WebAuthnEnrollment extends EnrollmentBase {
   authn_params_public_key: WebAuthnCreationOptions
 }
 
+export interface PasskeyEnrollment {
+  auth_session: string
+  authn_params_public_key: WebAuthnCreationOptions
+}
+
 export type CreateAuthenticationMethodResponse =
   | OtpEnrollment
   | PhoneEnrollment
   | EmailEnrollment
   | PushEnrollment
   | WebAuthnEnrollment
+  | PasskeyEnrollment
 
 // --- Enrollment UI state ---
 
