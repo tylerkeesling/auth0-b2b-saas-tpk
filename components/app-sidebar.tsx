@@ -15,6 +15,7 @@ import {
   Users,
 } from 'lucide-react'
 
+import { useDevFlag } from '@/lib/dev-flags'
 import {
   Sidebar,
   SidebarContent,
@@ -58,14 +59,15 @@ const accountItems = [
     href: '/dashboard/account/mfa',
     icon: ShieldCheck,
   },
-  {
-    title: 'MFA (My Account)',
-    href: '/dashboard/account/mfa-v2',
-    icon: ShieldCheck,
-  },
   { title: 'Sessions', href: '/dashboard/account/sessions', icon: Monitor },
   { title: 'Logs', href: '/dashboard/account/logs', icon: ScrollText },
 ]
+
+const mfaV2Item = {
+  title: 'MFA (My Account)',
+  href: '/dashboard/account/mfa-v2',
+  icon: ShieldCheck,
+}
 
 const orgItems = [
   {
@@ -93,6 +95,9 @@ export function AppSidebar({
   userRole,
   ...props
 }: AppSidebarProps) {
+  const [showMfaV2] = useDevFlag('show-mfa-v2')
+  const items = showMfaV2 ? [...accountItems, mfaV2Item] : accountItems
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -102,7 +107,7 @@ export function AppSidebar({
         />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain title="My Account" items={accountItems} />
+        <NavMain title="My Account" items={items} />
         <NavMain
           title="My Organization"
           items={orgItems}
