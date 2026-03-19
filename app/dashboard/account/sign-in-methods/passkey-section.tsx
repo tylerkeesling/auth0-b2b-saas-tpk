@@ -162,7 +162,7 @@ export function PasskeySection({ passkeys, userId }: PasskeySectionProps) {
         credential.response as AuthenticatorAttestationResponse
 
       // Step 3: Verify enrollment via My Account API
-      await myAccountClient.authenticationMethods.verify('passkey|new/verify', {
+      await myAccountClient.authenticationMethods.verify('passkey|new', {
         auth_session,
         authn_response: {
           id: credential.id,
