@@ -11,7 +11,7 @@ const eventSchema = z.object({
   time: z.string(),
   a0stream: z.string(),
   a0tenant: z.string(),
-  data: z.record(z.any()),
+  data: z.record(z.string(), z.any()),
 })
 
 export async function POST(req: NextRequest) {

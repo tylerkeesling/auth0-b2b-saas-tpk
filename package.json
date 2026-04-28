@@ -56,10 +56,10 @@
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.5.0",
     "ua-parser-js": "^2.0.9",
-    "zod": "^3.25.76"
+    "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@auth0/actions": "^0.14.0",
+    "@auth0/actions": "^0.21.0",
     "@hubspot/api-client": "^13.5.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
     "@tailwindcss/postcss": "^4.2.4",
@@ -67,21 +67,21 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
-    "@types/node": "^20.12.12",
+    "@types/node": "^25.6.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@types/react-syntax-highlighter": "^15.5.13",
-    "@vitejs/plugin-react": "^5.1.4",
+    "@vitejs/plugin-react": "^6.0.1",
     "eslint": "^9.39.2",
     "eslint-config-next": "^16.2.4",
     "husky": "^9.1.7",
-    "jsdom": "^28.1.0",
+    "jsdom": "^29.1.0",
     "lint-staged": "^16.4.0",
     "postcss": "^8.5.12",
     "prettier": "^3.8.3",
-    "prettier-plugin-tailwindcss": "^0.7.2",
+    "prettier-plugin-tailwindcss": "^0.8.0",
     "tailwindcss": "^4.2.4",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "vitest": "^4.1.5"
   }
 }
