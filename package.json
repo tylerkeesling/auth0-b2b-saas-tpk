@@ -45,7 +45,7 @@
     "execa": "^9.6.1",
     "input-otp": "^1.4.2",
     "jwt-decode": "^4.0.0",
-    "lucide-react": "^0.564.0",
+    "lucide-react": "^1.11.0",
     "next": "^16.2.4",
     "next-themes": "^0.4.6",
     "ora": "^9.4.0",
