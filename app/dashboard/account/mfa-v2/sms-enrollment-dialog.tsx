@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Loader2 } from 'lucide-react'
 
 import { getMyAccountError } from '@/lib/mfa-utils'
@@ -55,10 +55,11 @@ export function SmsEnrollmentDialog({
   const [verifying, setVerifying] = useState(false)
   const [otp, setOtp] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [prevOpen, setPrevOpen] = useState(open)
 
-  const fullNumber = `+1${phoneNumber.replace(/\D/g, '')}`
-
-  useEffect(() => {
+  // Reset state when the dialog transitions from closed to open.
+  if (open !== prevOpen) {
+    setPrevOpen(open)
     if (open) {
       setStep('phone')
       setPhoneNumber('')
@@ -67,7 +68,9 @@ export function SmsEnrollmentDialog({
       setOtp('')
       setError(null)
     }
-  }, [open])
+  }
+
+  const fullNumber = `+1${phoneNumber.replace(/\D/g, '')}`
 
   const handleSendCode = async () => {
     const digits = phoneNumber.replace(/\D/g, '')

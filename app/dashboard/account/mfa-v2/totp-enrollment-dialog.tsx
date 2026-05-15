@@ -52,6 +52,7 @@ export function TotpEnrollmentDialog({
   const [otp, setOtp] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [createError, setCreateError] = useState<string | null>(null)
+  const [prevOpen, setPrevOpen] = useState(open)
 
   const createEnrollment = useCallback(async () => {
     setCreating(true)
@@ -74,13 +75,22 @@ export function TotpEnrollmentDialog({
     }
   }, [])
 
-  useEffect(() => {
+  // Reset state when the dialog transitions from closed to open.
+  if (open !== prevOpen) {
+    setPrevOpen(open)
     if (open) {
       setStep('setup')
       setChallengeData(null)
       setOtp('')
       setError(null)
       setCreateError(null)
+    }
+  }
+
+  useEffect(() => {
+    if (open) {
+      // Kicking off async work on open; setCreating fires once for the loader.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       createEnrollment()
     }
   }, [open, createEnrollment])

@@ -22,39 +22,53 @@ export function useColorTheme() {
   return React.useContext(ColorThemeContext)
 }
 
+const COLOR_THEME_EVENT = 'color-theme-change'
+
+function subscribeToColorTheme(callback: () => void) {
+  window.addEventListener('storage', callback)
+  window.addEventListener(COLOR_THEME_EVENT, callback)
+  return () => {
+    window.removeEventListener('storage', callback)
+    window.removeEventListener(COLOR_THEME_EVENT, callback)
+  }
+}
+
+function getColorThemeSnapshot(): ColorThemeId {
+  return (localStorage.getItem(STORAGE_KEY) as ColorThemeId | null) ?? 'default'
+}
+
+function getColorThemeServerSnapshot(): ColorThemeId {
+  return 'default'
+}
+
 function ColorThemeProvider({ children }: { children: React.ReactNode }) {
-  const [colorTheme, setColorThemeState] =
-    React.useState<ColorThemeId>('default')
-  const [mounted, setMounted] = React.useState(false)
+  const colorTheme = React.useSyncExternalStore(
+    subscribeToColorTheme,
+    getColorThemeSnapshot,
+    getColorThemeServerSnapshot
+  )
 
   React.useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY) as ColorThemeId | null
-    if (stored) {
-      setColorThemeState(stored)
-      document.documentElement.setAttribute('data-theme', stored)
+    if (colorTheme === 'default') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', colorTheme)
     }
-    setMounted(true)
-  }, [])
+  }, [colorTheme])
 
   const setColorTheme = React.useCallback((theme: ColorThemeId) => {
-    setColorThemeState(theme)
     if (theme === 'default') {
-      document.documentElement.removeAttribute('data-theme')
       localStorage.removeItem(STORAGE_KEY)
     } else {
-      document.documentElement.setAttribute('data-theme', theme)
       localStorage.setItem(STORAGE_KEY, theme)
     }
+    // 'storage' only fires for cross-tab changes; notify same-window subscribers.
+    window.dispatchEvent(new Event(COLOR_THEME_EVENT))
   }, [])
 
-  // Prevent flash: apply stored theme before React hydrates
-  // After mount, state is synced from localStorage
   const value = React.useMemo(
-    () => ({
-      colorTheme: mounted ? colorTheme : ('default' as ColorThemeId),
-      setColorTheme,
-    }),
-    [colorTheme, setColorTheme, mounted]
+    () => ({ colorTheme, setColorTheme }),
+    [colorTheme, setColorTheme]
   )
 
   return (
