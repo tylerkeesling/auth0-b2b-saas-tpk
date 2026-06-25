@@ -14,13 +14,13 @@ export default async function MfaV2SettingsPage() {
     return redirect('/auth/login?returnTo=/dashboard/account/mfa-v2')
   }
 
-  const org = (await managementClient.organizations.get(
-    session.user.org_id!
-  )) as any
+  const org = session.user.org_id
+    ? ((await managementClient.organizations.get(session.user.org_id)) as any)
+    : null
 
   let orgEnabledProviders: string[] = []
   try {
-    if (org.metadata?.mfaPolicy) {
+    if (org?.metadata?.mfaPolicy) {
       const mfaPolicy = JSON.parse(org.metadata.mfaPolicy)
       orgEnabledProviders = mfaPolicy.providers ?? []
     }

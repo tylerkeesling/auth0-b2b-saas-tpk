@@ -1,5 +1,6 @@
 'use client'
 
+import { ConnectedAccountsSection } from './connected-accounts-section'
 import { EmailSection } from './email-section'
 import { PasskeySection } from './passkey-section'
 import { PasswordSection } from './password-section'
@@ -38,6 +39,8 @@ export function SignInMethodsPage({
       />
 
       <PasskeySection passkeys={passkeys} userId={userId} />
+
+      <ConnectedAccountsSection />
     </div>
   )
 }

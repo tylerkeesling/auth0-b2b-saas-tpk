@@ -30,9 +30,9 @@ export default async function DashboardLayout({
   const orgs = orgsResponse.data as any[]
 
   // if the user does not belong to any organizations, redirect to onboarding
-  if (!orgs.length) {
-    redirect('/onboarding/create')
-  }
+  // if (!orgs.length) {
+  //   redirect('/onboarding/create')
+  // }
 
   const role = getRole(session.user)
 

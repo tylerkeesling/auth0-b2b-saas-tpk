@@ -22,7 +22,9 @@ export default async function MfaSettingsPage() {
       managementClient.guardian.factors.list(),
       managementClient.users.authenticationMethods.list(userId),
       managementClient.users.get(userId, { fields: 'user_metadata' }),
-      managementClient.organizations.get(session.user.org_id!) as any,
+      session.user.org_id
+        ? (managementClient.organizations.get(session.user.org_id) as any)
+        : Promise.resolve(null),
     ])
 
   const factors = factorsResponse as any[]
@@ -33,7 +35,7 @@ export default async function MfaSettingsPage() {
   // Parse org MFA policy to get enabled providers
   let orgEnabledProviders: string[] = []
   try {
-    if (org.metadata?.mfaPolicy) {
+    if (org?.metadata?.mfaPolicy) {
       const mfaPolicy = JSON.parse(org.metadata.mfaPolicy)
       orgEnabledProviders = (mfaPolicy.providers ?? []).map((p: string) =>
         p === 'phone' ? 'sms' : p

@@ -277,6 +277,46 @@ async function request<T>(
   return { data: (responseBody ?? undefined) as T, log }
 }
 
+// --- Connected Accounts ---
+
+export interface ConnectedAccountConnection {
+  name: string
+  strategy: string
+  scopes?: string[]
+}
+
+export interface ListConnectedAccountConnectionsResponse {
+  connections: ConnectedAccountConnection[]
+  next?: string
+}
+
+export interface ConnectedAccount {
+  id: string
+  connection: string
+  access_type: string
+  scopes?: string[]
+  created_at: string
+  expires_at?: string
+}
+
+export interface ListConnectedAccountsResponse {
+  accounts: ConnectedAccount[]
+  next?: string
+}
+
+export interface CreateConnectedAccountRequest {
+  connection: string
+  redirect_uri: string
+  state?: string
+}
+
+export interface CreateConnectedAccountResponse {
+  connect_uri: string
+  auth_session: string
+  connect_params: { ticket: string }
+  expires_in: number
+}
+
 // --- Client ---
 
 export const myAccount = {
@@ -324,6 +364,36 @@ export const myAccount = {
         `/me/v1/authentication-methods/${id}/verify`,
         'create:me:authentication_methods',
         { method: 'POST', body }
+      ),
+  },
+
+  connectedAccounts: {
+    connections: {
+      list: () =>
+        request<ListConnectedAccountConnectionsResponse>(
+          '/me/v1/connected-accounts/connections',
+          'read:me:connected_accounts'
+        ),
+    },
+
+    list: () =>
+      request<ListConnectedAccountsResponse>(
+        '/me/v1/connected-accounts/accounts',
+        'read:me:connected_accounts'
+      ),
+
+    create: (body: CreateConnectedAccountRequest) =>
+      request<CreateConnectedAccountResponse>(
+        '/me/v1/connected-accounts/connect',
+        'create:me:connected_accounts',
+        { method: 'POST', body }
+      ),
+
+    delete: (id: string) =>
+      request<void>(
+        `/me/v1/connected-accounts/accounts/${id}`,
+        'delete:me:connected_accounts',
+        { method: 'DELETE' }
       ),
   },
 }
