@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { type MyAccount } from '@auth0/myaccount-js'
 import {
   Fingerprint,
   Globe,
@@ -14,7 +13,6 @@ import {
 } from 'lucide-react'
 import { toast } from 'sonner'
 
-import { myAccountClient } from '@/lib/my-account-client'
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -29,7 +27,11 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { SubmitButton } from '@/components/submit-button'
 
-import { revokePasskey } from './actions'
+import {
+  getPasskeyEnrollmentChallenge,
+  revokePasskey,
+  verifyPasskeyEnrollment,
+} from './actions'
 import type { Passkey } from './sign-in-methods-page'
 
 // --- Base64url helpers for WebAuthn ---
@@ -109,10 +111,9 @@ function timeAgo(dateString: string) {
 
 interface PasskeySectionProps {
   passkeys: Passkey[]
-  userId: string
 }
 
-export function PasskeySection({ passkeys, userId }: PasskeySectionProps) {
+export function PasskeySection({ passkeys }: PasskeySectionProps) {
   const router = useRouter()
   const [enrolling, setEnrolling] = useState(false)
 
@@ -120,21 +121,18 @@ export function PasskeySection({ passkeys, userId }: PasskeySectionProps) {
     setEnrolling(true)
 
     try {
-      // Step 1: Start enrollment via My Account API
-      const enrollment = (await myAccountClient.authenticationMethods.create({
-        type: 'passkey',
-        connection: 'SaaStart-Shared-Database',
-        identity_user_id: userId.split('|').pop()!,
-      })) as MyAccount.PasskeyCreationResponse
+      // Step 1: Get challenge via new SDK
+      const challenge = await getPasskeyEnrollmentChallenge()
 
-      if (!enrollment?.authn_params_public_key) {
-        console.error('Unexpected create response:', enrollment)
-        throw new Error(
-          'Passkey enrollment failed — no creation options returned.'
-        )
+      if (!challenge?.authnParamsPublicKey) {
+        throw new Error('Passkey enrollment failed — no challenge returned.')
       }
 
-      const { auth_session, authn_params_public_key: options } = enrollment
+      const {
+        authSession,
+        authenticationMethodId,
+        authnParamsPublicKey: options,
+      } = challenge
 
       // Step 2: Browser WebAuthn ceremony
       if (!navigator.credentials) {
@@ -151,7 +149,7 @@ export function PasskeySection({ passkeys, userId }: PasskeySectionProps) {
             ...options.user,
             id: base64UrlToBuffer(options.user.id),
           },
-        },
+        } as PublicKeyCredentialCreationOptions,
       })) as PublicKeyCredential | null
 
       if (!credential) {
@@ -161,10 +159,11 @@ export function PasskeySection({ passkeys, userId }: PasskeySectionProps) {
       const attestation =
         credential.response as AuthenticatorAttestationResponse
 
-      // Step 3: Verify enrollment via My Account API
-      await myAccountClient.authenticationMethods.verify('passkey|new', {
-        auth_session,
-        authn_response: {
+      // Step 3: Verify enrollment via new SDK
+      await verifyPasskeyEnrollment({
+        authenticationMethodId,
+        authSession,
+        authResponse: {
           id: credential.id,
           rawId: bufferToBase64Url(credential.rawId),
           response: {

@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
+import type { PasskeyEnrollmentVerifyOptions } from '@auth0/nextjs-auth0/types'
 
 import { appClient } from '@/lib/auth0'
 import { managementClient } from '@/lib/auth0-manage'
@@ -149,4 +150,18 @@ export async function revokePasskey(formData: FormData) {
     console.error('failed to revoke passkey', error)
     return { error: 'Failed to delete your passkey.' }
   }
+}
+
+export async function getPasskeyEnrollmentChallenge() {
+  const session = await appClient.getSession()
+  if (!session) return redirect('/auth/login')
+  return appClient.passkey.enrollmentChallenge()
+}
+
+export async function verifyPasskeyEnrollment(
+  options: PasskeyEnrollmentVerifyOptions
+) {
+  const session = await appClient.getSession()
+  if (!session) return redirect('/auth/login')
+  return appClient.passkey.enrollmentVerify(options)
 }

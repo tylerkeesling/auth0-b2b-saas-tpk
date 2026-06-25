@@ -18,7 +18,6 @@ interface SignInMethodsPageProps {
   passkeys: Passkey[]
   lastPasswordReset: string | null
   createdAt: string | null
-  userId: string
 }
 
 export function SignInMethodsPage({
@@ -27,7 +26,6 @@ export function SignInMethodsPage({
   passkeys,
   lastPasswordReset,
   createdAt,
-  userId,
 }: SignInMethodsPageProps) {
   return (
     <div className="space-y-8">
@@ -38,7 +36,7 @@ export function SignInMethodsPage({
         createdAt={createdAt}
       />
 
-      <PasskeySection passkeys={passkeys} userId={userId} />
+      <PasskeySection passkeys={passkeys} />
 
       <ConnectedAccountsSection />
     </div>

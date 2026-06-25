@@ -49,7 +49,6 @@ export default async function SecuritySettingsSignInMethods() {
         passkeys={passkeys}
         lastPasswordReset={(userResponse as any).last_password_reset ?? null}
         createdAt={(userResponse as any).created_at ?? null}
-        userId={userId}
       />
     </div>
   )
